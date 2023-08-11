@@ -1,0 +1,19 @@
+unit BookDAOIntf;
+
+interface
+
+uses
+  System.Generics.Collections, Book;
+
+type
+  IBookDAO = interface
+    function CreateBook(const Book: TBook): Boolean;
+    function GetBooks: TObjectList<TBook>;
+    function GetBookById(const Id: Integer): TBook;
+    function UpdateBook(const Book: TBook): Boolean;
+    function DeleteBook: Boolean;
+  end;
+
+implementation
+
+end.

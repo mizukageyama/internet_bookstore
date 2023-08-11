@@ -1,0 +1,19 @@
+unit Book;
+
+interface
+
+type
+  TBook = class
+  private
+    FTitle: string;
+    FId: Integer;
+    FSynopsis: string;
+  public
+    property Id: Integer read FId;
+    property Title: string read FTitle;
+    property Synopsis: string read FSynopsis;
+  end;
+
+implementation
+
+end.

@@ -1,0 +1,32 @@
+unit Book;
+
+interface
+
+uses
+  MVCFramework.Serializer.Commons,
+  MVCFramework.ActiveRecord,
+  MVCFramework.Nullables,
+  MVCFramework.Commons,
+  MVCFramework.SQLGenerators.MySQL,
+  System.Generics.Collections;
+
+type
+  [MVCNameCase(ncCamelCase)]
+  [MVCTable('book')]
+  TBook = class
+  private
+    [MVCTableField('ID')]
+    FId: Integer;
+    [MVCTableField('TITLE')]
+    FTitle: string;
+    [MVCTableField('SYNOPSIS')]
+    FSynopsis: string;
+  public
+    property Id: Integer read FId;
+    property Title: string read FTitle;
+    property Synopsis: string read FSynopsis;
+  end;
+
+implementation
+
+end.

@@ -1,0 +1,17 @@
+unit CustomerDAO;
+
+interface
+
+uses
+  Customer, CustomerDAOIntf, MVCFramework, MVCFramework.Commons,
+  MVCFramework.Serializer.Commons, MVCFramework.ActiveRecord, BaseController,
+  System.Generics.Collections, system.SysUtils;
+
+type
+  TCustomerDAO = class(TInterfacedObject, ICustomerDAO)
+  public
+  end;
+
+implementation
+
+end.

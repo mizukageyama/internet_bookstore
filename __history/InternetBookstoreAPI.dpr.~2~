@@ -19,14 +19,7 @@ uses
   BookController in 'Book\BookController.pas',
   BaseController in 'BaseController.pas',
   BookDAO in 'Book\BookDAO.pas',
-  BookDAOIntf in 'Book\BookDAOIntf.pas',
-  Customer in 'Customer\Customer.pas',
-  CustomerReview in 'CustomerReview\CustomerReview.pas',
-  CustomerDAOIntf in 'Customer\CustomerDAOIntf.pas',
-  CustomerDAO in 'Customer\CustomerDAO.pas',
-  CustomerReviewDAOIntf in 'CustomerReview\CustomerReviewDAOIntf.pas',
-  CustomerReviewController in 'CustomerReview\CustomerReviewController.pas',
-  CustomerReviewDAO in 'CustomerReview\CustomerReviewDAO.pas';
+  BookDAOIntf in 'Book\BookDAOIntf.pas';
 
 {$R *.res}
 

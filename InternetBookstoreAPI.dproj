@@ -99,6 +99,13 @@
         <DCCReference Include="BaseController.pas"/>
         <DCCReference Include="Book\BookDAO.pas"/>
         <DCCReference Include="Book\BookDAOIntf.pas"/>
+        <DCCReference Include="Customer\Customer.pas"/>
+        <DCCReference Include="CustomerReview\CustomerReview.pas"/>
+        <DCCReference Include="Customer\CustomerDAOIntf.pas"/>
+        <DCCReference Include="Customer\CustomerDAO.pas"/>
+        <DCCReference Include="CustomerReview\CustomerReviewDAOIntf.pas"/>
+        <DCCReference Include="CustomerReview\CustomerReviewController.pas"/>
+        <DCCReference Include="CustomerReview\CustomerReviewDAO.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

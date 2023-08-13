@@ -1,0 +1,61 @@
+unit CustomerReviewDAO;
+
+interface
+
+uses
+  CustomerReview, CustomerReviewDAOIntf, MVCFramework, MVCFramework.Commons,
+  MVCFramework.Serializer.Commons, MVCFramework.ActiveRecord, BaseController,
+  System.Generics.Collections, system.SysUtils;
+
+type
+  TCustomerReviewDAO = class(TInterfacedObject, ICustomerReviewDAO)
+    procedure CreateCustomerReview(const CustomerReview: TCustomerReview);
+    function GetCustomerReviewsByBookId: TObjectList<TCustomerReview>;
+    procedure UpdateCustomerReview(const CustomerReviewId: Integer;
+      const CustomerReview: TCustomerReview);
+    procedure DeleteCustomerReview(const CustomerReviewId: Integer);
+  end;
+
+implementation
+
+{ TCustomerReviewDAO }
+
+procedure TCustomerReviewDAO.CreateCustomerReview(
+  const CustomerReview: TCustomerReview);
+begin
+
+end;
+
+procedure TCustomerReviewDAO.DeleteCustomerReview(
+  const CustomerReviewId: Integer);
+begin
+
+end;
+
+function TCustomerReviewDAO.GetCustomerReviewsByBookId:
+  TObjectList<TCustomerReview>;
+begin
+  Result := TMVCActiveRecord.Where<TCustomerReview>();
+end;
+
+procedure TCustomerReviewDAO.UpdateCustomerReview(
+  const CustomerReviewId: Integer; const CustomerReview: TCustomerReview);
+begin
+  var CustomerReviewById := TMVCActiveRecord
+    .GetByPK<TCustomerReview>(CustomerReviewId, True);
+
+  if CustomerReviewById = nil then
+    raise EMVCActiveRecordNotFound.Create(Classname +
+      ', Customer review not found');
+
+  try
+    CustomerReview.Update;
+  except
+    on E: Exception do
+      raise Exception.Create(Classname + ', Failed to update review: ' +
+        E.Message);
+  end;
+end;
+
+end.
+

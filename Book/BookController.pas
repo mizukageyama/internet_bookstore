@@ -5,7 +5,9 @@ interface
 uses
   MVCFramework, MVCFramework.Commons, MVCFramework.Serializer.Commons,
   MVCFramework.ActiveRecord, BaseController, System.Generics.Collections,
-  BookDAOIntf, Book, System.SysUtils, MVCFramework.Logger;
+  BookDAOIntf, Book, System.SysUtils, MVCFramework.Logger, REST.Client,
+  System.Classes, System.DateUtils, System.NetEncoding, REST.Types, Web.HTTPApp,
+  JSON, System.IOUtils;
 
 type
   [MVCPath('/api/books')]
@@ -39,6 +41,10 @@ type
     [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
     [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
     procedure UpdateBook(const BookId: Integer);
+
+    [MVCPath('/upload')]
+    [MVCHTTPMethod([httpPOST])]
+    procedure UploadImage;
     
     constructor Create; override;
   end;
@@ -131,5 +137,67 @@ begin
       Render(HTTP_STATUS.InternalServerError, 'Failed to update book');
   end;
 end;
+
+procedure TBookController.UploadImage;
+var
+  UploadedFile: TAbstractWebRequestFile;
+  RESTClient: TRESTClient;
+  RESTRequest: TRESTRequest;
+  ResponseContent: string;
+begin
+  if Context.Request.Files.Count <> 1 then
+  begin
+    Render(HTTP_STATUS.BadRequest, 'Expected exactly 1 file');
+    Exit;
+  end;
+
+  UploadedFile := Context.Request.Files[0];
+   var FullFilePath := TPath.Combine('', UploadedFile.FileName);
+  RESTClient := TRESTClient.Create(nil);
+  RESTRequest := TRESTRequest.Create(nil);
+
+  try
+    RESTClient.BaseURL := 'https://api.cloudinary.com/v1_1/' + 'dcseyuhyn' +
+      '/image/upload';
+    RESTRequest.Client := RESTClient;
+    RESTRequest.Method := rmPOST;
+    RESTRequest.AddParameter('api_key', '642271547663687');
+    RESTRequest.AddParameter('api_secret', '6nCfopfBWpjYPzwzvieWIrXC0X0');
+    RESTRequest.AddParameter('timestamp', IntToStr(DateTimeToUnix(Now)));
+
+   RESTRequest.AddFile('file', UploadedFile.FileName, TRESTContentType.ctIMAGE_JPEG);
+    // Execute the Cloudinary upload request
+    RESTRequest.AddParameter('upload_preset', 'this_is_the_preset');
+
+    // Specify the folder in the public_id parameter
+    var PublicID: string := 'Internet_Bookstore/' + UploadedFile.FileName;
+    RESTRequest.AddParameter('public_id', PublicID);
+
+    RESTRequest.Execute;
+    ResponseContent := RESTRequest.Response.Content;
+
+    // Handle the Cloudinary response (e.g., log success or error)
+    if RESTRequest.Response.StatusCode = 200 then
+    begin
+      // Parse the JSON response to extract the URL
+      var JsonObject: TJSONObject;
+      JsonObject := TJSONObject.ParseJSONValue(ResponseContent) as TJSONObject;
+      try
+        var URL: string := JsonObject.GetValue('url').Value;
+        // Render the URL response
+        Render('File uploaded to Cloudinary: ' + URL);
+      finally
+        JsonObject.Free;
+      end;
+    end
+    else
+      Render(HTTP_STATUS.InternalServerError,
+        'Failed to upload file to Cloudinary: ' + ResponseContent);
+  finally
+    RESTRequest.Free;
+    RESTClient.Free;
+  end;
+end;
+
 
 end.

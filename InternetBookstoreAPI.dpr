@@ -26,7 +26,8 @@ uses
   CustomerDAO in 'Customer\CustomerDAO.pas',
   CustomerReviewDAOIntf in 'CustomerReview\CustomerReviewDAOIntf.pas',
   CustomerReviewController in 'CustomerReview\CustomerReviewController.pas',
-  CustomerReviewDAO in 'CustomerReview\CustomerReviewDAO.pas';
+  CustomerReviewDAO in 'CustomerReview\CustomerReviewDAO.pas',
+  CustomerController in 'Customer\CustomerController.pas';
 
 {$R *.res}
 

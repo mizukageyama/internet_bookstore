@@ -106,6 +106,7 @@
         <DCCReference Include="CustomerReview\CustomerReviewDAOIntf.pas"/>
         <DCCReference Include="CustomerReview\CustomerReviewController.pas"/>
         <DCCReference Include="CustomerReview\CustomerReviewDAO.pas"/>
+        <DCCReference Include="Customer\CustomerController.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

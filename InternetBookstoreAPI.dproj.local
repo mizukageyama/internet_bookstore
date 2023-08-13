@@ -23,21 +23,23 @@
     <Transaction>2023/08/11 15:37:31.000.519,C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore\Book\IBookDAO.pas=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
     <Transaction>2023/08/11 15:38:59.000.868,C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore\Book\BookDAOIntf.pas=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore\Book\IBookDAO.pas</Transaction>
     <Transaction>2023/08/11 15:39:32.000.492,C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore\IBaseDAO.pas=</Transaction>
-    <Transaction>2023/08/12 14:44:38.033,=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
-    <Transaction>2023/08/12 14:45:41.426,C:\Users\User\Documents\GitHub\internet_bookstore\Customer\Customer.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
-    <Transaction>2023/08/12 14:49:15.625,=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
-    <Transaction>2023/08/12 14:49:41.002,C:\Users\User\Documents\GitHub\internet_bookstore\CustomerReview\CustomerReview.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
-    <Transaction>2023/08/12 15:10:48.797,=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
-    <Transaction>2023/08/12 15:11:55.952,C:\Users\User\Documents\GitHub\internet_bookstore\Customer\CustomerIntf.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
-    <Transaction>2023/08/12 15:12:11.022,C:\Users\User\Documents\GitHub\internet_bookstore\Customer\CustomerDAOIntf.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Customer\CustomerIntf.pas</Transaction>
-    <Transaction>2023/08/12 15:12:20.206,=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
-    <Transaction>2023/08/12 15:12:30.924,C:\Users\User\Documents\GitHub\internet_bookstore\Customer\CustomerDAO.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
-    <Transaction>2023/08/12 15:14:02.849,=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
-    <Transaction>2023/08/12 15:14:25.619,C:\Users\User\Documents\GitHub\internet_bookstore\CustomerReview\CustomerReviewDAOIntf.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
-    <Transaction>2023/08/12 15:16:44.925,=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
-    <Transaction>2023/08/12 15:16:59.649,C:\Users\User\Documents\GitHub\internet_bookstore\CustomerReview\CustomerReviewController.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
-    <Transaction>2023/08/12 15:17:14.465,=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
-    <Transaction>2023/08/12 15:17:30.489,C:\Users\User\Documents\GitHub\internet_bookstore\CustomerReview\CustomerReviewDAO.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
+    <Transaction>2023/08/12 14:44:38.000.033,=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
+    <Transaction>2023/08/12 14:45:41.000.426,C:\Users\User\Documents\GitHub\internet_bookstore\Customer\Customer.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
+    <Transaction>2023/08/12 14:49:15.000.625,=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
+    <Transaction>2023/08/12 14:49:41.000.002,C:\Users\User\Documents\GitHub\internet_bookstore\CustomerReview\CustomerReview.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
+    <Transaction>2023/08/12 15:10:48.000.797,=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
+    <Transaction>2023/08/12 15:11:55.000.952,C:\Users\User\Documents\GitHub\internet_bookstore\Customer\CustomerIntf.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
+    <Transaction>2023/08/12 15:12:11.000.022,C:\Users\User\Documents\GitHub\internet_bookstore\Customer\CustomerDAOIntf.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Customer\CustomerIntf.pas</Transaction>
+    <Transaction>2023/08/12 15:12:20.000.206,=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
+    <Transaction>2023/08/12 15:12:30.000.924,C:\Users\User\Documents\GitHub\internet_bookstore\Customer\CustomerDAO.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
+    <Transaction>2023/08/12 15:14:02.000.849,=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
+    <Transaction>2023/08/12 15:14:25.000.619,C:\Users\User\Documents\GitHub\internet_bookstore\CustomerReview\CustomerReviewDAOIntf.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
+    <Transaction>2023/08/12 15:16:44.000.925,=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
+    <Transaction>2023/08/12 15:16:59.000.649,C:\Users\User\Documents\GitHub\internet_bookstore\CustomerReview\CustomerReviewController.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
+    <Transaction>2023/08/12 15:17:14.000.465,=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
+    <Transaction>2023/08/12 15:17:30.000.489,C:\Users\User\Documents\GitHub\internet_bookstore\CustomerReview\CustomerReviewDAO.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
+    <Transaction>2023/08/13 13:11:45.000.229,=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore\Unit1.pas</Transaction>
+    <Transaction>2023/08/13 13:11:55.000.967,C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore\Unit1.pas=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore\Customer\CustomerController.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="Book"/>
@@ -49,6 +51,7 @@
     <File Path="Customer\Customer.pas"/>
     <File Path="Customer\CustomerDAOIntf.pas"/>
     <File Path="Customer\CustomerDAO.pas"/>
+    <File Path="Customer\CustomerController.pas"/>
     <File Path="CustomerReview"/>
     <File Path="CustomerReview\CustomerReview.pas"/>
     <File Path="CustomerReview\CustomerReviewDAOIntf.pas"/>

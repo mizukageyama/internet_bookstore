@@ -40,7 +40,10 @@ implementation
 
 function TCustomerReview.IsValid: Boolean;
 begin
-
+//  Result := (BookId is nil) and
+//    (CustomerId = nil) and
+//    (Review <> '') and
+//    (Rating = nil);
 end;
 
 end.

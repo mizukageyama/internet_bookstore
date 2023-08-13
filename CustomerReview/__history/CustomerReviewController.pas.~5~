@@ -1,0 +1,44 @@
+unit CustomerReviewController;
+
+interface
+
+uses
+  MVCFramework, MVCFramework.Commons, MVCFramework.Serializer.Commons,
+  MVCFramework.ActiveRecord, BaseController, System.Generics.Collections,
+  CustomerReviewDAOIntf, CustomerReview, System.SysUtils, MVCFramework.Logger;
+
+type
+  [MVCPath('/api/reviews')]
+  TCustomerController = class(TBaseController)
+  private
+    FCustomerReviewDAO: ICustomerReviewDAO;
+  public
+    [MVCPath('/($BookId)')]
+    [MVCHTTPMethod([httpGET])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    procedure GetCustomerReviewsByBookId(const BookId: Integer);
+
+    [MVCPath()]
+    [MVCHTTPMethod([httpPOST])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure CreateCustomerReview;
+
+    [MVCPath('/($CustomerReviewId)')]
+    [MVCHTTPMethod([httpDELETE])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    procedure DeleteCustomerReview(const CustomerReviewId: Integer);
+
+    [MVCPath('/($CustomerReviewId)')]
+    [MVCHTTPMethod([httpPUT])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure UpdateCustomerReview(const CustomerReviewId: Integer);
+
+    constructor Create; override;
+  end;
+
+implementation
+
+end.
+

@@ -69,7 +69,6 @@ begin
       ', Customer review not found');
 
   try
-    CustomerReview.Id := CustomerReviewId;
     CustomerReview.Update;
   except
     on E: Exception do

@@ -65,7 +65,7 @@ end;
 procedure TBookController.CreateBook;
 begin
   try
-    var Book := Context.Request.BodyAs<TBook>;
+    var Book: TBook := Context.Request.BodyAs<TBook>;
 
     if not Book.IsValid then
     begin
@@ -135,7 +135,8 @@ begin
     on E: EMVCActiveRecordNotFound  do
       Render(HTTP_STATUS.NotFound, 'Book not found');
     on E: Exception do
-      Render(HTTP_STATUS.InternalServerError, 'Failed to update book');
+      Render(HTTP_STATUS.InternalServerError, 'Failed to update book: ' +
+        E.ToString);
   end;
 end;
 

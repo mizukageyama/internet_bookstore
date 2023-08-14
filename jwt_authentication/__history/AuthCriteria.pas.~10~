@@ -4,7 +4,7 @@ interface
 
 uses
   System.Generics.Collections, FireDAC.Comp.Client, MVCFramework.ActiveRecord,
-  MVCFramework, System.StrUtils, System.SysUtils, MVCFramework.Commons;
+  MVCFramework, System.StrUtils, System.SysUtils;
 
 type
   TAuthCriteria = class(TInterfacedObject, IMVCAuthenticationHandler)
@@ -29,7 +29,7 @@ procedure TAuthCriteria.OnRequest(const AContext: TWebContext;
   const AControllerQualifiedClassName, AActionName: string;
   var AAuthenticationRequired: Boolean);
 begin
-  if (AContext.Request.HTTPMethod in [httpPOST, httpPUT, httpDELETE]) then
+  if (AContext.Request.HTTPMethod in ['PUT', 'DELETE', 'POST']) then
     AAuthenticationRequired := True
   else
     AAuthenticationRequired := False;

@@ -73,6 +73,7 @@ begin
     raise EMVCActiveRecordNotFound.Create(Classname + ', Book not found');
 
   try
+    Book.Id := BookId;
     Book.Update;
   except
     on E: Exception do

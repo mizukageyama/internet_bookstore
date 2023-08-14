@@ -113,9 +113,9 @@ begin
     Render(HTTP_STATUS.OK, '');
   except
     on E: EMVCActiveRecordNotFound  do
-      Render(HTTP_STATUS.NotFound, 'Review not found');
+      Render(HTTP_STATUS.NotFound, 'Customer not found');
     on E: Exception do
-      Render(HTTP_STATUS.InternalServerError, 'Failed to update review');
+      Render(HTTP_STATUS.InternalServerError, 'Failed to update customer');
   end;
 end;
 

@@ -3,10 +3,12 @@ unit WebModule;
 interface
 
 uses
-  System.SysUtils,
+  MVCFramework, MVCFramework.Commons, MVCFramework.Serializer.Commons,
+  MVCFramework.ActiveRecord, System.SysUtils,
+  MVCFramework.Logger, System.StrUtils,
+  System.Math,  FireDAC.Stan.Error, System.Generics.Collections,
   System.Classes,
-  Web.HTTPApp,
-  MVCFramework, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error,
+  Web.HTTPApp, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool,
   FireDAC.Stan.Async, FireDAC.Phys, FireDAC.VCLUI.Wait, Data.DB,
   FireDAC.Comp.Client, FireDAC.Phys.MySQLDef, FireDAC.Phys.MySQL,
@@ -33,16 +35,18 @@ implementation
 uses 
   MyController,
   System.IOUtils,
-  MVCFramework.Commons, 
+  MVCFramework.JWT,
+  MVCFramework.Middleware.JWT,
   MVCFramework.Middleware.ActiveRecord, 
   MVCFramework.Middleware.StaticFiles, 
-  MVCFramework.Middleware.Analytics, 
+  MVCFramework.Middleware.Analytics,
   MVCFramework.Middleware.Trace, 
   MVCFramework.Middleware.CORS, 
-  MVCFramework.Middleware.ETag, 
+  MVCFramework.Middleware.ETag,
   MVCFramework.Middleware.Compression,
   BookController,
-  MVCFramework.Crypt.Utils;
+  MVCFramework.Crypt.Utils, AuthCriteria,
+  MVCFramework.Serializer.JsonDataObjects, JsonDataObjects;
 
 procedure TMyWebModule.WebModuleCreate(Sender: TObject);
 begin
@@ -70,9 +74,28 @@ begin
   FMVC.AddController(TCustomerReviewController);
   FMVC.AddController(TInternetBookstoreController);
 
-  //MVCCryptInit; //Initialize OpenSSL
+//    var lConfigClaims: TJWTClaimsSetup := procedure (const JWT: TJWT)
+//    begin
+//      JWT.Claims.Issuer := 'Internet Bookstore';
+//      //JWT will expire in 1 hour
+//      JWT.Claims.ExpirationTime := Now + EncodeTime(1, 0, 0, 0);
+//      JWT.Claims.NotBefore := Now - EncodeTime(0, 5, 0, 0);
+//    end;
+//
+//  FMVC.AddMiddleware(
+//    TMVCJWTAuthenticationMiddleware.Create(
+//      TAuthCriteria.Create,
+//      lConfigClaims,
+//      'this_is_my_secret',
+//      '/api/login',
+//      [TJWTCheckableClaim.ExpirationTime, TJWTCheckableClaim.NotBefore]
+//    )
+//  );
+
+  MVCCryptInit; //Initialize OpenSSL
   FMVC.AddMiddleware(TMVCCORSMiddleware.Create); //CORS Middleware
   FMVC.AddMiddleware(TMVCStaticFilesMiddleware.Create('/static'));
+  FMVC.AddMiddleware(TMVCActiveRecordMiddleware.Create('Internet_Bookstore_Connection'));
 end;
 
 procedure TMyWebModule.WebModuleDestroy(Sender: TObject);

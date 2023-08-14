@@ -45,8 +45,8 @@ uses
   MVCFramework.Middleware.ETag,
   MVCFramework.Middleware.Compression,
   BookController,
-  MVCFramework.Crypt.Utils, AuthCriteria,
-  MVCFramework.Serializer.JsonDataObjects, JsonDataObjects;
+  MVCFramework.Crypt.Utils,
+  MVCFramework.Serializer.JsonDataObjects, JsonDataObjects, AuthCriteria;
 
 procedure TMyWebModule.WebModuleCreate(Sender: TObject);
 begin
@@ -70,32 +70,30 @@ begin
     end);
 
   FMVC.AddController(TBookController);
-  FMVC.AddController(TCustomerReviewController);
+  FMVC.AddController(TCustomerController);
   FMVC.AddController(TCustomerReviewController);
   FMVC.AddController(TInternetBookstoreController);
 
-//    var lConfigClaims: TJWTClaimsSetup := procedure (const JWT: TJWT)
-//    begin
-//      JWT.Claims.Issuer := 'Internet Bookstore';
-//      //JWT will expire in 1 hour
-//      JWT.Claims.ExpirationTime := Now + EncodeTime(1, 0, 0, 0);
-//      JWT.Claims.NotBefore := Now - EncodeTime(0, 5, 0, 0);
-//    end;
-//
-//  FMVC.AddMiddleware(
-//    TMVCJWTAuthenticationMiddleware.Create(
-//      TAuthCriteria.Create,
-//      lConfigClaims,
-//      'this_is_my_secret',
-//      '/api/login',
-//      [TJWTCheckableClaim.ExpirationTime, TJWTCheckableClaim.NotBefore]
-//    )
-//  );
+    var lConfigClaims: TJWTClaimsSetup := procedure (const JWT: TJWT)
+    begin
+      JWT.Claims.Issuer := 'Internet Bookstore';
+      //JWT will expire in 1 hour
+      JWT.Claims.ExpirationTime := Now + EncodeTime(1, 0, 0, 0);
+      JWT.Claims.NotBefore := Now - EncodeTime(0, 5, 0, 0);
+    end;
+
+  FMVC.AddMiddleware(
+    TMVCJWTAuthenticationMiddleware.Create(
+      TAuthCriteria.Create,
+      lConfigClaims,
+      'this_is_my_secret',
+      '/api/login',
+      [TJWTCheckableClaim.ExpirationTime, TJWTCheckableClaim.NotBefore]
+    )
+  );
 
   MVCCryptInit; //Initialize OpenSSL
   FMVC.AddMiddleware(TMVCCORSMiddleware.Create); //CORS Middleware
-  FMVC.AddMiddleware(TMVCStaticFilesMiddleware.Create('/static'));
-  FMVC.AddMiddleware(TMVCActiveRecordMiddleware.Create('Internet_Bookstore_Connection'));
 end;
 
 procedure TMyWebModule.WebModuleDestroy(Sender: TObject);

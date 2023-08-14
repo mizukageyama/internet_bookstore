@@ -70,7 +70,6 @@ begin
     raise EMVCActiveRecordNotFound.Create(Classname + ', Customer not found');
 
   try
-    Customer.Id := CustomerId;
     Customer.Update;
   except
     on E: Exception do

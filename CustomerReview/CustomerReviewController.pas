@@ -9,7 +9,7 @@ uses
 
 type
   [MVCPath('/api/reviews')]
-  TCustomerController = class(TBaseController)
+  TCustomerReviewController = class(TBaseController)
   private
     FCustomerReviewDAO: ICustomerReviewDAO;
   public
@@ -40,18 +40,18 @@ type
 
 implementation
 
-{ TCustomerController }
+{ TCustomerReviewController }
 
 uses
   CustomerReviewDAO;
 
-constructor TCustomerController.Create;
+constructor TCustomerReviewController.Create;
 begin
   inherited;
   FCustomerReviewDAO := TCustomerReviewDAO.Create;
 end;
 
-procedure TCustomerController.CreateCustomerReview;
+procedure TCustomerReviewController.CreateCustomerReview;
 begin
   try
     var CustomerReview := Context.Request.BodyAs<TCustomerReview>;
@@ -70,21 +70,53 @@ begin
   end;
 end;
 
-procedure TCustomerController.DeleteCustomerReview(
+procedure TCustomerReviewController.DeleteCustomerReview(
   const CustomerReviewId: Integer);
 begin
-
+  try
+    FCustomerReviewDAO.DeleteCustomerReview(CustomerReviewId);
+    Render(204, '');
+  except
+    on E: EMVCActiveRecordNotFound  do
+      Render(HTTP_STATUS.NotFound, 'Customer review not found');
+    on E: Exception do
+      Render(HTTP_STATUS.InternalServerError, 'Failed to delete review');
+  end;
 end;
 
-procedure TCustomerController.GetCustomerReviewsByBookId(const BookId: Integer);
+procedure TCustomerReviewController.GetCustomerReviewsByBookId(const BookId: Integer);
 begin
-
+  try
+    var BookReviews := FCustomerReviewDAO.GetCustomerReviewsByBookId(BookId);
+    Render(ObjectDict().Add('data', BookReviews));
+  except
+    on E: EMVCActiveRecordNotFound  do
+      Render(HTTP_STATUS.NotFound, 'Customer Reviews not found');
+    on E: Exception do
+      Render(HTTP_STATUS.InternalServerError, 'An error occured: ' + E.ToString);
+  end;
 end;
 
-procedure TCustomerController.UpdateCustomerReview(
+procedure TCustomerReviewController.UpdateCustomerReview(
   const CustomerReviewId: Integer);
 begin
+  try
+    var CustomerReview := Context.Request.BodyAs<TCustomerReview>;
 
+    if not CustomerReview.IsValid then
+    begin
+      Render(HTTP_STATUS.BadRequest, 'Invalid request data');
+      Exit;
+    end;
+
+    FCustomerReviewDAO.UpdateCustomerReview(CustomerReviewId, CustomerReview);
+    Render(HTTP_STATUS.OK, '');
+  except
+    on E: EMVCActiveRecordNotFound  do
+      Render(HTTP_STATUS.NotFound, 'Customer not found');
+    on E: Exception do
+      Render(HTTP_STATUS.InternalServerError, 'Failed to update customer');
+  end;
 end;
 
 end.

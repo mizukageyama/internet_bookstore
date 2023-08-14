@@ -19,7 +19,8 @@ implementation
 
 uses
   System.SysUtils, MVCFramework.Logger, System.StrUtils, Data.DB,
-  FireDAC.Comp.Client, FireDAC.Stan.Param, MVCFramework.ActiveRecord;
+  FireDAC.Comp.Client, FireDAC.Stan.Param, MVCFramework.ActiveRecord,
+  FireDAC.Stan.Util;
 
 procedure TBaseController.OnAfterAction(Context: TWebContext;
   const AActionName: string);

@@ -56,7 +56,13 @@ end;
 
 function TBookDAO.GetBooks: TObjectList<TBook>;
 begin
-  Result := TMVCActiveRecord.All<TBook>;
+  try
+    Result := TMVCActiveRecord.All<TBook>;
+  except
+    on E: Exception do
+      raise EMVCActiveRecordNotFound.Create(Classname + ', Server Error:' +
+        E.ToString);
+  end;
 end;
 
 procedure TBookDAO.UpdateBook(const BookId: Integer; const Book: TBook);

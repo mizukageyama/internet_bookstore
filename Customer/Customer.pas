@@ -27,16 +27,23 @@ type
     FPassword: string;
   public
     function IsValid: Boolean;
+    function IsPasswordMatched(const APassword: string): boolean;
     property Id: Integer read FId write FId;
     property FirstName: string read FFirstName write FFirstName;
     property LastName: string read FLastName write FLastName;
     property Email: string read FEmail write FEmail;
+    [MVCDoNotSerialize]
     property Password: string read FPassword write FPassword;
   end;
 
 implementation
 
 { TCustomer }
+
+function TCustomer.IsPasswordMatched(const APassword: string): boolean;
+begin
+  Result := Password = APassword;
+end;
 
 function TCustomer.IsValid: Boolean;
 begin

@@ -107,6 +107,8 @@
         <DCCReference Include="CustomerReview\CustomerReviewController.pas"/>
         <DCCReference Include="CustomerReview\CustomerReviewDAO.pas"/>
         <DCCReference Include="Customer\CustomerController.pas"/>
+        <DCCReference Include="InternetBookstoreController.pas"/>
+        <DCCReference Include="jwt_authentication\AuthCriteria.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

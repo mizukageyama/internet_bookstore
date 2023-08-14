@@ -1,0 +1,13 @@
+object MyWebModule: TMyWebModule
+  OnCreate = WebModuleCreate
+  OnDestroy = WebModuleDestroy
+  Actions = <>
+  Height = 288
+  Width = 519
+  PixelsPerInch = 120
+  object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink
+    VendorLib = 'C:\Program Files (x86)\Embarcadero\Studio\22.0\bin\libmysql.dll'
+    Left = 232
+    Top = 96
+  end
+end

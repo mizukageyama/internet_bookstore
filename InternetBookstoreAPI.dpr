@@ -27,7 +27,9 @@ uses
   CustomerReviewDAOIntf in 'CustomerReview\CustomerReviewDAOIntf.pas',
   CustomerReviewController in 'CustomerReview\CustomerReviewController.pas',
   CustomerReviewDAO in 'CustomerReview\CustomerReviewDAO.pas',
-  CustomerController in 'Customer\CustomerController.pas';
+  CustomerController in 'Customer\CustomerController.pas',
+  InternetBookstoreController in 'InternetBookstoreController.pas',
+  AuthCriteria in 'jwt_authentication\AuthCriteria.pas';
 
 {$R *.res}
 

@@ -8,6 +8,7 @@ uses
   MVCFramework.Nullables,
   MVCFramework.Commons,
   MVCFramework.SQLGenerators.MySQL,
+  System.SysUtils,
   System.Generics.Collections;
 
 type
@@ -27,6 +28,8 @@ type
     FRating: Integer;
   public
     function IsValid: Boolean;
+    function IsMoreThan1MB: Boolean;
+    function IsTooShort: Boolean;
     property Id: Integer read FId write FId;
     property BookId: Integer read FBookId write FBookId;
     property CustomerId: Integer read FCustomerId write FCustomerId;
@@ -38,12 +41,24 @@ implementation
 
 { TCustomerReview }
 
+function TCustomerReview.IsMoreThan1MB: Boolean;
+begin
+  var MaxSizeBytes := 1 * 1024 * 1024;
+
+  if Length(Review) * SizeOf(Char) <= MaxSizeBytes then
+    Result := False
+  else
+    Result := True;
+end;
+
+function TCustomerReview.IsTooShort: Boolean;
+begin
+  Result := (Length(Review) < 10);
+end;
+
 function TCustomerReview.IsValid: Boolean;
 begin
-//  Result := (BookId is nil) and
-//    (CustomerId = nil) and
-//    (Review <> '') and
-//    (Rating = nil);
+  Result := ((Rating > 0) and (Rating <= 5));
 end;
 
 end.

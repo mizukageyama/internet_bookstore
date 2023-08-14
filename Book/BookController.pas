@@ -5,9 +5,9 @@ interface
 uses
   MVCFramework, MVCFramework.Commons, MVCFramework.Serializer.Commons,
   MVCFramework.ActiveRecord, BaseController, System.Generics.Collections,
-  BookDAOIntf, Book, System.SysUtils, MVCFramework.Logger, REST.Client,
-  System.Classes, System.DateUtils, System.NetEncoding, REST.Types, Web.HTTPApp,
-  JSON, System.IOUtils;
+  BookDAOIntf, Book, System.SysUtils, REST.Client,
+  System.Classes, System.DateUtils, REST.Types, Web.HTTPApp,
+  JSON;
 
 type
   [MVCPath('/api/books')]
@@ -47,6 +47,7 @@ type
     procedure UploadImage;
     
     constructor Create; override;
+    function UploadImageToCloudinary(UploadedFile: TAbstractWebRequestFile): string;
   end;
 
 implementation
@@ -76,7 +77,7 @@ begin
     Render201Created('/api/books/' + Book.ID.ToString);
   except
     on E: Exception do
-      Render(HTTP_STATUS.InternalServerError, 'An error occured');
+     Render(HTTP_STATUS.InternalServerError, 'An error occured: ' + E.ToString);
   end;
 end;
 
@@ -102,7 +103,7 @@ begin
     on E: EMVCActiveRecordNotFound  do
       Render(HTTP_STATUS.NotFound, 'Book not found');
     on E: Exception do
-      Render(HTTP_STATUS.InternalServerError, 'An error occured');
+      Render(HTTP_STATUS.InternalServerError, 'An error occured: ' + E.ToString);
   end;
 end;
 
@@ -113,7 +114,7 @@ begin
     Render(ObjectDict().Add('data', Books));
  except
     on E: Exception do
-      Render(HTTP_STATUS.InternalServerError, 'An error occured');
+      Render(HTTP_STATUS.InternalServerError, 'An error occured: ' + E.ToString);
   end;
 end;
 
@@ -127,7 +128,7 @@ begin
       Render(HTTP_STATUS.BadRequest, 'Invalid request data');
       Exit;
     end;
-    
+
     FBookDAO.UpdateBook(BookId, Book);
     Render(HTTP_STATUS.OK, '');
   except
@@ -141,63 +142,68 @@ end;
 procedure TBookController.UploadImage;
 var
   UploadedFile: TAbstractWebRequestFile;
-  RESTClient: TRESTClient;
-  RESTRequest: TRESTRequest;
-  ResponseContent: string;
+  ImageStream: TStream;
 begin
   if Context.Request.Files.Count <> 1 then
   begin
     Render(HTTP_STATUS.BadRequest, 'Expected exactly 1 file');
     Exit;
   end;
-
+  
   UploadedFile := Context.Request.Files[0];
-   var FullFilePath := TPath.Combine('', UploadedFile.FileName);
+
+  try
+    var URL := UploadImageToCloudinary(UploadedFile);
+    Render(URL);
+  except
+    on E: Exception do
+      Render(HTTP_STATUS.InternalServerError, E.ToString);
+  end;
+end;
+
+function TBookController.UploadImageToCloudinary(UploadedFile: TAbstractWebRequestFile): string;
+var
+  RESTClient: TRESTClient;
+  RESTRequest: TRESTRequest;
+  ResponseContent: string;
+begin
   RESTClient := TRESTClient.Create(nil);
   RESTRequest := TRESTRequest.Create(nil);
 
   try
-    RESTClient.BaseURL := 'https://api.cloudinary.com/v1_1/' + 'dcseyuhyn' +
-      '/image/upload';
+    RESTClient.BaseURL := 'https://api.cloudinary.com/v1_1/' + 'dcseyuhyn' + '/image/upload';
     RESTRequest.Client := RESTClient;
     RESTRequest.Method := rmPOST;
     RESTRequest.AddParameter('api_key', '642271547663687');
     RESTRequest.AddParameter('api_secret', '6nCfopfBWpjYPzwzvieWIrXC0X0');
     RESTRequest.AddParameter('timestamp', IntToStr(DateTimeToUnix(Now)));
 
-   RESTRequest.AddFile('file', UploadedFile.FileName, TRESTContentType.ctIMAGE_JPEG);
-    // Execute the Cloudinary upload request
-    RESTRequest.AddParameter('upload_preset', 'this_is_the_preset');
+    RESTRequest.AddFile('file', UploadedFile.FileName, TRESTContentType.ctIMAGE_JPEG);
 
-    // Specify the folder in the public_id parameter
+    RESTRequest.AddParameter('upload_preset', 'this_is_the_preset');
     var PublicID: string := 'Internet_Bookstore/' + UploadedFile.FileName;
     RESTRequest.AddParameter('public_id', PublicID);
 
     RESTRequest.Execute;
     ResponseContent := RESTRequest.Response.Content;
 
-    // Handle the Cloudinary response (e.g., log success or error)
     if RESTRequest.Response.StatusCode = 200 then
     begin
-      // Parse the JSON response to extract the URL
       var JsonObject: TJSONObject;
       JsonObject := TJSONObject.ParseJSONValue(ResponseContent) as TJSONObject;
       try
         var URL: string := JsonObject.GetValue('url').Value;
-        // Render the URL response
-        Render('File uploaded to Cloudinary: ' + URL);
+        Result := URL;
       finally
         JsonObject.Free;
       end;
     end
     else
-      Render(HTTP_STATUS.InternalServerError,
-        'Failed to upload file to Cloudinary: ' + ResponseContent);
+      raise Exception.Create('Failed to upload file to Cloudinary: ' + ResponseContent);
   finally
     RESTRequest.Free;
     RESTClient.Free;
   end;
 end;
-
 
 end.

@@ -41,7 +41,6 @@ type
     [MVCPath('/customers/($id)')]
     [MVCHTTPMethod([httpDELETE])]
     procedure DeleteCustomer(id: Integer);
-
   end;
 
 implementation

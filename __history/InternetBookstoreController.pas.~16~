@@ -1,0 +1,53 @@
+unit InternetBookstoreController;
+
+interface
+
+uses
+  MVCFramework, MVCFramework.Commons, MVCFramework.Serializer.Commons,
+  BaseController;
+
+type
+  [MVCPath('/api')]
+  TInternetBookstoreController = class(TBaseController)
+  public
+    [MVCPath('/index')]
+    [MVCHTTPMethod([httpGET])]
+    [MVCProduces('text/html')]
+    procedure Index;
+  end;
+
+implementation
+
+uses
+  System.SysUtils, MVCFramework.Logger, System.StrUtils, System.Classes,
+  Web.HTTPApp;
+
+procedure TInternetBookstoreController.Index;
+var
+  HtmlFilePath: string;
+  HtmlFile: TFileStream;
+  Response: TMemoryStream;
+begin
+  HtmlFilePath := 'static\index.html';
+
+  if FileExists(HtmlFilePath) then
+  begin
+    HtmlFile := TFileStream.Create(HtmlFilePath, fmOpenRead or fmShareDenyWrite);
+    try
+      Response := TMemoryStream.Create;
+      try
+        Response.CopyFrom(HtmlFile, 0);
+        Response.Position := 0;
+        SendStream(Response);
+      finally
+        Response.Free;
+      end;
+    finally
+      HtmlFile.Free;
+    end;
+  end
+  else
+    Render(404, 'File not found');
+end;
+
+end.

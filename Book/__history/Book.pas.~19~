@@ -1,0 +1,28 @@
+unit Book;
+
+interface
+
+type
+  [MVCNameCase(ncCamelCase)]
+  TBook = class
+  private
+    FId: Integer;
+    FTitle: string;
+    FSynopsis: string;
+  public
+    constructor Create(const ABook: IBookContext); overload;
+    constructor Create(const ATitle, ASynopsis: string); overload;
+
+    property Id: Integer read FId write FId;
+    property Title: string read FTitle write FTitle;
+    property Synopsis: string read FSynopsis write FSynopsis;
+  end;
+
+implementation
+
+uses
+  System.SysUtils;
+
+{ TBook }
+
+end.

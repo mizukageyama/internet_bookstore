@@ -1,0 +1,19 @@
+unit BookServiceIntf;
+
+interface
+
+uses
+  Book;
+
+type
+  IBookService = interface
+    ['{75DCFD37-3AF3-4AEB-9DB3-E7ED391477D7}']
+    procedure CreateBook(var ABook: TBook);
+    procedure GetBook(const ATitle: string; var ABook: TBook);
+    procedure UpdateBook(var ABook: TBook);
+    procedure DeleteBook(const ATitle: string);
+  end;
+
+implementation
+
+end.

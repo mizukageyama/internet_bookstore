@@ -1,0 +1,75 @@
+unit BookService;
+
+interface
+
+uses
+  BookServiceIntf, Book, BookDaoIntf;
+
+type
+  TBookService = class(TInterfacedObject, IBookService)
+  private
+    FBookDao: IBookDao;
+  public
+    constructor Create(const ABookDao: IBookDao);
+
+    procedure CreateBook(const Book: TBook);
+    function GetBook: TObjectList<TBook>;
+    function GetBookById(const BookId: Integer): TBook;
+    procedure UpdateBook(const BookId: Integer; const Book: TBook);
+    procedure DeleteBook(const BookId: Integer);
+  end;
+
+implementation
+
+uses
+  System.SysUtils;
+
+{ TBookService }
+
+constructor TBookService.Create(const ABookDao: IBookDao);
+begin
+  if not Assigned(ABookDao) then
+    raise EArgumentNilException.Create('ABookDao');
+
+  inherited Create;
+  FBookDao := ABookDao;
+end;
+
+procedure TBookService.CreateBook(const Book: TBook);
+begin
+  if not Book.IsValid then
+  begin
+    Render(HTTP_STATUS.BadRequest, 'Invalid request data');
+    Exit;
+  end;
+
+  FBookDao.Insert(Book);
+end;
+
+procedure TBookService.DeleteBook(const BookId: Integer);
+begin
+  FBookDao.Delete(BookId);
+end;
+
+function TBookService.GetBook: TObjectList<TBook>;
+begin
+  Result := FBookDao.Select;
+end;
+
+function TBookService.GetBookById(const BookId: Integer): TBook;
+begin
+  Result := FBookDao.SelectById(BookId);
+end;
+
+procedure TBookService.UpdateBook(const BookId: Integer; const Book: TBook);
+begin
+  if not Book.IsValid then
+  begin
+    Render(HTTP_STATUS.BadRequest, 'Invalid request data');
+    Exit;
+  end;
+
+  FBookDao.Delete(BookId, Book);
+end;
+
+end.

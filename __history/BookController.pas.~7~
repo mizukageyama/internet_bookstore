@@ -1,0 +1,203 @@
+unit BookController;
+
+interface
+
+//uses
+//  MVCFramework, MVCFramework.Commons, MVCFramework.Serializer.Commons,
+//  MVCFramework.ActiveRecord, BaseController, System.Generics.Collections,
+//  BookDAOIntf, Book, System.SysUtils, REST.Client,
+//  System.Classes, System.DateUtils, REST.Types, Web.HTTPApp,
+//  JSON;
+
+uses
+  MVCFramework, MVCFramework.Serializer.Commons, Book, BookServiceIntf;
+
+type
+  [MVCPath('/api/books')]
+  TBookController = class
+  private
+    FService: IBookService;
+  public
+    [MVCPath()]
+    [MVCHTTPMethod([httpGET])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    procedure GetBooks;
+
+    [MVCPath('/($BookId)')]
+    [MVCHTTPMethod([httpGET])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    procedure GetBookById(const BookId: Integer);
+
+    [MVCPath()]
+    [MVCHTTPMethod([httpPOST])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure CreateBook;
+
+    [MVCPath('/($BookId)')]
+    [MVCHTTPMethod([httpDELETE])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    procedure DeleteBook(const BookId: Integer);
+
+    [MVCPath('/($BookId)')]
+    [MVCHTTPMethod([httpPUT])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure UpdateBook(const BookId: Integer);
+
+    [MVCPath('/upload')]
+    [MVCHTTPMethod([httpPOST])]
+    procedure UploadImage;
+    
+    constructor Create(const AService: IBookService);
+    function UploadImageToCloudinary(UploadedFile: TAbstractWebRequestFile): string;
+  end;
+
+implementation
+
+{ TBookController }
+uses
+  BookDAO;
+
+constructor TBookController.Create(const AService: IBookService);
+begin
+ if not Assigned(AService) then
+    raise EArgumentNilException.Create('AService');
+
+  inherited Create;
+  FService := AService;
+end;
+
+procedure TBookController.CreateBook;
+begin
+  try
+    var Book: TBook := Context.Request.BodyAs<TBook>;
+    FService.CreateBook(Book);
+    Render201Created('/api/books/' + Book.ID.ToString);
+  except
+    on E: Exception do
+     Render(HTTP_STATUS.InternalServerError, 'An error occured: ' + E.ToString);
+  end;
+end;
+
+procedure TBookController.DeleteBook(const BookId: Integer);
+begin
+  try
+    FBookDAO.DeleteBook(BookId);
+    Render(204, '');
+  except
+    on E: EMVCActiveRecordNotFound  do
+      Render(HTTP_STATUS.NotFound, 'Book not found');
+    on E: Exception do
+      Render(HTTP_STATUS.InternalServerError, 'Failed to delete book');
+  end;
+end;
+
+procedure TBookController.GetBookById(const BookId: Integer);
+begin
+  try
+    var Book := FBookDAO.GetBookById(BookId);     
+    Render(ObjectDict().Add('data', Book));
+  except
+    on E: EMVCActiveRecordNotFound  do
+      Render(HTTP_STATUS.NotFound, 'Book not found');
+    on E: Exception do
+      Render(HTTP_STATUS.InternalServerError, 'An error occured: ' + E.ToString);
+  end;
+end;
+
+procedure TBookController.GetBooks;
+begin
+   try
+    var Books := FBookDAO.GetBooks;
+    Render(ObjectDict().Add('data', Books));
+ except
+    on E: Exception do
+      Render(HTTP_STATUS.InternalServerError, 'An error occured: ' + E.ToString);
+  end;
+end;
+
+procedure TBookController.UpdateBook(const BookId: Integer);
+begin
+  try
+    var Book := Context.Request.BodyAs<TBook>;
+
+    FBookDAO.UpdateBook(BookId, Book);
+    Render(HTTP_STATUS.OK, '');
+  except
+    on E: EMVCActiveRecordNotFound  do
+      Render(HTTP_STATUS.NotFound, 'Book not found');
+    on E: Exception do
+      Render(HTTP_STATUS.InternalServerError, 'Failed to update book: ' +
+        E.ToString);
+  end;
+end;
+
+procedure TBookController.UploadImage;
+var
+  UploadedFile: TAbstractWebRequestFile;
+  ImageStream: TStream;
+begin
+  if Context.Request.Files.Count <> 1 then
+  begin
+    Render(HTTP_STATUS.BadRequest, 'Expected exactly 1 file');
+    Exit;
+  end;
+  
+  UploadedFile := Context.Request.Files[0];
+
+  try
+    var URL := UploadImageToCloudinary(UploadedFile);
+    Render(URL);
+  except
+    on E: Exception do
+      Render(HTTP_STATUS.InternalServerError, E.ToString);
+  end;
+end;
+
+function TBookController.UploadImageToCloudinary(UploadedFile: TAbstractWebRequestFile): string;
+var
+  RESTClient: TRESTClient;
+  RESTRequest: TRESTRequest;
+  ResponseContent: string;
+begin
+  RESTClient := TRESTClient.Create(nil);
+  RESTRequest := TRESTRequest.Create(nil);
+
+  try
+    RESTClient.BaseURL := 'https://api.cloudinary.com/v1_1/' + 'dcseyuhyn' + '/image/upload';
+    RESTRequest.Client := RESTClient;
+    RESTRequest.Method := rmPOST;
+    RESTRequest.AddParameter('api_key', '642271547663687');
+    RESTRequest.AddParameter('api_secret', '6nCfopfBWpjYPzwzvieWIrXC0X0');
+    RESTRequest.AddParameter('timestamp', IntToStr(DateTimeToUnix(Now)));
+
+    RESTRequest.AddFile('file', UploadedFile.FileName, TRESTContentType.ctIMAGE_JPEG);
+
+    RESTRequest.AddParameter('upload_preset', 'this_is_the_preset');
+    var PublicID: string := 'Internet_Bookstore/' + UploadedFile.FileName;
+    RESTRequest.AddParameter('public_id', PublicID);
+
+    RESTRequest.Execute;
+    ResponseContent := RESTRequest.Response.Content;
+
+    if RESTRequest.Response.StatusCode = 200 then
+    begin
+      var JsonObject: TJSONObject;
+      JsonObject := TJSONObject.ParseJSONValue(ResponseContent) as TJSONObject;
+      try
+        var URL: string := JsonObject.GetValue('url').Value;
+        Result := URL;
+      finally
+        JsonObject.Free;
+      end;
+    end
+    else
+      raise Exception.Create('Failed to upload file to Cloudinary: ' + ResponseContent);
+  finally
+    RESTRequest.Free;
+    RESTClient.Free;
+  end;
+end;
+
+end.

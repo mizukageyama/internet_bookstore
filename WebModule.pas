@@ -92,8 +92,28 @@ begin
     )
   );
 
-  MVCCryptInit; //Initialize OpenSSL
+  //MVCCryptInit; //Initialize OpenSSL
   FMVC.AddMiddleware(TMVCCORSMiddleware.Create); //CORS Middleware
+
+    FMVC.AddController(
+    TBookController,
+    function: TMVCController
+    begin
+      //Object Composition
+
+      //Data Access Layer
+      var Dao := TBookActiveRecordDao.Create;
+
+      //Domain Layer
+      var Service := TBookService.Create(Dao);
+
+      //Presentation Layer
+      Result := TBookController.Create(Service);
+    end,
+    '/api/books');
+
+  FMVC.AddMiddleware(TMVCActiveRecordMiddleware
+    .Create('Internet_Bookstore_Connection','FDConnectionDefs.ini'));
 end;
 
 procedure TMyWebModule.WebModuleDestroy(Sender: TObject);

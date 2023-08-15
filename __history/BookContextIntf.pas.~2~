@@ -1,0 +1,24 @@
+unit BookContextIntf;
+
+interface
+
+type
+  IBookContext = interface
+    ['{0D568A78-9709-49E4-946D-1B7167B4BC01}']
+    function GetTitle: string;
+    procedure SetTitle(const ATitle: string);
+
+    function GetAuthor: string;
+    procedure SetAuthor(const AAuthor: string);
+
+    function GetIsBorrowed: Boolean;
+    procedure SetIsBorrowed(const AIsBorrowed: Boolean);
+
+    property Title: string read GetTitle write SetTitle;
+    property Author: string read GetAuthor write SetAuthor;
+    property IsBorrowed: Boolean read GetIsBorrowed write SetIsBorrowed;
+  end;
+
+implementation
+
+end.

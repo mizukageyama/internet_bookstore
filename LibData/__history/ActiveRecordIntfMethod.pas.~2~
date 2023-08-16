@@ -1,0 +1,12 @@
+unit ActiveRecordIntfMethod;
+
+interface
+
+type
+  TActiveRecordIntfMethod = class
+
+  end;
+
+implementation
+
+end.

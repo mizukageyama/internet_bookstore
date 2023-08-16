@@ -3,16 +3,16 @@
         <ProjectGuid>{1CD41601-76F6-449C-9C8B-C08056CF9F5F}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="InternetBookstoreServer.dproj">
+        <Projects Include="Server\InternetBookstoreServer.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="LibSystem.dproj">
+        <Projects Include="LibSystem\LibSystem.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="LibData.dproj">
+        <Projects Include="LibData\LibData.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="LibDMVC.dproj">
+        <Projects Include="LibDMVC\LibDMVC.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -24,40 +24,40 @@
         </BorlandProject>
     </ProjectExtensions>
     <Target Name="InternetBookstoreServer">
-        <MSBuild Projects="InternetBookstoreServer.dproj"/>
+        <MSBuild Projects="Server\InternetBookstoreServer.dproj"/>
     </Target>
     <Target Name="InternetBookstoreServer:Clean">
-        <MSBuild Projects="InternetBookstoreServer.dproj" Targets="Clean"/>
+        <MSBuild Projects="Server\InternetBookstoreServer.dproj" Targets="Clean"/>
     </Target>
     <Target Name="InternetBookstoreServer:Make">
-        <MSBuild Projects="InternetBookstoreServer.dproj" Targets="Make"/>
+        <MSBuild Projects="Server\InternetBookstoreServer.dproj" Targets="Make"/>
     </Target>
     <Target Name="LibSystem">
-        <MSBuild Projects="LibSystem.dproj"/>
+        <MSBuild Projects="LibSystem\LibSystem.dproj"/>
     </Target>
     <Target Name="LibSystem:Clean">
-        <MSBuild Projects="LibSystem.dproj" Targets="Clean"/>
+        <MSBuild Projects="LibSystem\LibSystem.dproj" Targets="Clean"/>
     </Target>
     <Target Name="LibSystem:Make">
-        <MSBuild Projects="LibSystem.dproj" Targets="Make"/>
+        <MSBuild Projects="LibSystem\LibSystem.dproj" Targets="Make"/>
     </Target>
     <Target Name="LibData">
-        <MSBuild Projects="LibData.dproj"/>
+        <MSBuild Projects="LibData\LibData.dproj"/>
     </Target>
     <Target Name="LibData:Clean">
-        <MSBuild Projects="LibData.dproj" Targets="Clean"/>
+        <MSBuild Projects="LibData\LibData.dproj" Targets="Clean"/>
     </Target>
     <Target Name="LibData:Make">
-        <MSBuild Projects="LibData.dproj" Targets="Make"/>
+        <MSBuild Projects="LibData\LibData.dproj" Targets="Make"/>
     </Target>
     <Target Name="LibDMVC">
-        <MSBuild Projects="LibDMVC.dproj"/>
+        <MSBuild Projects="LibDMVC\LibDMVC.dproj"/>
     </Target>
     <Target Name="LibDMVC:Clean">
-        <MSBuild Projects="LibDMVC.dproj" Targets="Clean"/>
+        <MSBuild Projects="LibDMVC\LibDMVC.dproj" Targets="Clean"/>
     </Target>
     <Target Name="LibDMVC:Make">
-        <MSBuild Projects="LibDMVC.dproj" Targets="Make"/>
+        <MSBuild Projects="LibDMVC\LibDMVC.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
         <CallTarget Targets="InternetBookstoreServer;LibSystem;LibData;LibDMVC"/>

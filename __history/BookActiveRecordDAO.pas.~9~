@@ -1,0 +1,109 @@
+unit BookActiveRecordDAO;
+
+interface
+
+uses
+  Book, BookDAOIntf, MVCFramework, MVCFramework.Commons,
+  MVCFramework.Serializer.Commons, MVCFramework.ActiveRecord,
+  System.Generics.Collections, system.SysUtils;
+
+type
+  TBookDAO = class(TInterfacedObject, IBookDAO)
+  public
+    procedure Insert(const Book: TBook);
+    function Select: TObjectList<TBook>;
+    function SelectWhereId(const BookId: Integer): TBook;
+    procedure Update(const BookId: Integer; const Book: TBook);
+    procedure Delete(const BookId: Integer);
+  end;
+
+implementation
+
+
+
+uses
+  BookActiveRecord;
+
+{ TBookDAO }
+
+procedure TBookDAO.Insert(const Book: TBook);
+begin
+//  try
+//    Book.Insert;
+//  except
+//    on E: Exception do
+//      raise Exception.Create(Classname + ', Failed to create book: ' +
+//        E.Message);
+//  end;
+end;
+
+procedure TBookDAO.Delete(const BookId: Integer);
+begin
+//  var Book := TMVCActiveRecord.GetByPK<TBook>(BookId, True);
+//
+//  if Book = nil then
+//    raise EMVCActiveRecordNotFound.Create(Classname + ', Book not found');
+//
+//  try
+//    Book.Delete;
+//  except
+//    on E: Exception do
+//      raise Exception.Create(Classname + ', Failed to delete book: ' +
+//        E.Message);
+//  end;
+end;
+
+function TBookDAO.SelectWhereId(const BookId: Integer): TBook;
+begin
+//  Result := TMVCActiveRecord.GetOneByWhere<TBook>('ID = ?', [BookId]);
+//  if Result = nil then
+//    raise EMVCActiveRecordNotFound.Create(Classname + ', Book not found');
+end;
+
+function TBookDAO.Select: TObjectList<TBook>;
+begin
+  var BooksAR := TMVCActiveRecord.All<TBookActiveRecord>;
+  var Books := TObjectList<TBook>.Create;
+
+  for var BookAR in BooksAR do
+  begin
+    var Book := TBook.Create(BookAR.Id, BookAR.Title, BookAR.Synopsis);
+    Books.Add(Book);
+  end;
+
+  REsult := Books;
+
+
+//  try
+//    BookAR.LoadByPK(ATitle);
+//    ABook := TBook.Create(BookAR);
+//  finally
+//    BookAR.Free;
+//  end;
+//  try
+//    Result := TMVCActiveRecord.All<TBook>;
+//  except
+//    on E: Exception do
+//      raise EMVCActiveRecordNotFound.Create(Classname + ', Server Error:' +
+//        E.ToString);
+//  end;
+end;
+
+procedure TBookDAO.Update(const BookId: Integer; const Book: TBook);
+begin
+//  var BookById := TMVCActiveRecord.GetByPK<TBook>(BookId, True);
+//
+//  if BookById = nil then
+//    raise EMVCActiveRecordNotFound.Create(Classname + ', Book not found');
+//
+//  try
+//    Book.Id := BookId;
+//    Book.Update;
+//  except
+//    on E: Exception do
+//      raise Exception.Create(Classname + ', Failed to update book: ' +
+//        E.Message);
+//  end;
+end;
+
+end.

@@ -1,0 +1,33 @@
+unit ActiveRecordIntfMethod;
+
+interface
+
+type
+  TActiveRecordIntfMethod = class abstract
+  public
+    function QueryInterface(const IID: TGUID; out Obj): HRESULT; stdcall;
+    function _AddRef: Integer; stdcall;
+    function _Release: Integer; stdcall;
+  end;
+
+implementation
+
+{ TActiveRecordIntfMethod }
+
+function TActiveRecordIntfMethod.QueryInterface(const IID: TGUID;
+  out Obj): HRESULT;
+begin
+  Result := -1;
+end;
+
+function TActiveRecordIntfMethod._AddRef: Integer;
+begin
+  Result := -1;
+end;
+
+function TActiveRecordIntfMethod._Release: Integer;
+begin
+  Result := -1;
+end;
+
+end.

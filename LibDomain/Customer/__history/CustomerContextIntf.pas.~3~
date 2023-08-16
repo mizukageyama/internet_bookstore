@@ -1,0 +1,16 @@
+unit CustomerContextIntf;
+
+interface
+
+type
+  ICustomerContext = interface
+    ['{0E7035E0-2235-42D4-9414-5330DD9C0C7E}']
+
+    property Id: Integer read GetBookId write SetBookId;
+    property Title: string read GetBookTitle write SetBookTitle;
+    property Synopsis: string read GetBookSynopsis write SetBookSynopsis;
+  end;
+
+implementation
+
+end.

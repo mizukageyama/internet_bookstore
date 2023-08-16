@@ -1,0 +1,18 @@
+unit CustomerContextIntf;
+
+interface
+
+type
+  ICustomerContext = interface
+    ['{0E7035E0-2235-42D4-9414-5330DD9C0C7E}']
+
+    property Id: Integer read GetId write SetId;
+    property FirstName: string read GetFirstName write SetFirstName;
+    property LastName: string read GetLastName write SetLastName;
+    property Email: string read GetEmail write SetEmail;
+    property Password: string read GetPassword write SetPassword;
+  end;
+
+implementation
+
+end.

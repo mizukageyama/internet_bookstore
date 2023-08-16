@@ -3,7 +3,7 @@
         <ProjectGuid>{1CD41601-76F6-449C-9C8B-C08056CF9F5F}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="LibSystem\LibDomain.dproj">
+        <Projects Include="LibDomain\LibDomain.dproj">
             <Dependencies/>
         </Projects>
         <Projects Include="LibData\LibData.dproj">
@@ -21,13 +21,13 @@
         </BorlandProject>
     </ProjectExtensions>
     <Target Name="LibDomain">
-        <MSBuild Projects="LibSystem\LibDomain.dproj"/>
+        <MSBuild Projects="LibDomain\LibDomain.dproj"/>
     </Target>
     <Target Name="LibDomain:Clean">
-        <MSBuild Projects="LibSystem\LibDomain.dproj" Targets="Clean"/>
+        <MSBuild Projects="LibDomain\LibDomain.dproj" Targets="Clean"/>
     </Target>
     <Target Name="LibDomain:Make">
-        <MSBuild Projects="LibSystem\LibDomain.dproj" Targets="Make"/>
+        <MSBuild Projects="LibDomain\LibDomain.dproj" Targets="Make"/>
     </Target>
     <Target Name="LibData">
         <MSBuild Projects="LibData\LibData.dproj"/>

@@ -1,0 +1,68 @@
+unit Customer;
+
+interface
+
+uses
+  CustomerContextIntf;
+
+type
+  TCustomer = class
+  private
+    FId: Integer;
+    FFirstName: string;
+    FLastName: string;
+    FEmail: string;
+    FPassword: string;
+  public
+    constructor Create(const ACustomer: ICustomerContext); overload;
+    constructor Create(const AId: Integer; const AFirstName, ALastName,
+      AEmail, APassword: string); overload;
+
+    function IsValid: Boolean;
+    function IsPasswordMatched(const APassword: string): boolean;
+
+    property Id: Integer read FId write FId;
+    property FirstName: string read FFirstName write FFirstName;
+    property LastName: string read FLastName write FLastName;
+    property Email: string read FEmail write FEmail;
+    property Password: string read FPassword write FPassword;
+  end;
+
+implementation
+
+{ TCustomer }
+
+constructor TCustomer.Create(const AId: Integer; const AFirstName, ALastName,
+  AEmail, APassword: string);
+begin
+
+end;
+
+constructor TCustomer.Create(const ACustomer: ICustomerContext);
+begin
+  if not Assigned(ACustomer) then
+    raise EArgumentNilException.Create('ACustomer');
+
+  inherited Create;
+
+  FId := ACustomer.Id;
+  FFirstName := ACustomer.FirstName;
+  FLastName := ACustomer.LastName;
+  FEmail := ACustomer.Email;
+  FPassword := ACustomer.Password;
+end;
+
+function TCustomer.IsPasswordMatched(const APassword: string): boolean;
+begin
+  Result := Password = APassword;
+end;
+
+function TCustomer.IsValid: Boolean;
+begin
+  Result := (FirstName <> '') and
+    (LastName <> '') and
+    (Email <> '') and
+    (Password <> '');
+end;
+
+end.

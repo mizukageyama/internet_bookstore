@@ -1,0 +1,27 @@
+unit CustomerService;
+
+interface
+
+uses
+  CustomerServiceIntf, Customer, CustomerDaoIntf, System.Generics.Collections;
+
+type
+  TCustomerService = class(TInterfacedObject, ICustomerService)
+  private
+    FCustomerDao: ICustomerDao;
+  public
+    constructor Create(const ACustomerDao: ICustomerDao);
+
+    ['{7C0CF3E4-6B1D-4738-96DC-BA40DC67B34B}']
+    procedure CreateCustomer(const Customer: TCustomer);
+    function GetCustomers: TObjectList<TCustomer>;
+    function GetCustomerById(const CustomerId: Integer): TCustomer;
+    procedure UpdateCustomer(const Customer: TCustomer);
+    procedure DeleteCustomer(const CustomerId: Integer);
+  end;
+
+implementation
+
+uses
+  System.SysUtils;
+end.

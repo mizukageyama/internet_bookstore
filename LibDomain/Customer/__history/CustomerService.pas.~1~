@@ -1,0 +1,26 @@
+unit CustomerService;
+
+interface
+
+uses
+  CustomerServiceIntf, Customer, CustomerDaoIntf, System.Generics.Collections;
+
+type
+  TBookService = class(TInterfacedObject, ICustomerService)
+  private
+    FCustomerDao: ICustomerDao;
+  public
+    constructor Create(const ACustomerDao: IBookDao);
+
+    procedure CreateBook(const Book: TBook);
+    function GetBooks: TObjectList<TBook>;
+    function GetBookById(const BookId: Integer): TBook;
+    procedure UpdateBook(const Book: TBook);
+    procedure DeleteBook(const BookId: Integer);
+  end;
+
+implementation
+
+uses
+  System.SysUtils;
+end.

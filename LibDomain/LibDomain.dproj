@@ -84,6 +84,11 @@
         <DCCReference Include="Book\BookDAOIntf.pas"/>
         <DCCReference Include="Book\BookService.pas"/>
         <DCCReference Include="Book\BookServiceIntf.pas"/>
+        <DCCReference Include="Customer\Customer.pas"/>
+        <DCCReference Include="Customer\CustomerDAOIntf.pas"/>
+        <DCCReference Include="Customer\CustomerContextIntf.pas"/>
+        <DCCReference Include="Customer\CustomerService.pas"/>
+        <DCCReference Include="Customer\CustomerServiceIntf.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

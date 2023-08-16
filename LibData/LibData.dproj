@@ -93,6 +93,8 @@
         <DCCReference Include="ActiveRecordEntity.pas"/>
         <DCCReference Include="Book\BookActiveRecord.pas"/>
         <DCCReference Include="Book\BookActiveRecordDAO.pas"/>
+        <DCCReference Include="Customer\CustomerActiveRecordDAO.pas"/>
+        <DCCReference Include="Customer\CustomerActiveRecord.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

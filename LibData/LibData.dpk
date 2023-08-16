@@ -42,9 +42,9 @@ requires
   dmvcframeworkRT;
 
 contains
-  BookActiveRecord in 'BookActiveRecord.pas',
-  BookActiveRecordDAO in 'BookActiveRecordDAO.pas',
-  ActiveRecordIntfMethod in 'ActiveRecordIntfMethod.pas';
+  ActiveRecordEntity in 'ActiveRecordEntity.pas',
+  BookActiveRecord in 'Book\BookActiveRecord.pas',
+  BookActiveRecordDAO in 'Book\BookActiveRecordDAO.pas';
 
 end.
 

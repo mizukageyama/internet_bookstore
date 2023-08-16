@@ -3,16 +3,13 @@
         <ProjectGuid>{1CD41601-76F6-449C-9C8B-C08056CF9F5F}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="Server\InternetBookstoreServer.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="LibSystem\LibSystem.dproj">
+        <Projects Include="LibSystem\LibDomain.dproj">
             <Dependencies/>
         </Projects>
         <Projects Include="LibData\LibData.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="LibDMVC\LibDMVC.dproj">
+        <Projects Include="Server\InternetBookstoreServer.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -23,23 +20,14 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
-    <Target Name="InternetBookstoreServer">
-        <MSBuild Projects="Server\InternetBookstoreServer.dproj"/>
+    <Target Name="LibDomain">
+        <MSBuild Projects="LibSystem\LibDomain.dproj"/>
     </Target>
-    <Target Name="InternetBookstoreServer:Clean">
-        <MSBuild Projects="Server\InternetBookstoreServer.dproj" Targets="Clean"/>
+    <Target Name="LibDomain:Clean">
+        <MSBuild Projects="LibSystem\LibDomain.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="InternetBookstoreServer:Make">
-        <MSBuild Projects="Server\InternetBookstoreServer.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="LibSystem">
-        <MSBuild Projects="LibSystem\LibSystem.dproj"/>
-    </Target>
-    <Target Name="LibSystem:Clean">
-        <MSBuild Projects="LibSystem\LibSystem.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="LibSystem:Make">
-        <MSBuild Projects="LibSystem\LibSystem.dproj" Targets="Make"/>
+    <Target Name="LibDomain:Make">
+        <MSBuild Projects="LibSystem\LibDomain.dproj" Targets="Make"/>
     </Target>
     <Target Name="LibData">
         <MSBuild Projects="LibData\LibData.dproj"/>
@@ -50,23 +38,23 @@
     <Target Name="LibData:Make">
         <MSBuild Projects="LibData\LibData.dproj" Targets="Make"/>
     </Target>
-    <Target Name="LibDMVC">
-        <MSBuild Projects="LibDMVC\LibDMVC.dproj"/>
+    <Target Name="InternetBookstoreServer">
+        <MSBuild Projects="Server\InternetBookstoreServer.dproj"/>
     </Target>
-    <Target Name="LibDMVC:Clean">
-        <MSBuild Projects="LibDMVC\LibDMVC.dproj" Targets="Clean"/>
+    <Target Name="InternetBookstoreServer:Clean">
+        <MSBuild Projects="Server\InternetBookstoreServer.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="LibDMVC:Make">
-        <MSBuild Projects="LibDMVC\LibDMVC.dproj" Targets="Make"/>
+    <Target Name="InternetBookstoreServer:Make">
+        <MSBuild Projects="Server\InternetBookstoreServer.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="InternetBookstoreServer;LibSystem;LibData;LibDMVC"/>
+        <CallTarget Targets="LibDomain;LibData;InternetBookstoreServer"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="InternetBookstoreServer:Clean;LibSystem:Clean;LibData:Clean;LibDMVC:Clean"/>
+        <CallTarget Targets="LibDomain:Clean;LibData:Clean;InternetBookstoreServer:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="InternetBookstoreServer:Make;LibSystem:Make;LibData:Make;LibDMVC:Make"/>
+        <CallTarget Targets="LibDomain:Make;LibData:Make;InternetBookstoreServer:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

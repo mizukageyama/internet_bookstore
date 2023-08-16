@@ -14,15 +14,8 @@ uses
   IdContext,
   IdHTTPWebBrokerBridge,
   WebModule in 'WebModule.pas' {MyWebModule: TWebModule},
-//  Customer in 'Customer\Customer.pas',
-//  CustomerReview in 'CustomerReview\CustomerReview.pas',
-//  CustomerDAOIntf in 'Customer\CustomerDAOIntf.pas',
-//  CustomerDAO in 'Customer\CustomerDAO.pas',
-//  CustomerReviewDAOIntf in 'CustomerReview\CustomerReviewDAOIntf.pas',
-//  CustomerReviewController in 'CustomerReview\CustomerReviewController.pas',
-//  CustomerReviewDAO in 'CustomerReview\CustomerReviewDAO.pas',
-//  CustomerController in 'Customer\CustomerController.pas',
-  BookController in '..\LibDMVC\BookController.pas';
+  BookController in 'BookController.pas',
+  AuthCriteria in 'JWTAuth\AuthCriteria.pas';
 
 {$R *.res}
 

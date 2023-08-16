@@ -58,67 +58,42 @@ end;
 
 procedure TBookController.CreateBook;
 begin
-  try
-    var Book: TBook := Context.Request.BodyAs<TBook>;
-    FService.CreateBook(Book);
-    Render201Created('/api/books/' + Book.ID.ToString);
-  except
-    on E: Exception do
-     Render(HTTP_STATUS.InternalServerError, 'An error occured: ' + E.ToString);
-  end;
+  var Book := Context.Request.BodyAs<TBook>;
+  
+  if not Book.IsValid then
+  begin
+    raise EMVCException.Create(400, 'Invalid Request');
+  end; 
+     
+  FService.CreateBook(Book);
+  Render201Created('/api/books/' + Book.ID.ToString);
 end;
 
 procedure TBookController.DeleteBook(const BookId: Integer);
 begin
-  try
-    FService.DeleteBook(BookId);
-    Render(204, '');
-  except
-    on E: EMVCActiveRecordNotFound  do
-      Render(HTTP_STATUS.NotFound, 'Book not found');
-    on E: Exception do
-      Render(HTTP_STATUS.InternalServerError, 'Failed to delete book');
-  end;
+  FService.DeleteBook(BookId);
+  Render(204, '');
 end;
 
 procedure TBookController.GetBookById(const BookId: Integer);
 begin
-  try
-    var Book := FService.GetBookById(BookId);
-    Render(ObjectDict().Add('data', Book));
-  except
-    on E: EMVCActiveRecordNotFound  do
-      Render(HTTP_STATUS.NotFound, 'Book not found');
-    on E: Exception do
-      Render(HTTP_STATUS.InternalServerError, 'An error occured: ' + E.ToString);
-  end;
+  var Book := FService.GetBookById(BookId);
+  Render(ObjectDict().Add('data', Book));
 end;
 
 procedure TBookController.GetBooks;
 begin
-   try
-    var Books := FService.GetBooks;
-    Render(ObjectDict().Add('data', Books));
- except
-    on E: Exception do
-      Render(HTTP_STATUS.InternalServerError, 'An error occured: ' + E.ToString);
-  end;
+  var Books := FService.GetBooks;
+  Render(ObjectDict().Add('data', Books));
 end;
 
 procedure TBookController.UpdateBook(const BookId: Integer);
 begin
-  try
-    var Book := Context.Request.BodyAs<TBook>;
+  var Book := Context.Request.BodyAs<TBook>;
+  Book.Id := BookId;
 
-    FService.UpdateBook(BookId, Book);
-    Render(HTTP_STATUS.OK, '');
-  except
-    on E: EMVCActiveRecordNotFound  do
-      Render(HTTP_STATUS.NotFound, 'Book not found');
-    on E: Exception do
-      Render(HTTP_STATUS.InternalServerError, 'Failed to update book: ' +
-        E.ToString);
-  end;
+  FService.UpdateBook(Book);
+  Render(HTTP_STATUS.OK, '');
 end;
 
 end.

@@ -90,9 +90,9 @@
         <DCCReference Include="SwagDoc.dcp"/>
         <DCCReference Include="loggerproRT.dcp"/>
         <DCCReference Include="dmvcframeworkRT.dcp"/>
-        <DCCReference Include="BookActiveRecord.pas"/>
-        <DCCReference Include="BookActiveRecordDAO.pas"/>
-        <DCCReference Include="ActiveRecordIntfMethod.pas"/>
+        <DCCReference Include="ActiveRecordEntity.pas"/>
+        <DCCReference Include="Book\BookActiveRecord.pas"/>
+        <DCCReference Include="Book\BookActiveRecordDAO.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -1,0 +1,41 @@
+unit CustomerReviewContextIntf;
+
+interface
+
+type
+  ICustomerReviewContext = interface
+    ['{073F2737-2F23-4602-97C6-FE55EFE68269}']
+    function GetCustomerReviewId: Integer;
+    procedure SetCustomerReviewId(const CustomerId: Integer);
+
+    function GetCustomerReviewBookId: string;
+    procedure SetCustomerReviewBookId(const CustomerFirstName: string);
+
+    function GetLastName: string;
+    procedure SetLastName(const CustomerLastName: string);
+
+    function GetEmail: string;
+    procedure SetEmail(const CustomerEmail: string);
+
+    function GetPassword: string;
+    procedure SetPassword(const CustomerPassword: string);
+
+    property Id: Integer
+      read GetCustomerReviewId write SetCustomerReviewId;
+
+    property BookId: string
+      read GetCustomerReviewBookId write SetCustomerReviewBookId;
+
+    property CustomerId: string
+      read GetCustomerReviewCustomerId write SetCustomerReviewCustomerId;
+
+    property Review: string
+      read GetReview write SetReview;
+
+    property Rating: string
+      read GetCustomerReviewRating write SetCustomerReviewRating;
+  end;
+
+implementation
+
+end.

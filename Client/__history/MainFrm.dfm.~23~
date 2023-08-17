@@ -1,0 +1,155 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  Caption = 'Internet Bookstore'
+  ClientHeight = 605
+  ClientWidth = 628
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnShow = FormShow
+  TextHeight = 15
+  object lblTitle: TLabel
+    Left = 0
+    Top = 0
+    Width = 628
+    Height = 30
+    Align = alTop
+    Caption = 'ICONIX Internet Bookstore'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -22
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    Layout = tlCenter
+    ExplicitWidth = 258
+  end
+  object dbgBooks: TDBGrid
+    Left = 0
+    Top = 274
+    Width = 628
+    Height = 316
+    Align = alClient
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -12
+    TitleFont.Name = 'Segoe UI'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'id'
+        Title.Caption = 'ID'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'title'
+        Title.Caption = 'Title'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'synopsis'
+        Title.Caption = 'Synopsis'
+        Visible = True
+      end>
+  end
+  object pnlSearch: TPanel
+    Left = 0
+    Top = 233
+    Width = 628
+    Height = 41
+    Align = alTop
+    Padding.Top = 5
+    Padding.Bottom = 5
+    TabOrder = 1
+    ExplicitTop = 30
+    ExplicitWidth = 622
+    object lblSearch: TLabel
+      Left = 1
+      Top = 6
+      Width = 94
+      Height = 29
+      Align = alLeft
+      Caption = 'Search Book'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -17
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentFont = False
+      Layout = tlCenter
+      ExplicitHeight = 23
+    end
+    object edtSearchKey: TEdit
+      Left = 392
+      Top = 6
+      Width = 139
+      Height = 29
+      Align = alRight
+      TabOrder = 0
+      ExplicitLeft = 391
+      ExplicitHeight = 23
+    end
+    object Search: TButton
+      Left = 536
+      Top = 6
+      Width = 91
+      Height = 29
+      Align = alRight
+      Caption = 'Search'
+      TabOrder = 1
+      ExplicitLeft = 567
+    end
+    object pnlSpace: TPanel
+      Left = 531
+      Top = 6
+      Width = 5
+      Height = 29
+      Align = alRight
+      BevelOuter = bvNone
+      TabOrder = 2
+      ExplicitLeft = 526
+    end
+  end
+  object pnlBottom: TPanel
+    Left = 0
+    Top = 590
+    Width = 628
+    Height = 15
+    Align = alBottom
+    TabOrder = 2
+    ExplicitTop = 360
+  end
+  object pnlWelcomeText: TPanel
+    Left = 0
+    Top = 30
+    Width = 628
+    Height = 203
+    Align = alTop
+    TabOrder = 3
+    object lblWelcome: TLabel
+      Left = 1
+      Top = 1
+      Width = 626
+      Height = 25
+      Align = alTop
+      Caption = 'Welcome to our streamlined Internet Bookstore.'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -18
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ExplicitWidth = 412
+    end
+  end
+end

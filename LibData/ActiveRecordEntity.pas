@@ -4,7 +4,7 @@ interface
 
 uses
   MVCFramework.ActiveRecord, MVCFramework, MVCFramework.Serializer.Commons,
-  MVCFramework.SQLGenerators.MySQL, BookContextIntf;
+  MVCFramework.SQLGenerators.MySQL;
 
 type
   TActiveRecordEntity = class abstract(TMVCActiveRecord)

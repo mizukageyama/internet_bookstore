@@ -57,12 +57,6 @@ end;
 
 procedure TBookService.UpdateBook(const Book: TBook);
 begin
-//  if not Book.IsValid then
-//  begin
-//    Render(HTTP_STATUS.BadRequest, 'Invalid request data');
-//    Exit;
-//  end;
-
   FBookDao.Update(Book);
 end;
 

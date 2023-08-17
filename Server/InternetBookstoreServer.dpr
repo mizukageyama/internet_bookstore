@@ -15,7 +15,9 @@ uses
   IdHTTPWebBrokerBridge,
   WebModule in 'WebModule.pas' {MyWebModule: TWebModule},
   BookController in 'BookController.pas',
-  AuthCriteria in 'JWTAuth\AuthCriteria.pas';
+  AuthCriteria in 'JWTAuth\AuthCriteria.pas',
+  CustomerController in 'CustomerController.pas',
+  CustomerReviewController in 'CustomerReviewController.pas';
 
 {$R *.res}
 

@@ -46,7 +46,9 @@ contains
   BookActiveRecord in 'Book\BookActiveRecord.pas',
   BookActiveRecordDAO in 'Book\BookActiveRecordDAO.pas',
   CustomerActiveRecordDAO in 'Customer\CustomerActiveRecordDAO.pas',
-  CustomerActiveRecord in 'Customer\CustomerActiveRecord.pas';
+  CustomerActiveRecord in 'Customer\CustomerActiveRecord.pas',
+  CustomerReviewActiveRecord in 'CustomerReview\CustomerReviewActiveRecord.pas',
+  CustomerReviewActiveRecordDAO in 'CustomerReview\CustomerReviewActiveRecordDAO.pas';
 
 end.
 

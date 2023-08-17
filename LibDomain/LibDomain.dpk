@@ -32,7 +32,6 @@ requires
 
 contains
   Book in 'Book\Book.pas',
-  BookContextIntf in 'Book\BookContextIntf.pas',
   BookDAOIntf in 'Book\BookDAOIntf.pas',
   BookService in 'Book\BookService.pas',
   BookServiceIntf in 'Book\BookServiceIntf.pas',
@@ -40,6 +39,12 @@ contains
   CustomerDAOIntf in 'Customer\CustomerDAOIntf.pas',
   CustomerContextIntf in 'Customer\CustomerContextIntf.pas',
   CustomerService in 'Customer\CustomerService.pas',
-  CustomerServiceIntf in 'Customer\CustomerServiceIntf.pas';
+  CustomerServiceIntf in 'Customer\CustomerServiceIntf.pas',
+  BookContextIntf in 'Book\BookContextIntf.pas',
+  CustomerReview in 'CustomerReview\CustomerReview.pas',
+  CustomerReviewContextIntf in 'CustomerReview\CustomerReviewContextIntf.pas',
+  CustomerReviewDAOIntf in 'CustomerReview\CustomerReviewDAOIntf.pas',
+  CustomerReviewService in 'CustomerReview\CustomerReviewService.pas',
+  CustomerReviewServiceIntf in 'CustomerReview\CustomerReviewServiceIntf.pas';
 
 end.

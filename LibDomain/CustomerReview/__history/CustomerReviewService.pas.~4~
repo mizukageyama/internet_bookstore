@@ -1,0 +1,60 @@
+unit CustomerReviewService;
+
+interface
+
+uses
+  CustomerReviewServiceIntf, CustomerReview, CustomerReviewDaoIntf, System.Generics.Collections;
+
+type
+  TCustomerReviewService = class(TInterfacedObject, ICustomerReviewService)
+  private
+    FCustomerReviewDao: ICustomerReviewDao;
+  public
+    constructor Create(const ACustomerDao: ICustomerReviewDao);
+
+    procedure CreateCustomerReview(const CustomerReview: TCustomerReview);
+    function GetCustomerReviewsByBookId(const BookId: Integer):
+      TObjectList<TCustomerReview>;
+    function GetCustomerReviewById(const CustomerReviewId: Integer):
+      TCustomerReview;
+    procedure UpdateCustomerReview(const CustomerReview: TCustomerReview);
+    procedure DeleteCustomerReview(const CustomerReviewId: Integer);
+  end;
+
+implementation
+
+uses
+  System.SysUtils;
+{ TCustomerService }
+
+constructor TCustomerService.Create(const ACustomerDao: ICustomerReviewDao);
+begin
+  FCustomerReviewDao := CreateCustomerReview;
+end;
+
+procedure TCustomerService.CreateCustomer(const Customer: TCustomer);
+begin
+  FCustomerDao.Insert(Customer);
+end;
+
+procedure TCustomerService.DeleteCustomer(const CustomerId: Integer);
+begin
+  FCustomerDao.Delete(CustomerId);
+end;
+
+function TCustomerService.GetCustomerById(const CustomerId: Integer): TCustomer;
+begin
+  Result := FCustomerDao.SelectWhereId(CustomerId);
+end;
+
+function TCustomerService.GetCustomers: TObjectList<TCustomer>;
+begin
+  Result := FCustomerDao.Select;
+end;
+
+procedure TCustomerService.UpdateCustomer(const Customer: TCustomer);
+begin
+  FCustomerDao.Update(Customer);
+end;
+
+end.

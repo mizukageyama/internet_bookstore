@@ -80,7 +80,6 @@
         </DelphiCompile>
         <DCCReference Include="rtl.dcp"/>
         <DCCReference Include="Book\Book.pas"/>
-        <DCCReference Include="Book\BookContextIntf.pas"/>
         <DCCReference Include="Book\BookDAOIntf.pas"/>
         <DCCReference Include="Book\BookService.pas"/>
         <DCCReference Include="Book\BookServiceIntf.pas"/>
@@ -89,6 +88,12 @@
         <DCCReference Include="Customer\CustomerContextIntf.pas"/>
         <DCCReference Include="Customer\CustomerService.pas"/>
         <DCCReference Include="Customer\CustomerServiceIntf.pas"/>
+        <DCCReference Include="Book\BookContextIntf.pas"/>
+        <DCCReference Include="CustomerReview\CustomerReview.pas"/>
+        <DCCReference Include="CustomerReview\CustomerReviewContextIntf.pas"/>
+        <DCCReference Include="CustomerReview\CustomerReviewDAOIntf.pas"/>
+        <DCCReference Include="CustomerReview\CustomerReviewService.pas"/>
+        <DCCReference Include="CustomerReview\CustomerReviewServiceIntf.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

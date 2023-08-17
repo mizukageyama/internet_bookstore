@@ -4,14 +4,13 @@ interface
 
 uses
   MVCFramework, MVCFramework.Commons, MVCFramework.Serializer.Commons,
-  MVCFramework.ActiveRecord, BaseController, System.Generics.Collections,
-  CustomerDAOIntf, Customer, System.SysUtils, MVCFramework.Logger;
+  MVCFramework.ActiveRecord, System.Generics.Collections,
+  Customer, System.SysUtils, System.Classes, CustomerServiceIntf;
 
 type
-  [MVCPath('/api/customers')]
-  TCustomerController = class(TBaseController)
+  TCustomerController = class(TMVCController)
   private
-    FCustomerDAO: ICustomerDAO;
+    FService: ICustomerService;
   public
     [MVCPath()]
     [MVCHTTPMethod([httpGET])]
@@ -40,97 +39,65 @@ type
     [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
     procedure UpdateCustomer(const CustomerId: Integer);
 
-    constructor Create; override;
+    constructor Create(const AService: ICustomerService); overload;
   end;
 
 implementation
 
 { TCustomerController }
 
-uses
-  CustomerDAO;
-
-constructor TCustomerController.Create;
+constructor TCustomerController.Create(const AService: ICustomerService);
 begin
-  inherited;
-  FCustomerDAO := TCustomerDAO.Create;
+ if not Assigned(AService) then
+    raise EArgumentNilException.Create('AService');
+
+  inherited Create;
+  FService := AService;
 end;
 
 procedure TCustomerController.CreateCustomer;
 begin
-  try
-    var Customer := Context.Request.BodyAs<TCustomer>;
+  var Customer := Context.Request.BodyAs<TCustomer>;
 
-    if not Customer.IsValid then
-    begin
-      Render(HTTP_STATUS.BadRequest, 'Invalid request data');
-      Exit;
-    end;
-
-    FCustomerDAO.CreateCustomer(Customer);
-    Render201Created('/api/customers/' + Customer.ID.ToString);
-  except
-    on E: Exception do
-     Render(HTTP_STATUS.InternalServerError, 'An error occured: ' + E.ToString);
+  if not Customer.IsValid then
+  begin
+    raise EMVCException.Create(400, 'Invalid Request');
   end;
+
+  FService.CreateCustomer(Customer);
+  Render201Created('/api/customers/' + Customer.ID.ToString);
 end;
 
 procedure TCustomerController.DeleteCustomer(const CustomerId: Integer);
 begin
-  try
-    FCustomerDAO.DeleteCustomer(CustomerId);
-    Render(204, '');
-  except
-    on E: EMVCActiveRecordNotFound  do
-      Render(HTTP_STATUS.NotFound, 'Customer not found');
-    on E: Exception do
-      Render(HTTP_STATUS.InternalServerError, 'Failed to delete customer');
-  end;
+  FService.DeleteCustomer(CustomerId);
+  Render(204, '');
 end;
 
 procedure TCustomerController.GetCustomerById(const CustomerId: Integer);
 begin
-  try
-    var Customer := FCustomerDAO.GetCustomerById(CustomerId);
-    Render(ObjectDict().Add('data', Customer));
-  except
-    on E: EMVCActiveRecordNotFound  do
-      Render(HTTP_STATUS.NotFound, 'Customer not found');
-    on E: Exception do
-      Render(HTTP_STATUS.InternalServerError, 'An error occured: ' + E.ToString);
-  end;
+  var Customer := FService.GetCustomerById(CustomerId);
+  Render(ObjectDict().Add('data', Customer));
 end;
 
 procedure TCustomerController.GetCustomers;
 begin
-   try
-    var Customers := FCustomerDAO.GetCustomers;
-    Render(ObjectDict().Add('data', Customers));
- except
-    on E: Exception do
-      Render(HTTP_STATUS.InternalServerError, 'An error occured: ' + E.ToString);
-  end;
+  var Customer := FService.GetCustomers;
+  Render(ObjectDict().Add('data', Customer));
 end;
 
 procedure TCustomerController.UpdateCustomer(const CustomerId: Integer);
 begin
-  try
-    var Customer := Context.Request.BodyAs<TCustomer>;
+  var Customer := Context.Request.BodyAs<TCustomer>;
+  Customer.Id := CustomerId;
 
-    if not Customer.IsValid then
-    begin
-      Render(HTTP_STATUS.BadRequest, 'Invalid request data');
-      Exit;
-    end;
-
-    FCustomerDAO.UpdateCustomer(CustomerId, Customer);
-    Render(HTTP_STATUS.OK, '');
-  except
-    on E: EMVCActiveRecordNotFound  do
-      Render(HTTP_STATUS.NotFound, 'Customer not found');
-    on E: Exception do
-      Render(HTTP_STATUS.InternalServerError, 'Failed to update customer');
+  if not Customer.IsValid then
+  begin
+    raise EMVCException.Create(HTTP_STATUS.BadRequest, 'Invalid Request');
   end;
+
+  FService.UpdateCustomer(Customer);
+  Render(HTTP_STATUS.OK, '');
 end;
 
 end.

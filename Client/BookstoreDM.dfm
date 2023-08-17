@@ -1,0 +1,66 @@
+object BookstoreDataModule: TBookstoreDataModule
+  Height = 416
+  Width = 591
+  PixelsPerInch = 120
+  object fdMemBook: TFDMemTable
+    FieldDefs = <>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 88
+    Top = 120
+    object fdMemBookId: TIntegerField
+      FieldName = 'id'
+    end
+    object fdMemBookTitle: TStringField
+      FieldName = 'title'
+    end
+    object fdMemBookSynopsis: TStringField
+      FieldName = 'synopsis'
+      Size = 255
+    end
+  end
+  object dsBook: TDataSource
+    DataSet = fdMemBook
+    Left = 88
+    Top = 216
+  end
+  object fdMemCustomer: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 224
+    Top = 120
+  end
+  object dsCustomer: TDataSource
+    DataSet = fdMemCustomer
+    Left = 224
+    Top = 216
+  end
+  object fdMemCustomerReview: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 400
+    Top = 120
+  end
+  object dsCustomerReview: TDataSource
+    DataSet = fdMemCustomerReview
+    Left = 400
+    Top = 216
+  end
+end

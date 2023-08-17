@@ -41,8 +41,10 @@ uses
   MVCFramework.Middleware.ETag,
   MVCFramework.Middleware.Compression,
   MVCFramework.Serializer.JsonDataObjects, JsonDataObjects,
-  BookActiveRecordDAO, BookService,
-  BookController, BookDAOIntf, AuthCriteria;
+  BookActiveRecordDAO, BookService, BookController, BookDAOIntf,
+  CustomerActiveRecordDAO, CustomerService, CustomerController, CustomerDAOIntf,
+  CustomerReviewActiveRecordDAO, CustomerReviewService,
+  CustomerReviewController, CustomerReviewDAOIntf, AuthCriteria;
 
 procedure TMyWebModule.WebModuleCreate(Sender: TObject);
 begin
@@ -65,10 +67,10 @@ begin
         IntToStr(TMVCConstants.DEFAULT_MAX_REQUEST_SIZE);
     end);
 
-//  FMVC.AddController(TBookController);
-//  FMVC.AddController(TCustomerController);
-//  FMVC.AddController(TCustomerReviewController);
-//
+
+    FMVC.AddMiddleware(TMVCActiveRecordMiddleware
+      .Create('Internet_Bookstore_Connection','FDConnectionDefs.ini'));
+
     var lConfigClaims: TJWTClaimsSetup := procedure (const JWT: TJWT)
     begin
       JWT.Claims.Issuer := 'Internet Bookstore';
@@ -88,27 +90,38 @@ begin
   );
 
   //MVCCryptInit; //Initialize OpenSSL
-  FMVC.AddMiddleware(TMVCCORSMiddleware.Create); //CORS Middleware
+  FMVC.AddMiddleware(TMVCCORSMiddleware.Create);
 
   FMVC.AddController(
     TBookController,
     function: TMVCController
     begin
-      //Object Composition
-
-      //Data Access Layer
-      var Dao: IBookDAO := TBookActiveRecordDao.Create;
-
-      //Domain Layer
-      var Service := TBookService.Create(Dao);
-
-      //Presentation Layer
+      var DAO: IBookDAO := TBookActiveRecordDAO.Create;
+      var Service := TBookService.Create(DAO);
       Result := TBookController.Create(Service);
     end,
     '/api/books');
 
-  FMVC.AddMiddleware(TMVCActiveRecordMiddleware
-    .Create('Internet_Bookstore_Connection','FDConnectionDefs.ini'));
+  FMVC.AddController(
+    TCustomerController,
+    function: TMVCController
+    begin
+      var DAO: ICustomerDAO := TCustomerActiveRecordDao.Create;
+      var Service := TCustomerService.Create(DAO);
+      Result := TCustomerController.Create(Service);
+    end,
+    '/api/customers');
+
+  FMVC.AddController(
+    TCustomerReviewController,
+    function: TMVCController
+    begin
+      var DAO: ICustomerReviewDAO := TCustomerReviewActiveRecordDao.Create;
+      var Service := TCustomerReviewService.Create(DAO);
+      Result := TCustomerReviewController.Create(Service);
+    end,
+    '/api/reviews');
+
 end;
 
 procedure TMyWebModule.WebModuleDestroy(Sender: TObject);

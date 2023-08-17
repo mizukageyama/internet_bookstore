@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2023/07/25 10:36:55.000.106,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2023/08/14 10:42:49.000.328,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2023/08/14 16:50:09.000.522,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2023/08/14 16:50:42.000.676,C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\User\Documents\GitHub\internet_bookstore_client\MainFrm.dfm</Transaction>
+    <Transaction>2023/08/14 16:50:42.000.676,C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\User\Documents\GitHub\internet_bookstore_client\MainFrm.pas</Transaction>
+    <Transaction>2023/08/14 16:51:21.000.194,C:\Users\User\Documents\Embarcadero\Studio\Projects\Project3.dproj=C:\Users\User\Documents\GitHub\internet_bookstore_client\InternetBookstore.dproj</Transaction>
+    <Transaction>2023/08/15 09:31:39.000.949,=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\Unit1.pas</Transaction>
+    <Transaction>2023/08/15 09:31:58.000.472,C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\Unit1.dfm=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\BookstoreDM.dfm</Transaction>
+    <Transaction>2023/08/15 09:31:58.000.472,C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\Unit1.pas=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\BookstoreDM.pas</Transaction>
+    <Transaction>2023/08/15 10:54:22.000.635,=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\Unit1.pas</Transaction>
+    <Transaction>2023/08/15 10:55:01.000.365,C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\Unit1.dfm=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\BookDetailsFrm.dfm</Transaction>
+    <Transaction>2023/08/15 10:55:01.000.365,C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\Unit1.pas=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\BookDetailsFrm.pas</Transaction>
+    <Transaction>2023/08/15 11:06:32.000.437,=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\Unit1.pas</Transaction>
+    <Transaction>2023/08/15 11:07:40.000.995,C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\Unit1.dfm=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\WriteReviewFrm.dfm</Transaction>
+    <Transaction>2023/08/15 11:07:40.000.995,C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\Unit1.pas=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\WriteReviewFrm.pas</Transaction>
+    <Transaction>2023/08/15 13:38:48.000.441,=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\Unit1.pas</Transaction>
+    <Transaction>2023/08/15 13:38:56.000.906,=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\Unit1.pas</Transaction>
+    <Transaction>2023/08/15 13:39:06.000.643,C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\Unit1.pas=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\LoginFrm.pas</Transaction>
+    <Transaction>2023/08/15 13:39:06.000.643,C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\Unit1.dfm=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\LoginFrm.dfm</Transaction>
+    <Transaction>2023/08/15 14:57:23.000.526,=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\Unit1.pas</Transaction>
+    <Transaction>2023/08/15 14:57:28.000.989,C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\Unit1.pas=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore_client\Book.pas</Transaction>
+  </Transactions>
+</BorlandProject>

@@ -1,0 +1,35 @@
+unit LoginFrm;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
+
+type
+  TLoginForm = class(TForm)
+    btnLogin: TButton;
+    pnlEmail: TPanel;
+    lblEmail: TLabel;
+    pnlEmailInput: TPanel;
+    lblEmailValidationMessage: TLabel;
+    edtEmail: TEdit;
+    Panel1: TPanel;
+    lblPassword: TLabel;
+    pnlPasswordInput: TPanel;
+    lblPasswordValidationMessage: TLabel;
+    edtPassword: TEdit;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  LoginForm: TLoginForm;
+
+implementation
+
+{$R *.dfm}
+
+end.

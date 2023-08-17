@@ -1,0 +1,25 @@
+unit BookstoreDM;
+
+interface
+
+uses
+  System.SysUtils, System.Classes;
+
+type
+  TBookstoreDataModule = class(TDataModule)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  BookstoreDataModule: TBookstoreDataModule;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+end.

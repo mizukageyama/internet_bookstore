@@ -1,0 +1,16 @@
+program InternetBookstore;
+
+uses
+  Vcl.Forms,
+  MainFrm in 'MainFrm.pas' {MainForm},
+  BookstoreDM in 'BookstoreDM.pas' {BookstoreDataModule: TDataModule};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TBookstoreDataModule, BookstoreDataModule);
+  Application.Run;
+end.

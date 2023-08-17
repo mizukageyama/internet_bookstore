@@ -41,9 +41,6 @@ type
     constructor Create; overload; override;
     constructor Create(const ACustomer: TCustomer); overload;
 
-    function IsValid: Boolean;
-    function IsPasswordMatched(const APassword: string): boolean;
-
     property Id: Integer read GetCustomerId write SetCustomerId;
     property FirstName: string read GetFirstName write SetFirstName;
     property LastName: string read GetLastName write SetLastName;
@@ -77,62 +74,49 @@ begin
   Result := FId;
 end;
 
-function TCustomerActiveRecord.GetEmail: string;
-begin
-
-end;
-
-function TCustomerActiveRecord.GetFirstName: string;
-begin
-
-end;
-
-function TCustomerActiveRecord.GetLastName: string;
-begin
-
-end;
-
-function TCustomerActiveRecord.GetPassword: string;
-begin
-
-end;
-
-function TCustomerActiveRecord.IsPasswordMatched(const APassword: string): boolean;
-begin
-  Result := Password = APassword;
-end;
-
-function TCustomerActiveRecord.IsValid: Boolean;
-begin
-  Result := (FirstName <> '') and
-    (LastName <> '') and
-    (Email <> '') and
-    (Password <> '');
-end;
-
 procedure TCustomerActiveRecord.SetCustomerId(const CustomerId: Integer);
 begin
+  FId := CustomerId;
+end;
 
+function TCustomerActiveRecord.GetEmail: string;
+begin
+  Result := FEmail;
 end;
 
 procedure TCustomerActiveRecord.SetEmail(const CustomerEmail: string);
 begin
+  FEmail := CustomerEmail;
+end;
 
+function TCustomerActiveRecord.GetFirstName: string;
+begin
+  Result := FFirstName;
 end;
 
 procedure TCustomerActiveRecord.SetFirstName(const CustomerFirstName: string);
 begin
+  FFirstName := CustomerFirstName;
+end;
 
+function TCustomerActiveRecord.GetLastName: string;
+begin
+  Result := FLastName;
 end;
 
 procedure TCustomerActiveRecord.SetLastName(const CustomerLastName: string);
 begin
+  FLastName := CustomerLastName;
+end;
 
+function TCustomerActiveRecord.GetPassword: string;
+begin
+  Result := FPassword;
 end;
 
 procedure TCustomerActiveRecord.SetPassword(const CustomerPassword: string);
 begin
-
+  FPassword:= CustomerPassword;
 end;
 
 end.

@@ -8,7 +8,6 @@ uses
   Book, System.SysUtils, System.Classes, BookServiceIntf;
 
 type
-  [MVCPath('/api/books')]
   TBookController = class(TMVCController)
   private
     FService: IBookService;
@@ -91,6 +90,11 @@ procedure TBookController.UpdateBook(const BookId: Integer);
 begin
   var Book := Context.Request.BodyAs<TBook>;
   Book.Id := BookId;
+
+  if not Book.IsValid then
+  begin
+    raise EMVCException.Create(400, 'Invalid Request');
+  end;
 
   FService.UpdateBook(Book);
   Render(HTTP_STATUS.OK, '');

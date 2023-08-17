@@ -22,8 +22,8 @@ type
 
 implementation
 
-//uses
-//  Customer;
+uses
+  CustomerActiveRecord, Customer;
 
 procedure TAuthCriteria.OnRequest(const AContext: TWebContext;
   const AControllerQualifiedClassName, AActionName: string;
@@ -38,27 +38,38 @@ end;
 procedure TAuthCriteria.OnAuthentication(const AContext: TWebContext;
   const AUserName, APassword: string; AUserRoles: TList<string>;
   var AIsValid: Boolean; const ASessionData: TDictionary<string, string>);
-var
-  LConn: TFDConnection;
-  //LCustomer: TCustomer;
 begin
   inherited;
 
-//  LCustomer := TMVCActiveRecord.GetOneByWhere<TCustomer>('email = ?',
-//    [AUserName], False);
+  var CustomerAR := TCustomerActiveRecord.Create;
+  var CustomerList := CustomerAR.Where(TCustomerActiveRecord,
+    ' WHERE EMAIL = ?', [AUserName]);
 
   try
-//    AIsValid := Assigned(LCustomer) and LCustomer.IsPasswordMatched(APassword);
-//    if not AIsValid then
-//    begin
-//      Exit;
-//    end;
-    //Let's save in the custom claims the user's user_id
-    AIsValid := True;
-    ASessionData.AddOrSetValue('customer_id', '9');
+    if CustomerList.Count	<> 0 then
+    begin
+      var Customer := TCustomer.Create(CustomerList[0] as TCustomerActiveRecord);
+      AIsValid := Customer.IsPasswordMatched(APassword);
+
+      if not AIsValid then
+      begin
+        raise EMVCException.Create(HTTP_STATUS.Unauthorized,
+          'Invalid Password');
+        Exit;
+      end;
+
+      AIsValid := True;
+      ASessionData.AddOrSetValue('customer_id', Customer.Id.ToString);
+    end
+    else
+    begin
+      raise EMVCException.Create(HTTP_STATUS.Unauthorized,
+        'Email does not exist');
+      AIsValid := False;
+    end;
   finally
-    //LCustomer.Free;
-    //ActiveRecordConnectionsRegistry.RemoveDefaultConnection;
+    CustomerAR.Free;
+    CustomerList.Free;
   end;
 end;
 

@@ -98,28 +98,43 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="MainFrm.pas">
-            <Form>MainForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="BookstoreDM.pas">
             <Form>BookstoreDataModule</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="BookDetailsFrm.pas">
+        <DCCReference Include="Views\BookDetailsFrm.pas">
             <Form>BookDetailsForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="WriteReviewFrm.pas">
-            <Form>WriteReviewForm</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="LoginFrm.pas">
+        <DCCReference Include="Views\LoginFrm.pas">
             <Form>LoginForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Book.pas"/>
+        <DCCReference Include="Views\MainFrm.pas">
+            <Form>MainForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Views\WriteReviewFrm.pas">
+            <Form>WriteReviewForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Presenters\MainPresenterIntf.pas"/>
+        <DCCReference Include="Presenters\MainPresenter.pas"/>
+        <DCCReference Include="Repositories\BookRepositoryIntf.pas"/>
+        <DCCReference Include="Views\MainFrmIntf.pas"/>
+        <DCCReference Include="Services\BookServiceClient.pas"/>
+        <DCCReference Include="Repositories\BookRepository.pas"/>
+        <DCCReference Include="Models\BookDTO.pas"/>
+        <DCCReference Include="Services\BookServiceClientIntf.pas"/>
+        <DCCReference Include="Views\BookDetailsFrmIntf.pas"/>
+        <DCCReference Include="Presenters\BookDetailsPresenter.pas"/>
+        <DCCReference Include="Models\CustomerReviewDTO.pas"/>
+        <DCCReference Include="Services\CustomerReviewServiceClientIntf.pas"/>
+        <DCCReference Include="Presenters\BookDetailsPresenterIntf.pas"/>
+        <DCCReference Include="Services\CustomerReviewServiceClient.pas"/>
+        <DCCReference Include="Repositories\CustomerReviewRepositoryIntf.pas"/>
+        <DCCReference Include="Repositories\CustomerReviewRepository.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

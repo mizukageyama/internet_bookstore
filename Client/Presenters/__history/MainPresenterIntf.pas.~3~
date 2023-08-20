@@ -1,0 +1,13 @@
+unit MainPresenterIntf;
+
+interface
+
+type
+  IMainPresenter = interface
+    procedure LoadBooks;
+    procedure ShowBookDetails;
+  end;
+
+implementation
+
+end.

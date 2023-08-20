@@ -1,0 +1,12 @@
+unit CustomerReviewRepositoryIntf;
+
+interface
+
+type
+  ICustomerReviewRepository = interface
+
+  end;
+
+implementation
+
+end.

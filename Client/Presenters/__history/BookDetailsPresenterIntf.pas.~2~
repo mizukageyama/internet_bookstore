@@ -1,0 +1,15 @@
+unit BookDetailsPresenterIntf;
+
+interface
+
+type
+  IBookDetailsPresenter = interface
+    procedure LoadReviews(const BookId: Integer);
+    procedure WriteReview;
+    procedure CheckCustomerSession;
+    procedure PopulateReviewsTable(JSONData: string);
+  end;
+
+implementation
+
+end.

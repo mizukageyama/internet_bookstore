@@ -1,0 +1,12 @@
+unit MainRepositoryIntf;
+
+interface
+
+type
+  IMainRepository = interface
+
+  end;
+
+implementation
+
+end.

@@ -1,0 +1,19 @@
+unit MainFrmIntf;
+
+interface
+
+uses
+  MainPresenterIntf;
+
+type
+  IMainFrm = interface
+    procedure SetPresenter(APresenter: IMainPresenter);
+    procedure SetPageInfo;
+    procedure EnablePrevButton;
+    procedure DisablePrevButton;
+    procedure EnableNextButton;
+    procedure DisableNextButton;
+  end;
+implementation
+
+end.

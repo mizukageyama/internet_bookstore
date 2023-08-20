@@ -1,0 +1,61 @@
+unit BookServiceClient;
+
+interface
+
+uses
+  BookServiceIntf, BookRepositoryIntf, BookDTO, System.Generics.Collections;
+
+type
+  TBookServiceClient = class//(TInterfacedObject, IBookService)
+  private
+    FRepository: IBookRepository;
+  public
+    constructor Create(ARepository: IBookRepository); overload;
+
+//    procedure CreateBook(const Book: TBook);
+    function GetBooks: String;
+//    function GetBookById(const BookId: Integer): TBook;
+//    procedure UpdateBook(const Book: TBook);
+//    procedure DeleteBook(const BookId: Integer);
+  end;
+
+implementation
+
+{ TBookServiceClient }
+
+constructor TBookServiceClient.Create(ARepository: IBookRepository);
+begin
+  FRepository := ARepository;
+end;
+
+//procedure TBookServiceClient.CreateBook(const Book: TBook);
+//begin
+//  FRepository.CreateBook(Book.ToJSONBody);
+//end;
+//
+//procedure TBookServiceClient.DeleteBook(const BookId: Integer);
+//begin
+//  FRepository.DeleteBook(BookId);
+//end;
+//
+//function TBookServiceClient.GetBookById(const BookId: Integer): TBook;
+//begin
+//  Result := FRepository.GetBookById(BookId);
+//end;
+
+function TBookServiceClient.GetBooks: string;
+begin
+  var Response := FRepository.GetBooks;
+
+  if Response.StatusCode <> 200 then
+    raise Exception.Create('Error Message');
+
+  Result := Response.Content;
+end;
+
+//procedure TBookServiceClient.UpdateBook(const Book: TBook);
+//begin
+//  FRepository.UpdateBook(Book);
+//end;
+
+end.

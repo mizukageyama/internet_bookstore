@@ -1,0 +1,75 @@
+unit MainPresenter;
+
+interface
+
+uses
+  MainPresenterIntf, BookServiceClientIntf, MainFrmIntf, System.SysUtils,
+  Vcl.Dialogs, MVCFramework.DataSet.Utils, MVCFramework.Serializer.Commons;
+
+type
+  TMainPresenter = class(TInterfacedObject, IMainPresenter)
+  private
+    FMainView: IMainFrm;
+    FMainService: IBookServiceClient;
+  protected
+    procedure LoadBooks;
+    procedure ShowBookDetails;
+    procedure PopulateBookTable(JSONData: string);
+  public
+    constructor Create(AMainView: IMainFrm; AMainService: IBookServiceClient);
+  end;
+
+implementation
+
+{ TMainPresenter }
+
+constructor TMainPresenter.Create(AMainView: IMainFrm;
+  AMainService: IBookServiceClient);
+begin
+  FMainView := AMainView;
+  FMainService := AMainService;
+  FMainView.SetPresenter(Self);
+end;
+
+procedure TMainPresenter.LoadBooks;
+begin
+  try
+    var ResponseContent := FMainService.GetBooks;
+    PopulateBookTable(ResponseContent);
+    FMainView.EnablePrevButton;
+    FMainView.EnableNextButton;
+    FMainView.SetPageInfo(1, 4);
+  except
+    on E: Exception do
+    begin
+      ShowMessage(E.ToString);
+      FMainView.DisablePrevButton;
+      FMainView.DisableNextButton;
+      FMainView.SetNoResult;
+    end;
+  end;
+end;
+
+procedure TMainPresenter.PopulateBookTable(JSONData: string);
+begin
+  var BookstoreDM := BookstoreDataModule;
+  BookstoreDM.fdmemBook.Close;
+  BookstoreDM.fdmemBook.Open;
+  BookstoreDM.fdmemBook.LoadJSONArrayFromJSONObjectProperty('data', JSONData,
+    TMVCNameCase.ncPascalCase);
+  BookstoreDM.fdmemBook.First;
+end;
+
+procedure TMainPresenter.ShowBookDetails;
+begin
+  Self.Hide;
+  var SelectedBook := TBook.Create;
+  SelectedBook.SetBookId(BookstoreDataModule.fdmemBookId.Value);
+  SelectedBook.SetBookTitle(BookstoreDataModule.fdmemBookTitle.Value);
+  SelectedBook.SetBookSynopsis(BookstoreDataModule.fdmemBookSynopsis.Value);
+  var BookDetailsForm:=  TBookDetailsForm.Create(SelectedBook, Self);
+  BookDetailsForm.Show;
+end;
+
+end.
+

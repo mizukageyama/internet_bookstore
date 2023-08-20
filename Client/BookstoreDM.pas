@@ -18,6 +18,11 @@ type
     fdMemBookId: TIntegerField;
     fdMemBookTitle: TStringField;
     fdMemBookSynopsis: TStringField;
+    fdMemCustomerReviewId: TIntegerField;
+    fdMemCustomerReviewBookId: TIntegerField;
+    fdMemCustomerReviewCustomerId: TIntegerField;
+    fdMemCustomerReviewRating: TIntegerField;
+    fdMemCustomerReviewReview: TStringField;
   private
     { Private declarations }
   public

@@ -1,0 +1,14 @@
+unit ApiRequestTemplate;
+
+interface
+
+type
+  TApiRequestTemplate = class abstract
+  public
+    procedure HandleApiResponse;
+    procedure AfterSuccess; virtual; abstract;
+  end;
+
+implementation
+
+end.

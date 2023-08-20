@@ -1,0 +1,66 @@
+unit CustomerReviewServiceClient;
+
+interface
+
+uses
+  CustomerReviewServiceClientIntf, CustomerReviewRepositoryIntf,
+  CustomerReviewDTO, System.Generics.Collections, System.SysUtils;
+
+type
+  TCustomerReviewServiceClient = class(TInterfacedObject,
+    ICustomerReviewServiceClient)
+  private
+    FRepository: ICustomerReviewRepository;
+  protected
+    function CreateCustomerReview(const CustomerReview:
+      TCustomerReview): string;
+    function GetCustomerReviewsByBookId(const BookId: Integer): string;
+    function GetCustomerReviewById(const CustomerReviewId: Integer): string;
+    function UpdateCustomerReview(const CustomerReview:
+      TCustomerReview): string;
+    function DeleteCustomerReview(const CustomerReviewId: Integer): string;
+  public
+    constructor Create(ARepository: ICustomerReviewRepository); overload;
+  end;
+
+implementation
+
+{ TCustomerReviewServiceClient }
+
+constructor TCustomerReviewServiceClient.Create(
+  ARepository: ICustomerReviewRepository);
+begin
+
+end;
+
+function TCustomerReviewServiceClient.CreateCustomerReview(
+  const CustomerReview: TCustomerReview): string;
+begin
+
+end;
+
+function TCustomerReviewServiceClient.DeleteCustomerReview(
+  const CustomerReviewId: Integer): string;
+begin
+
+end;
+
+function TCustomerReviewServiceClient.GetCustomerReviewById(
+  const CustomerReviewId: Integer): string;
+begin
+
+end;
+
+function TCustomerReviewServiceClient.GetCustomerReviewsByBookId(
+  const BookId: Integer): string;
+begin
+
+end;
+
+function TCustomerReviewServiceClient.UpdateCustomerReview(
+  const CustomerReview: TCustomerReview): string;
+begin
+
+end;
+
+end.

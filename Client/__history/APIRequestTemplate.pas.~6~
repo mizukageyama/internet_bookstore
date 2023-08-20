@@ -1,0 +1,28 @@
+unit ApiRequestTemplate;
+
+interface
+
+type
+  TApiRequestTemplate = class abstract
+  public
+    procedure DoApiCall;
+    function IsSuccess: Boolean; virtual;
+    procedure AfterSuccess; virtual; abstract;
+  end;
+
+implementation
+
+{ TApiRequestTemplate }
+
+procedure TApiRequestTemplate.DoApiCall;
+begin
+  if IsSuccess then
+    AfterSuccess;
+end;
+
+function TApiRequestTemplate.IsSuccess: Boolean;
+begin
+  Result := True;
+end;
+
+end.

@@ -39,11 +39,6 @@ begin
   FSynopsis := ASynopsis;
 end;
 
-function TBook.IsValid: Boolean;
-begin
-  Result := (Title <> '') and (Synopsis <> '');
-end;
-
 constructor TBook.Create(const ABook: IBookContext);
 begin
   if not Assigned(ABook) then
@@ -54,6 +49,11 @@ begin
   FId := ABook.Id;
   FTitle := ABook.Title;
   FSynopsis := ABook.Synopsis;
+end;
+
+function TBook.IsValid: Boolean;
+begin
+  Result := (Title <> '') and (Synopsis <> '');
 end;
 
 end.

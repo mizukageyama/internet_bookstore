@@ -1,0 +1,81 @@
+unit BookDetailsPresenter;
+
+interface
+
+uses
+  MainPresenterIntf, BookServiceClientIntf, MainFrmIntf, System.SysUtils,
+  Vcl.Dialogs, MVCFramework.DataSet.Utils, MVCFramework.Serializer.Commons,
+  BookstoreDM, BookDTO, BookDetailsFrm, System.Variants, BookDetailsFrmIntf,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
+  CustomerReviewServiceClientIntf;
+
+type
+  TBookDetailsPresenter = class(TInterfacedObject, IBookDetailsPresenter)
+  private
+    FBookDetailsView: IBookDetailsForm;
+    FBookDetailsService: ICustomerReviewServiceClient;
+  protected
+    procedure LoadBooks;
+    procedure ShowBookDetails;
+    procedure PopulateBookTable(JSONData: string);
+  public
+    constructor Create(AMainView: IMainFrm; AMainService: IBookServiceClient);
+  end;
+
+implementation
+
+{ TMainPresenter }
+
+constructor TMainPresenter.Create(AMainView: IMainFrm;
+  AMainService: IBookServiceClient);
+begin
+  FMainView := AMainView;
+  FMainService := AMainService;
+  FMainView.SetPresenter(Self);
+end;
+
+procedure TMainPresenter.LoadBooks;
+begin
+  try
+    var ResponseContent := FMainService.GetBooks;
+    PopulateBookTable(ResponseContent);
+    FMainView.EnablePrevButton;
+    FMainView.EnableNextButton;
+    FMainView.SetPageInfo(1, 4);
+  except
+    on E: Exception do
+    begin
+      ShowMessage(E.ToString);
+      FMainView.DisablePrevButton;
+      FMainView.DisableNextButton;
+      FMainView.SetNoResult;
+    end;
+  end;
+end;
+
+procedure TMainPresenter.PopulateBookTable(JSONData: string);
+begin
+  var BookstoreDM := BookstoreDataModule;
+  BookstoreDM.fdmemBook.Close;
+  BookstoreDM.fdmemBook.Open;
+  BookstoreDM.fdmemBook.LoadJSONArrayFromJSONObjectProperty('data', JSONData,
+    TMVCNameCase.ncPascalCase);
+  BookstoreDM.fdmemBook.First;
+end;
+
+procedure TMainPresenter.ShowBookDetails;
+begin
+  FMainView.HideForm;
+  var BookstoreDM := BookstoreDataModule;
+
+  var BookId := (BookstoreDM.fdmemBookId.Value);
+  var BookTitle := (BookstoreDM.fdmemBookTitle.Value);
+  var BookSynopsis := (BookstoreDM.fdmemBookSynopsis.Value);
+
+  var SelectedBook := TBook.Create(BookId, BookTitle, BookSynopsis);
+  var BookDetailsForm := TBookDetailsForm.Create(SelectedBook, FMainView.Self);
+  BookDetailsForm.Show;
+end;
+
+end.
+

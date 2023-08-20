@@ -1,0 +1,30 @@
+unit CustomerReviewRepository;
+
+interface
+
+uses
+  CustomerReviewRepositoryIntf, CustomerReview, MVCFramework.RESTClient.Intf,
+  MVCFramework.RESTClient, MVCFramework.DataSet.Utils,
+  System.Generics.Collections, JSON, System.SysUtils;
+
+type
+  TCustomerReviewRepository = class(TInterfacedObject,
+    ICustomerReviewRepository)
+  private
+    FRESTClient: IMVCRESTClient;
+    const
+      ENDPOINT = '/api/reviews';
+  protected
+    function CreateReview(const RequestBody: TJSONObject): IMVCRESTResponse;
+    function GetReviewsByBookId(const BookId: Integer): IMVCRESTResponse;
+    function GetReviewById(const ReviewId: Integer): IMVCRESTResponse;
+    function UpdateReview(const RequestBody: TJSONObject): IMVCRESTResponse;
+    function DeleteReview(const ReviewId: Integer): IMVCRESTResponse;
+  public
+    constructor Create;
+    destructor OnDestroy;
+  end;
+
+implementation
+
+end.

@@ -1,0 +1,16 @@
+unit BookRepositoryIntf;
+
+interface
+
+type
+  IBookRepository = interface
+    procedure SaveBook(const Book: TBook);
+    function GetBooks: TObjectList<TBook>;
+    function GetBookById(const BookId: Integer): TBook;
+    procedure UpdateBook(const Book: TBook);
+    procedure DeleteBook(const BookId: Integer);
+  end;
+
+implementation
+
+end.

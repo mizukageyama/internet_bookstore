@@ -1,0 +1,13 @@
+unit BookDetailsFrmIntf;
+
+interface
+
+type
+  IBookDetailsForm = interface
+    procedure LoadCustomerReviews(const BookId: Integer);
+    procedure SetBookDetails;
+  end;
+
+implementation
+
+end.

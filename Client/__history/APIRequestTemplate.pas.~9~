@@ -1,0 +1,58 @@
+unit ApiRequestTemplate;
+
+interface
+
+uses
+  MVCFramework.RESTClient.Intf, MVCFramework.RESTClient;
+
+type
+  TApiRequestTemplate = class abstract
+  public
+    procedure DoApiCall;
+    function IsSuccess: Boolean; virtual;
+    procedure ResponseHandler(Response: IMVCRESTResponse);
+    procedure DoAfterSuccess; virtual; abstract;
+  end;
+
+implementation
+
+{ TApiRequestTemplate }
+
+procedure TApiRequestTemplate.DoApiCall;
+begin
+
+  if IsSuccess then
+    DoAfterSuccess;
+end;
+
+function TApiRequestTemplate.IsSuccess: Boolean;
+begin
+  Result := True;
+end;
+
+procedure TApiRequestTemplate.ResponseHandler(Response: IMVCRESTResponse);
+begin
+  case Response.StatusCode of
+    200, 201:
+      begin
+        ShowMessage(SuccessMessage);
+        IsSucess := True;
+      end;
+    204:
+      begin
+        ShowMessage(Response.StatusText);
+        IsSucess := True;
+      end;
+    400, 401:
+      begin
+        JSONValue := TJSONObject.ParseJSONValue(Response.Content);
+        var ErrorMessage := JSONValue.GetValue<string>('message');
+        ShowMessage(ErrorMessage);
+      end;
+    403:
+      ShowMessage('You are not allowed for this action.')
+  else
+    ShowMessage('Something went wrong');
+end;
+
+end.

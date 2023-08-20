@@ -1,0 +1,14 @@
+unit MainFrmIntf;
+
+interface
+
+uses
+  MainPresenterIntf;
+
+type
+  IMainFrm = interface
+    procedure SetPresenter(APresenter: IMainPresenter);
+  end;
+implementation
+
+end.

@@ -1,0 +1,24 @@
+unit MainFrmIntf;
+
+interface
+
+uses
+  MainPresenterIntf, Vcl.Forms;
+
+type
+  IMainFrm = interface
+    procedure SetPresenter(APresenter: IMainPresenter);
+    procedure SetPageInfo(CurrentPage, TotalPage: Integer);
+    procedure SetNoResult;
+    procedure EnablePrevButton;
+    procedure DisablePrevButton;
+    procedure EnableNextButton;
+    procedure DisableNextButton;
+    procedure PopulateTable(JSONData: string);
+    procedure HideForm;
+    procedure ShowForm;
+    function Self: TForm;
+  end;
+implementation
+
+end.

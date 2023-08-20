@@ -3,7 +3,8 @@ unit CustomerReviewService;
 interface
 
 uses
-  CustomerReviewServiceIntf, CustomerReview, CustomerReviewDaoIntf, System.Generics.Collections;
+  CustomerReviewServiceIntf, CustomerReview, CustomerReviewDaoIntf,
+  System.Generics.Collections;
 
 type
   TCustomerReviewService = class(TInterfacedObject, ICustomerReviewService)

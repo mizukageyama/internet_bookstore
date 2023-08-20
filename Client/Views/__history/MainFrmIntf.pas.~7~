@@ -1,0 +1,23 @@
+unit MainFrmIntf;
+
+interface
+
+uses
+  MainPresenterIntf;
+
+type
+  IMainFrm = interface
+    procedure SetPresenter(APresenter: IMainPresenter);
+    procedure SetPageInfo(CurrentPage, TotalPage: Integer);
+    procedure SetNoResult;
+    procedure EnablePrevButton;
+    procedure DisablePrevButton;
+    procedure EnableNextButton;
+    procedure DisableNextButton;
+    procedure PopulateTable(JSONData: string);
+    procedure HideForm;
+    procedure ShowForm;
+  end;
+implementation
+
+end.

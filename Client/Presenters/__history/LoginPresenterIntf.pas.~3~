@@ -1,0 +1,14 @@
+unit LoginPresenterIntf;
+
+interface
+
+type
+  ILoginPresenter = interface
+    procedure Login(const Username, Password: string);
+    procedure ValidateInput(out Username, Password: string;
+      out IsSuccess: Boolean);
+  end;
+
+implementation
+
+end.

@@ -1,0 +1,12 @@
+unit WriteReviewPresenterIntf;
+
+interface
+
+type
+  IWriteReviewPresenter = interface
+
+  end;
+
+implementation
+
+end.

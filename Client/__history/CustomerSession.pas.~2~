@@ -1,0 +1,57 @@
+unit CustomerSession;
+
+interface
+
+type
+  TCustomerSession = class
+  private
+    class var FInstance: TCustomerSession;
+    FCustomerID: Integer;
+    FLoggedIn: Boolean;
+    constructor Create;
+  public
+    class function Instance: TCustomerSession;
+    procedure SetLoggedIn(CustomerID: Integer);
+    procedure SetLoggedOut;
+    function IsLoggedIn: Boolean;
+    function GetCustomerID: Integer;
+  end;
+
+implementation
+
+constructor TCustomerSession.Create;
+begin
+  FLoggedIn := False;
+  FCustomerID := 0;
+end;
+
+class function TCustomerSession.Instance: TCustomerSession;
+begin
+  if FInstance = nil then
+    FInstance := TCustomerSession.Create;
+  Result := FInstance;
+end;
+
+procedure TCustomerSession.SetLoggedIn(CustomerID: Integer);
+begin
+  FLoggedIn := True;
+  FCustomerID := CustomerID;
+end;
+
+procedure TCustomerSession.SetLoggedOut;
+begin
+  FLoggedIn := False;
+  FCustomerID := 0;
+end;
+
+function TCustomerSession.IsLoggedIn: Boolean;
+begin
+  Result := FLoggedIn;
+end;
+
+function TCustomerSession.GetCustomerID: Integer;
+begin
+  Result := FCustomerID;
+end;
+
+end.

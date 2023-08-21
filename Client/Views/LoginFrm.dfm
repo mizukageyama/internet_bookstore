@@ -5,8 +5,8 @@ object LoginForm: TLoginForm
   AutoSize = True
   BorderStyle = bsSingle
   Caption = 'Login'
-  ClientHeight = 152
-  ClientWidth = 343
+  ClientHeight = 151
+  ClientWidth = 304
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,10 +15,10 @@ object LoginForm: TLoginForm
   Font.Style = []
   TextHeight = 15
   object btnLogin: TButton
-    Left = 242
-    Top = 128
-    Width = 101
-    Height = 24
+    Left = 165
+    Top = 81
+    Width = 139
+    Height = 70
     Align = alRight
     Caption = 'Login'
     Font.Charset = DEFAULT_CHARSET
@@ -29,25 +29,25 @@ object LoginForm: TLoginForm
     ParentFont = False
     TabOrder = 0
     OnClick = btnLoginClick
-    ExplicitLeft = 236
-    ExplicitHeight = 15
+    ExplicitLeft = 159
+    ExplicitHeight = 61
   end
   object pnlEmail: TPanel
     Left = 0
     Top = 0
-    Width = 343
-    Height = 64
+    Width = 304
+    Height = 41
     Align = alTop
     BevelOuter = bvNone
     Padding.Top = 7
     Padding.Bottom = 7
     TabOrder = 1
-    ExplicitWidth = 337
+    ExplicitWidth = 298
     object lblEmail: TLabel
       Left = 0
       Top = 7
       Width = 104
-      Height = 50
+      Height = 27
       Align = alLeft
       AutoSize = False
       Caption = 'Email'
@@ -61,59 +61,33 @@ object LoginForm: TLoginForm
       ExplicitTop = 1
       ExplicitHeight = 22
     end
-    object pnlEmailInput: TPanel
+    object edtEmail: TEdit
       Left = 104
       Top = 7
-      Width = 239
-      Height = 50
-      Align = alClient
-      BevelOuter = bvNone
+      Width = 168
+      Height = 27
+      Align = alLeft
       TabOrder = 0
-      ExplicitWidth = 233
-      object lblEmailValidationMessage: TLabel
-        Left = 0
-        Top = 30
-        Width = 239
-        Height = 20
-        Align = alBottom
-        Caption = 'Validation Message'
-        Color = clBlack
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGray
-        Font.Height = -15
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-        ExplicitWidth = 129
-      end
-      object edtEmail: TEdit
-        Left = 0
-        Top = 0
-        Width = 168
-        Height = 30
-        Align = alLeft
-        TabOrder = 0
-        ExplicitHeight = 23
-      end
+      Text = 'thanna1@mit.edu'
+      ExplicitHeight = 23
     end
   end
-  object Panel1: TPanel
+  object pnlPassword: TPanel
     Left = 0
-    Top = 64
-    Width = 343
-    Height = 64
+    Top = 41
+    Width = 304
+    Height = 40
     Align = alTop
     BevelOuter = bvNone
     Padding.Top = 7
     Padding.Bottom = 7
     TabOrder = 2
-    ExplicitWidth = 337
+    ExplicitWidth = 298
     object lblPassword: TLabel
       Left = 0
       Top = 7
       Width = 104
-      Height = 50
+      Height = 26
       Align = alLeft
       AutoSize = False
       Caption = 'Password'
@@ -123,45 +97,19 @@ object LoginForm: TLoginForm
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitLeft = 1
-      ExplicitTop = 1
-      ExplicitHeight = 22
+      ExplicitLeft = -8
+      ExplicitTop = 6
+      ExplicitHeight = 50
     end
-    object pnlPasswordInput: TPanel
+    object edtPassword: TEdit
       Left = 104
       Top = 7
-      Width = 239
-      Height = 50
-      Align = alClient
-      BevelOuter = bvNone
+      Width = 168
+      Height = 26
+      Align = alLeft
       TabOrder = 0
-      ExplicitWidth = 233
-      object lblPasswordValidationMessage: TLabel
-        Left = 0
-        Top = 30
-        Width = 239
-        Height = 20
-        Align = alBottom
-        Caption = 'Validation Message'
-        Color = clBlack
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGray
-        Font.Height = -15
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-        ExplicitWidth = 129
-      end
-      object edtPassword: TEdit
-        Left = 0
-        Top = 0
-        Width = 168
-        Height = 30
-        Align = alLeft
-        TabOrder = 0
-        ExplicitHeight = 23
-      end
+      Text = 'cknssmmAoD'
+      ExplicitHeight = 23
     end
   end
 end

@@ -1,0 +1,14 @@
+unit WriteReviewPresenterIntf;
+
+interface
+
+type
+  IWriteReviewPresenter = interface
+    procedure InitializeView;
+    procedure SaveReview(const BookId: Integer);
+    function ValidateInput(const BookId: Integer): TCustomerReview;
+  end;
+
+implementation
+
+end.

@@ -1,0 +1,20 @@
+unit AuthService;
+
+interface
+
+uses
+  AuthServiceIntf;
+
+type
+  TAuthService = class(TInterfacedObject, IAuthService)
+  private
+    FRepository: IAuthRepository;
+  protected
+    procedure LoginCustomer;
+  public
+    constructor Create(ARepository: IAuthRepository); overload;
+  end;
+
+implementation
+
+end.

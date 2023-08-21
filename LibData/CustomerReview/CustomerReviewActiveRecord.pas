@@ -62,7 +62,7 @@ begin
   inherited Create(True);
 
   FId := ACustomerReview.Id;
-  FCustomerId := ACustomerReview.Id;
+  FCustomerId := ACustomerReview.CustomerId;
   FBookId := ACustomerReview.BookId;
   FReview := ACustomerReview.Review;
   FRating := ACustomerReview.Rating;

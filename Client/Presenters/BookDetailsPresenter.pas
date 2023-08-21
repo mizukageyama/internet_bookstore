@@ -16,9 +16,11 @@ type
     FBookDetailsService: ICustomerReviewServiceClient;
   protected
     procedure LoadReviews(const BookId: Integer);
-    procedure WriteReview;
+    procedure WriteReview(const Book: TBook);
     function IsCustomerLoggedIn: Boolean;
     procedure PopulateReviewsTable(JSONData: string);
+    procedure ShowWriteReviewForm(const Book: TBook);
+    procedure ShowLoginForm(const Book: TBook);
   public
     constructor Create(ABookDetailsView: IBookDetailsForm;
       ABookDetailsService: ICustomerReviewServiceClient);
@@ -29,7 +31,8 @@ implementation
 { TBookDetailsPresenter }
 
 uses
-  WriteReviewFrm;
+  WriteReviewFrm, CustomerReviewRepository, CustomerReviewServiceClient,
+  WriteReviewPresenter, LoginFrm, AuthService, AuthRepository, LoginPresenter;
 
 function TBookDetailsPresenter.IsCustomerLoggedIn;
 begin
@@ -60,17 +63,41 @@ begin
   BookstoreDM.fdmemCustomerReview.First;
 end;
 
-procedure TBookDetailsPresenter.WriteReview;
+procedure TBookDetailsPresenter.ShowLoginForm(const Book: TBook);
 begin
-  if IsCustomerLoggedIn then
+  var LoginForm := TLoginForm.Create(FBookDetailsView.Self);
+  var AuthRepository := TAuthRepository.Create;
+  var AuthService := TAuthService.Create(AuthRepository);
+  var LoginPresenter := TLoginPresenter .Create(LoginForm as TLoginForm,
+    AuthService);
+
+  LoginPresenter.OnLoginSuccess := procedure
   begin
-    var ReviewForm := TWriteReviewForm.Create(FBookDetailsView.Self);
-    ReviewForm.Show;
-  end
+    ShowWriteReviewForm(Book);
+  end;
+
+  LoginForm.Show;
+end;
+
+procedure TBookDetailsPresenter.ShowWriteReviewForm(const Book: TBook);
+begin
+  var ReviewForm := TWriteReviewForm.Create(Book, FBookDetailsView.Self);
+  var CustomerReviewRepository := TCustomerReviewRepository.Create;
+  var CustomerReviewService := TCustomerReviewServiceClient
+    .Create(CustomerReviewRepository);
+  var WriteReviewPresenter := TWriteReviewPresenter
+    .Create(ReviewForm as TWriteReviewForm, CustomerReviewService);
+
+  ReviewForm.Show;
+end;
+
+procedure TBookDetailsPresenter.WriteReview(const Book: TBook);
+begin
+  if not IsCustomerLoggedIn then
+    ShowWriteReviewForm(Book)
   else
   begin
-//    var LoginForm := TLoginForm.Create(FBookDetailsView.Self);
-//    LoginForm.Show;
+    ShowLoginForm(Book);
   end;
 end;
 

@@ -1,0 +1,17 @@
+unit AuthService;
+
+interface
+
+type
+  TAuthService = class
+  private
+    FRepository: IAuthRepository;
+  protected
+    procedure LoginCustomer();
+  public
+    constructor Create(ARepository: ICustomerReviewRepository); overload;
+  end;
+
+implementation
+
+end.

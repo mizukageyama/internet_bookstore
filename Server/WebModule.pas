@@ -84,7 +84,7 @@ begin
       TAuthCriteria.Create,
       lConfigClaims,
       'this_is_my_secret',
-      '/api/login',
+      '/api/auth/login',
       [TJWTCheckableClaim.ExpirationTime, TJWTCheckableClaim.NotBefore]
     )
   );

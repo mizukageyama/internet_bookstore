@@ -12,13 +12,12 @@ type
   private
     FRepository: ICustomerReviewRepository;
   protected
-    function CreateCustomerReview(const CustomerReview:
-      TCustomerReview): string;
+    procedure CreateCustomerReview(const CustomerReview:
+      TCustomerReview);
     function GetCustomerReviewsByBookId(const BookId: Integer): string;
     function GetCustomerReviewById(const CustomerReviewId: Integer): string;
-    function UpdateCustomerReview(const CustomerReview:
-      TCustomerReview): string;
-    function DeleteCustomerReview(const CustomerReviewId: Integer): string;
+    procedure UpdateCustomerReview(const CustomerReview: TCustomerReview);
+    procedure DeleteCustomerReview(const CustomerReviewId: Integer);
   public
     constructor Create(ARepository: ICustomerReviewRepository); overload;
   end;
@@ -33,26 +32,22 @@ begin
   FRepository := ARepository;
 end;
 
-function TCustomerReviewServiceClient.CreateCustomerReview(
-  const CustomerReview: TCustomerReview): string;
+procedure TCustomerReviewServiceClient.CreateCustomerReview(
+  const CustomerReview: TCustomerReview);
 begin
   var Response := FRepository.CreateReview(CustomerReview.ToJSONBody);
 
   if Response.StatusCode <> 201 then
     raise Exception.Create('Unable to create review');
-
-  Result := Response.Content;
 end;
 
-function TCustomerReviewServiceClient.DeleteCustomerReview(
-  const CustomerReviewId: Integer): string;
+procedure TCustomerReviewServiceClient.DeleteCustomerReview(
+  const CustomerReviewId: Integer);
 begin
   var Response := FRepository.DeleteReview(CustomerReviewId);
 
   if Response.StatusCode <> 204 then
     raise Exception.Create('Unable to delete review');
-
-  Result := Response.Content;
 end;
 
 function TCustomerReviewServiceClient.GetCustomerReviewById(
@@ -77,15 +72,13 @@ begin
   Result := Response.Content;
 end;
 
-function TCustomerReviewServiceClient.UpdateCustomerReview(
-  const CustomerReview: TCustomerReview): string;
+procedure TCustomerReviewServiceClient.UpdateCustomerReview(
+  const CustomerReview: TCustomerReview);
 begin
   var Response := FRepository.UpdateReview(CustomerReview.ToJSONBody);
 
   if Response.StatusCode <> 200 then
     raise Exception.Create('Unable to update review');
-
-  Result := Response.Content;
 end;
 
 end.

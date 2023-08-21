@@ -1,0 +1,23 @@
+unit WriteReviewFrmIntf;
+
+interface
+
+uses
+  Vcl.Forms;
+
+type
+  IWriteReviewForm = interface
+    procedure DisplayBookTitle;
+    procedure DisplayCustomerGreeting(const Customer: string);
+    procedure HideForm;
+    procedure ShowForm;
+    function Self: TForm;
+    procedure ShowReviewValidationMessage(const ValidationMessage: string);
+    procedure HideReviewValidationMessage;
+    procedure ShowRatingValidationMessage(const ValidationMessage: string);
+    procedure HideRatingValidationMessage;
+  end;
+
+implementation
+
+end.

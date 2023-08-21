@@ -59,6 +59,7 @@ begin
       end;
 
       AIsValid := True;
+      ASessionData.AddOrSetValue('customer_name', Customer.FirstName);
       ASessionData.AddOrSetValue('customer_id', Customer.Id.ToString);
     end
     else

@@ -15,10 +15,10 @@ type
     const
       ENDPOINT = '/api/reviews';
   protected
-    function CreateReview(const RequestBody: TJSONObject): IMVCRESTResponse;
+    function CreateReview(const RequestBody: string): IMVCRESTResponse;
     function GetReviewsByBookId(const BookId: Integer): IMVCRESTResponse;
     function GetReviewById(const ReviewId: Integer): IMVCRESTResponse;
-    function UpdateReview(const RequestBody: TJSONObject): IMVCRESTResponse;
+    function UpdateReview(const RequestBody: string): IMVCRESTResponse;
     function DeleteReview(const ReviewId: Integer): IMVCRESTResponse;
   public
     constructor Create;
@@ -26,6 +26,9 @@ type
   end;
 
 implementation
+
+uses
+  CustomerSession;
 
 { TCustomerReviewRepository }
 
@@ -35,12 +38,14 @@ begin
 end;
 
 function TCustomerReviewRepository.CreateReview(
-  const RequestBody: TJSONObject): IMVCRESTResponse;
+  const RequestBody: string): IMVCRESTResponse;
 var
   Response: IMVCRESTResponse;
+  CustomerSession: TCustomerSession;
 begin
-  FRESTClient.SetBearerAuthorization('token');
-  FRESTClient.AddBody(RequestBody.toString, 'application/json');
+  CustomerSession := TCustomerSession.Instance;
+  FRESTClient.SetBearerAuthorization(CustomerSession.GetToken);
+  FRESTClient.AddBody(RequestBody, 'application/json');
   Response := FRESTClient.POST(ENDPOINT);
   Result := Response;
 end;
@@ -79,12 +84,12 @@ begin
 end;
 
 function TCustomerReviewRepository.UpdateReview(
-  const RequestBody: TJSONObject): IMVCRESTResponse;
+  const RequestBody: string): IMVCRESTResponse;
 var
   Response: IMVCRESTResponse;
 begin
   FRESTClient.SetBearerAuthorization('token');
-  FRESTClient.AddBody(RequestBody.toString, 'application/json');
+  FRESTClient.AddBody(RequestBody, 'application/json');
   Response := FRESTClient.PUT(ENDPOINT);
   Result := Response;
 end;

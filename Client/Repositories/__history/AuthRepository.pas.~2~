@@ -1,0 +1,20 @@
+unit AuthRepository;
+
+interface
+
+uses
+  AuthRepositoryIntf, System.Generics.Collections, MVCFramework.RESTClient.Intf,
+  MVCFramework.RESTClient, JSON;
+
+type
+  TAuthRepository = class(TInterfacedObject, IAuthRepository)
+  private
+    FRepository: IAuthRepository;
+  protected
+    function LoginUser(const Username, Password: string): IMVCRESTResponse;
+  end;
+
+implementation
+
+end.
+

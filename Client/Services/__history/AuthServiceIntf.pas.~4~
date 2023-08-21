@@ -1,0 +1,12 @@
+unit AuthServiceIntf;
+
+interface
+
+type
+  IAuthService = interface
+   procedure LoginCustomer(const Username, Password: string): string;
+  end;
+
+implementation
+
+end.

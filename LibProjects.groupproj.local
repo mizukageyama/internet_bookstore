@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2023/08/15 15:27:56.000.381,C:\Users\Emmy-chwaan\Documents\Embarcadero\Studio\Projects\ProjectGroup1.groupproj=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore\LibProjects.groupproj</Transaction>
+    <Transaction>2023/08/15 15:27:56.000.381,C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore\LibProjects.groupproj=C:\Users\Emmy-chwaan\Documents\Embarcadero\Studio\Projects\ProjectGroup1.groupproj</Transaction>
   </Transactions>
 	<Default.Personality>
-		<Projects ActiveProject="C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore\Client\InternetBookstore.dproj"/>
+		<Projects ActiveProject="C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore\Server\InternetBookstoreServer.dproj"/>
 	</Default.Personality>
 </BorlandProject>

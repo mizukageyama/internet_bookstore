@@ -10,6 +10,7 @@ object WriteReviewForm: TWriteReviewForm
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  OnShow = FormShow
   TextHeight = 15
   object lblBookTitle: TLabel
     Left = 0
@@ -24,7 +25,6 @@ object WriteReviewForm: TWriteReviewForm
     Font.Name = 'Segoe UI'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitTop = 71
     ExplicitWidth = 38
   end
   object pnlBottom: TPanel
@@ -41,8 +41,8 @@ object WriteReviewForm: TWriteReviewForm
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    ExplicitTop = 439
-    ExplicitWidth = 616
+    ExplicitTop = 321
+    ExplicitWidth = 528
     object btnSaveReview: TButton
       Left = 0
       Top = 0
@@ -51,6 +51,7 @@ object WriteReviewForm: TWriteReviewForm
       Align = alLeft
       Caption = 'Save Review'
       TabOrder = 0
+      OnClick = btnSaveReviewClick
     end
   end
   object pnlGreeting: TPanel
@@ -61,8 +62,7 @@ object WriteReviewForm: TWriteReviewForm
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitTop = 96
-    ExplicitWidth = 616
+    ExplicitWidth = 528
     object lblGreeting: TLabel
       Left = 0
       Top = 0
@@ -91,8 +91,8 @@ object WriteReviewForm: TWriteReviewForm
     Padding.Top = 7
     Padding.Bottom = 7
     TabOrder = 2
-    ExplicitTop = 376
-    ExplicitWidth = 616
+    ExplicitTop = 258
+    ExplicitWidth = 528
     object lblRating: TLabel
       Left = 0
       Top = 7
@@ -117,6 +117,7 @@ object WriteReviewForm: TWriteReviewForm
       Width = 482
       Height = 49
       Align = alLeft
+      BevelOuter = bvNone
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clGray
       Font.Height = -12
@@ -124,28 +125,44 @@ object WriteReviewForm: TWriteReviewForm
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      object lblRatingValidationMessage: TLabel
-        Left = 1
-        Top = 28
-        Width = 480
-        Height = 20
-        Align = alBottom
-        Caption = 'Validation Message'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGray
-        Font.Height = -15
-        Font.Name = 'Segoe UI'
-        Font.Style = []
-        ParentFont = False
-        ExplicitWidth = 129
-      end
       object edtRating: TEdit
-        Left = 1
-        Top = 1
+        Left = 0
+        Top = 0
         Width = 58
         Height = 27
         Align = alLeft
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBackground
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 0
+        ExplicitHeight = 23
+      end
+      object pnlValidation: TPanel
+        Left = 0
+        Top = 27
+        Width = 482
+        Height = 22
+        Align = alBottom
+        BevelOuter = bvNone
+        TabOrder = 1
+        object lblRatingValidationMessage: TLabel
+          Left = 0
+          Top = 2
+          Width = 482
+          Height = 20
+          Align = alBottom
+          Caption = 'Validation Message'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clGray
+          Font.Height = -15
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          ExplicitWidth = 129
+        end
       end
     end
   end
@@ -155,17 +172,17 @@ object WriteReviewForm: TWriteReviewForm
     Width = 534
     Height = 215
     Align = alClient
+    BevelOuter = bvNone
     Padding.Top = 7
     Padding.Bottom = 7
     TabOrder = 3
-    ExplicitTop = 187
-    ExplicitWidth = 616
-    ExplicitHeight = 189
+    ExplicitWidth = 528
+    ExplicitHeight = 206
     object blbReview: TLabel
-      Left = 1
-      Top = 8
+      Left = 0
+      Top = 7
       Width = 103
-      Height = 199
+      Height = 201
       Align = alLeft
       AutoSize = False
       Caption = 'Your Review'
@@ -175,20 +192,23 @@ object WriteReviewForm: TWriteReviewForm
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
+      ExplicitLeft = 1
+      ExplicitTop = 8
       ExplicitHeight = 126
     end
     object pnlReviewInput: TPanel
-      Left = 104
-      Top = 8
+      Left = 103
+      Top = 7
       Width = 483
-      Height = 199
+      Height = 201
       Align = alLeft
+      BevelOuter = bvNone
       TabOrder = 0
-      ExplicitHeight = 173
+      ExplicitHeight = 192
       object lblReviewValidationMessage: TLabel
-        Left = 1
-        Top = 178
-        Width = 481
+        Left = 0
+        Top = 181
+        Width = 483
         Height = 20
         Align = alBottom
         Caption = 'Validation Message'
@@ -198,14 +218,13 @@ object WriteReviewForm: TWriteReviewForm
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        ExplicitTop = 225
         ExplicitWidth = 129
       end
       object memReview: TMemo
-        Left = 1
-        Top = 1
+        Left = 0
+        Top = 0
         Width = 408
-        Height = 177
+        Height = 181
         Align = alLeft
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -214,6 +233,7 @@ object WriteReviewForm: TWriteReviewForm
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        ExplicitHeight = 172
       end
     end
   end

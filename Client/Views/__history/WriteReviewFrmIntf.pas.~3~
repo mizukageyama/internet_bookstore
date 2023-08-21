@@ -1,0 +1,22 @@
+unit WriteReviewFrmIntf;
+
+interface
+
+uses
+  Vcl.Forms;
+
+type
+  IWriteReviewForm = interface
+    procedure SetBookDetails;
+    procedure HideForm;
+    procedure ShowForm;
+    function Self: TForm;
+    procedure ShowReviewValidationMessage;
+    procedure HideReviewValidationMessage;
+    procedure ShowRatingValidationMessage;
+    procedure HideRatingValidationMessage;
+  end;
+
+implementation
+
+end.

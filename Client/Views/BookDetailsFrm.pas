@@ -40,7 +40,7 @@ uses
 
 procedure TBookDetailsForm.btnWriteReviewClick(Sender: TObject);
 begin
-  FPresenter.WriteReview;
+  FPresenter.WriteReview(FBook);
 end;
 
 constructor TBookDetailsForm.Create(const Book: TBook; Owner: TComponent);

@@ -135,6 +135,17 @@
         <DCCReference Include="Services\CustomerReviewServiceClient.pas"/>
         <DCCReference Include="Repositories\CustomerReviewRepositoryIntf.pas"/>
         <DCCReference Include="Repositories\CustomerReviewRepository.pas"/>
+        <DCCReference Include="Views\WriteReviewFrmIntf.pas"/>
+        <DCCReference Include="Presenters\WriteReviewPresenterIntf.pas"/>
+        <DCCReference Include="Presenters\WriteReviewPresenter.pas"/>
+        <DCCReference Include="CustomerSession.pas"/>
+        <DCCReference Include="Services\AuthService.pas"/>
+        <DCCReference Include="Repositories\AuthRepositoryIntf.pas"/>
+        <DCCReference Include="Repositories\AuthRepository.pas"/>
+        <DCCReference Include="Services\AuthServiceIntf.pas"/>
+        <DCCReference Include="Presenters\LoginPresenterIntf.pas"/>
+        <DCCReference Include="Presenters\LoginPresenter.pas"/>
+        <DCCReference Include="Views\LoginFrmIntf.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

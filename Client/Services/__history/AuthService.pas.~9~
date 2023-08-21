@@ -1,0 +1,35 @@
+unit AuthService;
+
+interface
+
+uses
+  AuthServiceIntf, AuthRepositoryIntf, System.SysUtils;
+
+type
+  TAuthService = class(TInterfacedObject, IAuthService)
+  private
+    FRepository: IAuthRepository;
+  protected
+    procedure LoginCustomer(const Username, Password: string);
+  public
+    constructor Create(ARepository: IAuthRepository); overload;
+  end;
+
+implementation
+
+{ TAuthService }
+
+constructor TAuthService.Create(ARepository: IAuthRepository);
+begin
+  FRepository := ARepository;
+end;
+
+procedure TAuthService.LoginCustomer(const Username, Password: string);
+begin
+  var Response := FRepository.LoginUser(Username, Password);
+
+  if Response.StatusCode <> 200 then
+    raise Exception.Create('Please check your credentials');
+end;
+
+end.

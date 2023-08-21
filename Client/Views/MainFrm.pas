@@ -29,7 +29,6 @@ type
     procedure DisablePrevButton;
     procedure EnableNextButton;
     procedure DisableNextButton;
-    procedure PopulateTable(JSONData: string);
     procedure HideForm;
     procedure ShowForm;
     function Self: TForm;
@@ -91,11 +90,6 @@ end;
 procedure TMainForm.HideForm;
 begin
   Self.Hide;
-end;
-
-procedure TMainForm.PopulateTable(JSONData: string);
-begin
-
 end;
 
 function TMainForm.Self: TForm;

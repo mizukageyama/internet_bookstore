@@ -8,10 +8,10 @@ uses
 
 type
   ICustomerReviewRepository = interface
-    function CreateReview(const RequestBody: TJSONObject): IMVCRESTResponse;
+    function CreateReview(const RequestBody: string): IMVCRESTResponse;
     function GetReviewsByBookId(const BookId: Integer): IMVCRESTResponse;
     function GetReviewById(const ReviewId: Integer): IMVCRESTResponse;
-    function UpdateReview(const RequestBody: TJSONObject): IMVCRESTResponse;
+    function UpdateReview(const RequestBody: string): IMVCRESTResponse;
     function DeleteReview(const ReviewId: Integer): IMVCRESTResponse;
   end;
 

@@ -15,7 +15,6 @@ type
     procedure DisablePrevButton;
     procedure EnableNextButton;
     procedure DisableNextButton;
-    procedure PopulateTable(JSONData: string);
     procedure HideForm;
     procedure ShowForm;
     function Self: TForm;

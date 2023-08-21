@@ -1,0 +1,14 @@
+unit WriteReviewPresenterIntf;
+
+interface
+
+type
+  IWriteReviewPresenter = interface
+    procedure InitializeView;
+    procedure SaveReview;
+    procedure ValidateReview;
+  end;
+
+implementation
+
+end.

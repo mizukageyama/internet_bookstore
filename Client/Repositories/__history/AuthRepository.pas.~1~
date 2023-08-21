@@ -1,0 +1,19 @@
+unit AuthRepository;
+
+interface
+
+uses
+  AuthRepositoryIntf;
+
+type
+  TAuthRepository = class(TInterfacedObject, IAuthRepository)
+  private
+    FRepository: IAuthRepository;
+  protected
+    function LoginUser(const Username, Password: string): IMVCRESTResponse;
+  end;
+
+implementation
+
+end.
+

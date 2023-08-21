@@ -25,7 +25,6 @@ object BookDetailsForm: TBookDetailsForm
     Font.Name = 'Segoe UI'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitTop = 130
     ExplicitWidth = 31
   end
   object lblSynopsis: TLabel
@@ -43,7 +42,8 @@ object BookDetailsForm: TBookDetailsForm
     Font.Style = []
     ParentFont = False
     WordWrap = True
-    ExplicitHeight = 54
+    ExplicitWidth = 51
+    ExplicitHeight = 17
   end
   object pnlBottom: TPanel
     Left = 0
@@ -54,11 +54,11 @@ object BookDetailsForm: TBookDetailsForm
     BevelOuter = bvNone
     Padding.Top = 10
     TabOrder = 0
-    ExplicitWidth = 622
+    ExplicitWidth = 504
     object lblTitle: TLabel
       Left = 0
       Top = 10
-      Width = 281
+      Width = 258
       Height = 31
       Align = alLeft
       Caption = 'ICONIX Internet Bookstore'
@@ -69,6 +69,7 @@ object BookDetailsForm: TBookDetailsForm
       Font.Style = []
       ParentFont = False
       Layout = tlCenter
+      ExplicitHeight = 30
     end
     object btnWriteReview: TButton
       Left = 307
@@ -79,9 +80,7 @@ object BookDetailsForm: TBookDetailsForm
       Caption = 'Write a Review for this book'
       TabOrder = 0
       OnClick = btnWriteReviewClick
-      ExplicitLeft = 256
-      ExplicitTop = -8
-      ExplicitHeight = 34
+      ExplicitLeft = 301
     end
   end
   object pnlReviews: TPanel
@@ -91,11 +90,13 @@ object BookDetailsForm: TBookDetailsForm
     Height = 314
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 135
+    ExplicitWidth = 504
     object lblBookReviews: TLabel
       Left = 1
       Top = 1
       Width = 508
-      Height = 32
+      Height = 15
       Align = alTop
       Caption = 'Customer Reviews'
       Font.Charset = DEFAULT_CHARSET
@@ -105,12 +106,13 @@ object BookDetailsForm: TBookDetailsForm
       Font.Style = [fsBold]
       ParentFont = False
       Layout = tlCenter
+      ExplicitWidth = 104
     end
     object dbgReviews: TDBGrid
       Left = 1
-      Top = 33
+      Top = 16
       Width = 508
-      Height = 280
+      Height = 297
       Align = alClient
       DataSource = BookstoreDataModule.dsCustomerReview
       TabOrder = 0

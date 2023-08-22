@@ -34,9 +34,10 @@ object MainForm: TMainForm
     Left = 0
     Top = 89
     Width = 615
-    Height = 303
+    Height = 329
     Align = alClient
     DataSource = BookstoreDataModule.dsBook
+    ReadOnly = True
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
@@ -52,48 +53,6 @@ object MainForm: TMainForm
         Visible = True
       end>
   end
-  object pnlBottom: TPanel
-    Left = 0
-    Top = 392
-    Width = 615
-    Height = 26
-    Align = alBottom
-    BevelOuter = bvNone
-    TabOrder = 1
-    ExplicitTop = 383
-    ExplicitWidth = 609
-    object lblPageInfo: TLabel
-      Left = 75
-      Top = 0
-      Width = 465
-      Height = 26
-      Align = alClient
-      Alignment = taCenter
-      Caption = 'No result'
-      Layout = tlCenter
-      ExplicitWidth = 48
-      ExplicitHeight = 15
-    end
-    object btnNext: TButton
-      Left = 540
-      Top = 0
-      Width = 75
-      Height = 26
-      Align = alRight
-      Caption = 'Next'
-      TabOrder = 0
-      ExplicitLeft = 534
-    end
-    object btnPrev: TButton
-      Left = 0
-      Top = 0
-      Width = 75
-      Height = 26
-      Align = alLeft
-      Caption = 'Prev'
-      TabOrder = 1
-    end
-  end
   object pnlWelcomeText: TPanel
     Left = 0
     Top = 30
@@ -101,7 +60,7 @@ object MainForm: TMainForm
     Height = 59
     Align = alTop
     BevelOuter = bvNone
-    TabOrder = 2
+    TabOrder = 1
     ExplicitWidth = 609
     object lblWelcome: TLabel
       Left = 0

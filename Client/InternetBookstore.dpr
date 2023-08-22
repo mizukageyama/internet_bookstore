@@ -2,13 +2,8 @@ program InternetBookstore;
 
 uses
   Vcl.Forms,
+  BookServiceIntf,
   BookstoreDM in 'BookstoreDM.pas' {BookstoreDataModule: TDataModule},
-  AuthApi in 'APIs\AuthApi.pas',
-  AuthApiIntf in 'APIs\AuthApiIntf.pas',
-  BookApi in 'APIs\BookApi.pas',
-  BookApiIntf in 'APIs\BookApiIntf.pas',
-  CustomerReviewApi in 'APIs\CustomerReviewApi.pas',
-  CustomerReviewApiIntf in 'APIs\CustomerReviewApiIntf.pas',
   BookDetailsPresenter in 'BookDetails\Presenter\BookDetailsPresenter.pas',
   BookDetailsPresenterIntf in 'BookDetails\Presenter\BookDetailsPresenterIntf.pas',
   BookDetailsFrm in 'BookDetails\View\BookDetailsFrm.pas' {BookDetailsForm},
@@ -26,18 +21,13 @@ uses
   WriteReviewFrm in 'WriteReview\View\WriteReviewFrm.pas' {WriteReviewForm},
   WriteReviewFrmIntf in 'WriteReview\View\WriteReviewFrmIntf.pas',
   CustomerSession in 'CustomerSession.pas',
-  AuthService in 'Services\AuthService.pas',
-  AuthServiceIntf in 'Services\AuthServiceIntf.pas',
-  BookServiceClient in 'Services\BookServiceClient.pas',
-  BookServiceClientIntf in 'Services\BookServiceClientIntf.pas',
-  CustomerReviewServiceClient in 'Services\CustomerReviewServiceClient.pas',
-  CustomerReviewServiceClientIntf in 'Services\CustomerReviewServiceClientIntf.pas';
+  BookServiceProxy in 'ProxyServices\BookServiceProxy.pas',
+  CustomerReviewServiceProxy in 'ProxyServices\CustomerReviewServiceProxy.pas';
 
 {$R *.res}
 
 var
-  BookApi: IBookApi;
-  BookService: IBookServiceClient;
+  BookService: IBookService;
   MainPresenter: IMainPresenter;
   MainForm: TForm;
 begin
@@ -46,8 +36,7 @@ begin
 
   Application.CreateForm(TBookstoreDataModule, BookstoreDataModule);
   Application.CreateForm(TMainForm, MainForm);
-  BookApi := TBookApi.Create;
-  BookService := TBookServiceClient.Create(BookApi);
+  BookService := TBookServiceProxy.Create;
   MainPresenter := TMainPresenter.Create(MainForm as TMainForm, BookService);
 
   Application.Run;

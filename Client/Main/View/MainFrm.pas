@@ -12,23 +12,13 @@ type
   TMainForm = class(TForm, IMainFrm)
     lblTitle: TLabel;
     dbgBooks: TDBGrid;
-    pnlBottom: TPanel;
     pnlWelcomeText: TPanel;
     lblWelcome: TLabel;
-    lblPageInfo: TLabel;
-    btnNext: TButton;
-    btnPrev: TButton;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure dbgBooksDblClick(Sender: TObject);
   protected
     FPresenter: IMainPresenter;
-    procedure SetPageInfo(CurrentPage, TotalPage: Integer);
-    procedure SetNoResult;
-    procedure EnablePrevButton;
-    procedure DisablePrevButton;
-    procedure EnableNextButton;
-    procedure DisableNextButton;
     procedure HideForm;
     procedure ShowForm;
     function Self: TForm;
@@ -57,26 +47,6 @@ begin
   FPresenter.ShowBookDetails;
 end;
 
-procedure TMainForm.DisableNextButton;
-begin
-  btnNext.Enabled := False;
-end;
-
-procedure TMainForm.DisablePrevButton;
-begin
-  btnPrev.Enabled := False;
-end;
-
-procedure TMainForm.EnableNextButton;
-begin
-  btnNext.Enabled := True;
-end;
-
-procedure TMainForm.EnablePrevButton;
-begin
-  btnPrev.Enabled := True;
-end;
-
 procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   FPresenter := nil;
@@ -95,16 +65,6 @@ end;
 function TMainForm.Self: TForm;
 begin
   Result := Self;
-end;
-
-procedure TMainForm.SetNoResult;
-begin
-  lblPageInfo.Caption := 'No result';
-end;
-
-procedure TMainForm.SetPageInfo(CurrentPage, TotalPage: Integer);
-begin
-  lblPageInfo.Caption := Format('Page %d out of %d', [CurrentPage, TotalPage]);
 end;
 
 end.

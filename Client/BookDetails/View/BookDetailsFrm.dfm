@@ -116,6 +116,7 @@ object BookDetailsForm: TBookDetailsForm
       Height = 297
       Align = alClient
       DataSource = BookstoreDataModule.dsCustomerReview
+      ReadOnly = True
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText

@@ -4,7 +4,7 @@ interface
 
 uses
   MVCFramework, MVCFramework.Commons, MVCFramework.Serializer.Commons,
-  MVCFramework.ActiveRecord, System.Generics.Collections,
+  MVCFramework.ActiveRecord, System.Generics.Collections, System.Math,
   Book, System.SysUtils, System.Classes, BookServiceIntf;
 
 type
@@ -43,6 +43,9 @@ type
   end;
 
 implementation
+
+uses
+  PaginationHandler, BookActiveRecord;
 
 { TBookController }
 

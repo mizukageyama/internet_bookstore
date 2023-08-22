@@ -100,50 +100,35 @@
         </DelphiCompile>
         <DCCReference Include="BookstoreDM.pas">
             <Form>BookstoreDataModule</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="APIs\AuthApi.pas"/>
-        <DCCReference Include="APIs\AuthApiIntf.pas"/>
-        <DCCReference Include="APIs\BookApi.pas"/>
-        <DCCReference Include="APIs\BookApiIntf.pas"/>
-        <DCCReference Include="APIs\CustomerReviewApi.pas"/>
-        <DCCReference Include="APIs\CustomerReviewApiIntf.pas"/>
         <DCCReference Include="BookDetails\Presenter\BookDetailsPresenter.pas"/>
         <DCCReference Include="BookDetails\Presenter\BookDetailsPresenterIntf.pas"/>
         <DCCReference Include="BookDetails\View\BookDetailsFrm.pas">
             <Form>BookDetailsForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="BookDetails\View\BookDetailsFrmIntf.pas"/>
         <DCCReference Include="Login\Presenter\LoginPresenter.pas"/>
         <DCCReference Include="Login\Presenter\LoginPresenterIntf.pas"/>
         <DCCReference Include="Login\View\LoginFrm.pas">
             <Form>LoginForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Login\View\LoginFrmIntf.pas"/>
         <DCCReference Include="Main\Presenter\MainPresenter.pas"/>
         <DCCReference Include="Main\Presenter\MainPresenterIntf.pas"/>
         <DCCReference Include="Main\View\MainFrm.pas">
             <Form>MainForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Main\View\MainFrmIntf.pas"/>
         <DCCReference Include="WriteReview\Presenter\WriteReviewPresenter.pas"/>
         <DCCReference Include="WriteReview\Presenter\WriteReviewPresenterIntf.pas"/>
         <DCCReference Include="WriteReview\View\WriteReviewFrm.pas">
             <Form>WriteReviewForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="WriteReview\View\WriteReviewFrmIntf.pas"/>
         <DCCReference Include="CustomerSession.pas"/>
-        <DCCReference Include="Services\AuthService.pas"/>
-        <DCCReference Include="Services\AuthServiceIntf.pas"/>
-        <DCCReference Include="Services\BookServiceClient.pas"/>
-        <DCCReference Include="Services\BookServiceClientIntf.pas"/>
-        <DCCReference Include="Services\CustomerReviewServiceClient.pas"/>
-        <DCCReference Include="Services\CustomerReviewServiceClientIntf.pas"/>
+        <DCCReference Include="ProxyServices\BookServiceProxy.pas"/>
+        <DCCReference Include="ProxyServices\CustomerReviewServiceProxy.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

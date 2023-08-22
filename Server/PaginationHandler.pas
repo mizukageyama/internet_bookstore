@@ -1,0 +1,57 @@
+unit PaginationHandler;
+
+interface
+
+uses
+  MVCFramework.ActiveRecord, MVCFramework.Commons, System.Math,
+  MVCFramework.Serializer.Commons,  System.SysUtils, System.StrUtils,
+  FireDAC.Stan.Error, System.Generics.Collections, System.JSON;
+
+type
+  TPagination = class
+  public
+    class function GetTotalPages<T: TMVCActiveRecord, constructor>: Integer;
+    class function GetInfo(const ACurrPageNumber: UInt32; const ATotalPage:
+      UInt32; const AURITemplate: string): TMVCStringDictionary;
+  end;
+
+implementation
+
+{ TPagination }
+class function TPagination.GetTotalPages<T>: Integer;
+var
+  LRecordCount: Integer;
+begin
+  LRecordCount := TMVCActiveRecord.Count<T>;
+  Result := Ceil(LRecordCount / 10);
+end;
+
+class function TPagination.GetInfo(const ACurrPageNumber: UInt32;
+  const ATotalPage: UInt32; const AURITemplate: string): TMVCStringDictionary;
+var
+  LInfoKeys: array of string;
+  LInfoValues: array of string;
+begin
+  Insert('curr_page', LInfoKeys, 0);
+  Insert(ACurrPageNumber.ToString(), LInfoValues, 0);
+
+  Insert('total_page', LInfoKeys, 0);
+  Insert(ATotalPage.ToString(), LInfoValues, 0);
+
+  if ACurrPageNumber > 1 then
+  begin
+    Insert('prev_page_uri', LInfoKeys, 0);
+    Insert(Format(AURITemplate, [(ACurrPageNumber - 1)]),
+      LInfoValues, 0);
+  end;
+
+  if ATotalPage > ACurrPageNumber then
+  begin
+    Insert('next_page_uri', LInfoKeys, 0);
+    Insert(Format(AURITemplate, [(ACurrPageNumber + 1)]),
+      LInfoValues, 0);
+  end;
+  Result := StrDict(LInfoKeys, LInfoValues);
+end;
+
+end.

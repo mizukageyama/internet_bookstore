@@ -3,67 +3,71 @@ unit MainPresenter;
 interface
 
 uses
-  MainPresenterIntf, BookServiceClientIntf, MainFrmIntf, System.SysUtils,
+  MainPresenterIntf, BookServiceIntf, MainFrmIntf, System.SysUtils,
   Vcl.Dialogs, MVCFramework.DataSet.Utils, MVCFramework.Serializer.Commons,
   BookstoreDM, Book, BookDetailsFrm, System.Variants,
-  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms;
+  System.Generics.Collections, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms;
 
 type
   TMainPresenter = class(TInterfacedObject, IMainPresenter)
   private
     FMainView: IMainFrm;
-    FMainService: IBookServiceClient;
+    FMainService: IBookService;
+    FCurrentPage: Integer;
   protected
     procedure LoadBooks;
     procedure ShowBookDetails;
-    procedure PopulateBookTable(JSONData: string);
+    procedure PopulateBookTable(const Books: TObjectList<TBook>);
   public
-    constructor Create(AMainView: IMainFrm; AMainService: IBookServiceClient);
+    constructor Create(AMainView: IMainFrm; AMainService: IBookService);
   end;
 
 implementation
 
 uses
-  CustomerReviewApiIntf, CustomerReviewApi,
   BookDetailsPresenterIntf, BookDetailsPresenter,
-  CustomerReviewServiceIntf, CustomerReviewServiceClient;
+  CustomerReviewServiceIntf, CustomerReviewServiceProxy;
 
 { TMainPresenter }
 
 constructor TMainPresenter.Create(AMainView: IMainFrm;
-  AMainService: IBookServiceClient);
+  AMainService: IBookService);
 begin
   FMainView := AMainView;
   FMainService := AMainService;
   FMainView.SetPresenter(Self);
+  FCurrentPage := 1;
 end;
 
 procedure TMainPresenter.LoadBooks;
 begin
   try
-    var ResponseContent := FMainService.GetBooks;
-    PopulateBookTable(ResponseContent);
-    FMainView.EnablePrevButton;
-    FMainView.EnableNextButton;
-    FMainView.SetPageInfo(1, 4);
+    var Books := FMainService.GetBooks;
+    PopulateBookTable(Books);
   except
     on E: Exception do
     begin
       ShowMessage(E.ToString);
-      FMainView.DisablePrevButton;
-      FMainView.DisableNextButton;
-      FMainView.SetNoResult;
     end;
   end;
 end;
 
-procedure TMainPresenter.PopulateBookTable(JSONData: string);
+procedure TMainPresenter.PopulateBookTable(const Books: TObjectList<TBook>);
 begin
   var BookstoreDM := BookstoreDataModule;
   BookstoreDM.fdmemBook.Close;
   BookstoreDM.fdmemBook.Open;
-  BookstoreDM.fdmemBook.LoadJSONArrayFromJSONObjectProperty('data', JSONData,
-    TMVCNameCase.ncPascalCase);
+
+ for var Book in Books do
+  begin
+    BookstoreDM.fdmemBook.Append;
+    BookstoreDM.fdmemBook.FieldByName('Id').AsInteger := Book.Id;
+    BookstoreDM.fdmemBook.FieldByName('Title').AsString := Book.Title;
+    BookstoreDM.fdmemBook.FieldByName('Synopsis').AsString := Book.Synopsis;
+    BookstoreDM.fdmemBook.Post;
+  end;
+
   BookstoreDM.fdmemBook.First;
 end;
 
@@ -73,13 +77,13 @@ var
   BookId: Integer;
   BookTitle: string;
   BookSynopsis: string;
+
   SelectedBook: TBook;
-  CustomerReviewApi: ICustomerReviewApi;
+
   CustomerReviewService: ICustomerReviewService;
   BookDetailsPresenter: IBookDetailsPresenter;
   BookDetailsForm: TForm;
 begin
-  //FMainView.HideForm;
   BookstoreDM := BookstoreDataModule;
 
   BookId := (BookstoreDM.fdmemBookId.Value);
@@ -88,9 +92,7 @@ begin
   SelectedBook := TBook.Create(BookId, BookTitle, BookSynopsis);
 
   BookDetailsForm := TBookDetailsForm.Create(SelectedBook, FMainView.Self);
-  CustomerReviewApi := TCustomerReviewApi.Create;
-  CustomerReviewService := TCustomerReviewServiceClient
-    .Create(CustomerReviewApi);
+  CustomerReviewService := TCustomerReviewServiceProxy.Create;
   BookDetailsPresenter := TBookDetailsPresenter
     .Create(BookDetailsForm as TBookDetailsForm, CustomerReviewService);
 

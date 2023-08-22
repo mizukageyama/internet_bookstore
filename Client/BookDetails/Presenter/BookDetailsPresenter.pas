@@ -3,7 +3,7 @@ unit BookDetailsPresenter;
 interface
 
 uses
-  MainPresenterIntf, BookServiceClientIntf, MainFrmIntf, System.SysUtils,
+  MainPresenterIntf, BookServiceIntf, MainFrmIntf, System.SysUtils,
   Vcl.Dialogs, MVCFramework.DataSet.Utils, MVCFramework.Serializer.Commons,
   BookstoreDM, Book, BookDetailsFrm, System.Variants, BookDetailsFrmIntf,
   System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, CustomerReview,
@@ -32,9 +32,8 @@ implementation
 { TBookDetailsPresenter }
 
 uses
-  WriteReviewFrm, CustomerReviewApi, CustomerReviewServiceClient,
-  WriteReviewPresenter, LoginFrm, AuthService, AuthApi, LoginPresenter,
-  CustomerSession;
+  WriteReviewFrm, CustomerReviewServiceProxy, WriteReviewPresenter, LoginFrm,
+  LoginPresenter, CustomerSession;
 
 function TBookDetailsPresenter.IsCustomerLoggedIn;
 begin
@@ -66,9 +65,12 @@ begin
  for var Review in CustomerReviews do
   begin
     BookstoreDM.fdmemCustomerReview.Append;
-    BookstoreDM.fdmemCustomerReview.FieldByName('CustomerId').AsInteger := Review.CustomerId;
-    BookstoreDM.fdmemCustomerReview.FieldByName('Review').AsString := Review.Review;
-    BookstoreDM.fdmemCustomerReview.FieldByName('Rating').AsInteger := Review.Rating;
+    BookstoreDM.fdmemCustomerReview.
+      FieldByName('CustomerId').AsInteger := Review.CustomerId;
+    BookstoreDM.fdmemCustomerReview
+      .FieldByName('Review').AsString := Review.Review;
+    BookstoreDM.fdmemCustomerReview
+      .FieldByName('Rating').AsInteger := Review.Rating;
     BookstoreDM.fdmemCustomerReview.Post;
   end;
 
@@ -78,10 +80,7 @@ end;
 procedure TBookDetailsPresenter.ShowLoginForm(const Book: TBook);
 begin
   var LoginForm := TLoginForm.Create(FBookDetailsView.Self);
-  var AuthApi := TAuthApi.Create;
-  var AuthService := TAuthService.Create(AuthApi);
-  var LoginPresenter := TLoginPresenter .Create(LoginForm as TLoginForm,
-    AuthService);
+  var LoginPresenter := TLoginPresenter .Create(LoginForm as TLoginForm);
 
   LoginPresenter.OnLoginSuccess := procedure
   begin
@@ -94,9 +93,7 @@ end;
 procedure TBookDetailsPresenter.ShowWriteReviewForm(const Book: TBook);
 begin
   var ReviewForm := TWriteReviewForm.Create(Book, FBookDetailsView.Self);
-  var CustomerReviewApi := TCustomerReviewApi.Create;
-  var CustomerReviewService := TCustomerReviewServiceClient
-    .Create(CustomerReviewApi);
+  var CustomerReviewService := TCustomerReviewServiceProxy.Create;
   var WriteReviewPresenter := TWriteReviewPresenter
     .Create(ReviewForm as TWriteReviewForm, CustomerReviewService);
 

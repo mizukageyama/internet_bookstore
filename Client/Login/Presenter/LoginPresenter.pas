@@ -3,23 +3,25 @@ unit LoginPresenter;
 interface
 
 uses
-  LoginPresenterIntf, AuthServiceIntf, LoginFrmIntf, System.SysUtils,
-  Vcl.Dialogs;
+  LoginPresenterIntf, LoginFrmIntf, System.SysUtils, Vcl.Dialogs,
+  MVCFramework.RESTClient.Intf, MVCFramework.RESTClient,
+  MVCFramework.DataSet.Utils;
 
 type
   TLoginPresenter = class(TInterfacedObject, ILoginPResenter)
   private
     FLoginView: ILoginForm;
-    FAuthService: IAuthService;
     FOnLoginSuccess: TProc;
+    FRESTClient: IMVCRESTClient;
+    const
+      ENDPOINT = '/api/auth';
   protected
     procedure Login;
     procedure ValidateInput(out Username, Password: string;
       out IsSuccess: Boolean);
     procedure UpdateCustomerSession(const ResponseContent: string);
   public
-    constructor Create(ALoginView: ILoginForm;
-      AAuthService: IAuthService);
+    constructor Create(ALoginView: ILoginForm);
     property OnLoginSuccess: TProc read FOnLoginSuccess write FOnLoginSuccess;
   end;
 
@@ -30,16 +32,16 @@ uses
 
 { TLoginPresenter }
 
-constructor TLoginPresenter.Create(ALoginView: ILoginForm;
-  AAuthService: IAuthService);
+constructor TLoginPresenter.Create(ALoginView: ILoginForm);
 begin
   FLoginView := ALoginView;
-  FAuthService := AAuthService;
   FLoginView.SetPresenter(Self);
+  FRESTClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
 end;
 
 procedure TLoginPresenter.Login;
 var
+  Response: IMVCRESTResponse;
   Username: string;
   Password: string;
   IsSuccess: Boolean;
@@ -49,9 +51,15 @@ begin
   if IsSuccess then
   begin
     try
-      var ResponseContent := FAuthService.LoginCustomer(Username, Password);
-      UpdateCustomerSession(ResponseContent);
+      FRESTClient.SetBasicAuthorization(Username, Password);
+      Response := FRESTClient.POST(ENDPOINT + '/login');
+
+      if Response.StatusCode <> 200 then
+        raise Exception.Create('Please check your credentials');
+
+      UpdateCustomerSession(Response.Content);
       FLoginView.CloseForm;
+
       if Assigned(FOnLoginSuccess) then
         FOnLoginSuccess;
     except

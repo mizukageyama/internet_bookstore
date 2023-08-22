@@ -3,15 +3,15 @@ unit BookServiceClient;
 interface
 
 uses
-  BookServiceClientIntf, BookRepositoryIntf, Book,
+  BookServiceClientIntf, BookApiIntf, Book,
   System.Generics.Collections, System.SysUtils;
 
 type
   TBookServiceClient = class(TInterfacedObject, IBookServiceClient)
   private
-    FRepository: IBookRepository;
+    FApi: IBookApi;
   public
-    constructor Create(ARepository: IBookRepository); overload;
+    constructor Create(AApi: IBookApi); overload;
 
     function CreateBook(const Book: TBook): string;
     function GetBooks: string;
@@ -24,14 +24,14 @@ implementation
 
 { TBookServiceClient }
 
-constructor TBookServiceClient.Create(ARepository: IBookRepository);
+constructor TBookServiceClient.Create(AApi: IBookApi);
 begin
-  FRepository := ARepository;
+  FApi := AApi;
 end;
 
 function TBookServiceClient.CreateBook(const Book: TBook): string;
 begin
-  var Response := FRepository.CreateBook(Book.ToJSONBody);
+  var Response := FApi.CreateBook(Book.ToJSONBody);
 
   if Response.StatusCode <> 201 then
     raise Exception.Create('Unable to create book');
@@ -41,7 +41,7 @@ end;
 
 function TBookServiceClient.DeleteBook(const BookId: Integer): string;
 begin
-  var Response := FRepository.DeleteBook(BookId);
+  var Response := FApi.DeleteBook(BookId);
 
   if Response.StatusCode <> 204 then
     raise Exception.Create('Unable to delete book');
@@ -51,7 +51,7 @@ end;
 
 function TBookServiceClient.GetBookById(const BookId: Integer): string;
 begin
-  var Response := FRepository.DeleteBook(BookId);
+  var Response := FApi.DeleteBook(BookId);
 
   if Response.StatusCode <> 200 then
     raise Exception.Create('Something went wrong');
@@ -61,7 +61,7 @@ end;
 
 function TBookServiceClient.GetBooks: string;
 begin
-  var Response := FRepository.GetBooks;
+  var Response := FApi.GetBooks;
 
   if Response.StatusCode <> 200 then
     raise Exception.Create('Something went wrong');
@@ -71,7 +71,7 @@ end;
 
 function TBookServiceClient.UpdateBook(const Book: TBook): string;
 begin
-  var Response := FRepository.UpdateBook(Book.ToJSONBody);
+  var Response := FApi.UpdateBook(Book.ToJSONBody);
 
   if Response.StatusCode <> 200 then
     raise Exception.Create('Unable to update book');

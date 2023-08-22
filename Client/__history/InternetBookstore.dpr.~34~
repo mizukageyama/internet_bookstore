@@ -1,0 +1,24 @@
+program InternetBookstore;
+
+uses
+  Vcl.Forms,
+  BookstoreDM in 'BookstoreDM.pas' {BookstoreDataModule: TDataModule};
+{$R *.res}
+
+var
+  BookRepository: IBookRepository;
+  BookService: IBookServiceClient;
+  MainPresenter: IMainPresenter;
+  MainForm: TForm;
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+
+  Application.CreateForm(TBookstoreDataModule, BookstoreDataModule);
+  Application.CreateForm(TMainForm, MainForm);
+  BookRepository := TBookApi.Create;
+  BookService := TBookServiceClient.Create(BookRepository);
+  MainPresenter := TMainPresenter.Create(MainForm as TMainForm, BookService);
+
+  Application.Run;
+end.

@@ -3,30 +3,30 @@ unit AuthService;
 interface
 
 uses
-  AuthServiceIntf, AuthRepositoryIntf, System.SysUtils;
+  AuthServiceIntf, AuthApiIntf, System.SysUtils;
 
 type
   TAuthService = class(TInterfacedObject, IAuthService)
   private
-    FRepository: IAuthRepository;
+    FApi: IAuthApi;
   protected
     function LoginCustomer(const Username, Password: string): string;
   public
-    constructor Create(ARepository: IAuthRepository); overload;
+    constructor Create(AApi: IAuthApi); overload;
   end;
 
 implementation
 
 { TAuthService }
 
-constructor TAuthService.Create(ARepository: IAuthRepository);
+constructor TAuthService.Create(AApi: IAuthApi);
 begin
-  FRepository := ARepository;
+  FApi := AApi;
 end;
 
 function TAuthService.LoginCustomer(const Username, Password: string): string;
 begin
-  var Response := FRepository.LoginUser(Username, Password);
+  var Response := FApi.LoginUser(Username, Password);
 
   if Response.StatusCode <> 200 then
     raise Exception.Create('Please check your credentials');

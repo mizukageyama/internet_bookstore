@@ -3,40 +3,40 @@ program InternetBookstore;
 uses
   Vcl.Forms,
   BookstoreDM in 'BookstoreDM.pas' {BookstoreDataModule: TDataModule},
-  BookDetailsFrm in 'Views\BookDetailsFrm.pas' {BookDetailsForm},
-  LoginFrm in 'Views\LoginFrm.pas' {LoginForm},
-  MainFrm in 'Views\MainFrm.pas' {MainForm},
-  WriteReviewFrm in 'Views\WriteReviewFrm.pas' {WriteReviewForm},
-  MainPresenterIntf in 'Presenters\MainPresenterIntf.pas',
-  MainPresenter in 'Presenters\MainPresenter.pas',
-  BookRepositoryIntf in 'Repositories\BookRepositoryIntf.pas',
-  MainFrmIntf in 'Views\MainFrmIntf.pas',
-  BookServiceClient in 'Services\BookServiceClient.pas',
-  BookRepository in 'Repositories\BookRepository.pas',
-  BookServiceClientIntf in 'Services\BookServiceClientIntf.pas',
-  BookDetailsFrmIntf in 'Views\BookDetailsFrmIntf.pas',
-  BookDetailsPresenter in 'Presenters\BookDetailsPresenter.pas',
-  CustomerReviewServiceClientIntf in 'Services\CustomerReviewServiceClientIntf.pas',
-  BookDetailsPresenterIntf in 'Presenters\BookDetailsPresenterIntf.pas',
-  CustomerReviewServiceClient in 'Services\CustomerReviewServiceClient.pas',
-  CustomerReviewRepositoryIntf in 'Repositories\CustomerReviewRepositoryIntf.pas',
-  CustomerReviewRepository in 'Repositories\CustomerReviewRepository.pas',
-  WriteReviewFrmIntf in 'Views\WriteReviewFrmIntf.pas',
-  WriteReviewPresenterIntf in 'Presenters\WriteReviewPresenterIntf.pas',
-  WriteReviewPresenter in 'Presenters\WriteReviewPresenter.pas',
+  AuthApi in 'APIs\AuthApi.pas',
+  AuthApiIntf in 'APIs\AuthApiIntf.pas',
+  BookApi in 'APIs\BookApi.pas',
+  BookApiIntf in 'APIs\BookApiIntf.pas',
+  CustomerReviewApi in 'APIs\CustomerReviewApi.pas',
+  CustomerReviewApiIntf in 'APIs\CustomerReviewApiIntf.pas',
+  BookDetailsPresenter in 'BookDetails\Presenter\BookDetailsPresenter.pas',
+  BookDetailsPresenterIntf in 'BookDetails\Presenter\BookDetailsPresenterIntf.pas',
+  BookDetailsFrm in 'BookDetails\View\BookDetailsFrm.pas' {BookDetailsForm},
+  BookDetailsFrmIntf in 'BookDetails\View\BookDetailsFrmIntf.pas',
+  LoginPresenter in 'Login\Presenter\LoginPresenter.pas',
+  LoginPresenterIntf in 'Login\Presenter\LoginPresenterIntf.pas',
+  LoginFrm in 'Login\View\LoginFrm.pas' {LoginForm},
+  LoginFrmIntf in 'Login\View\LoginFrmIntf.pas',
+  MainPresenter in 'Main\Presenter\MainPresenter.pas',
+  MainPresenterIntf in 'Main\Presenter\MainPresenterIntf.pas',
+  MainFrm in 'Main\View\MainFrm.pas' {MainForm},
+  MainFrmIntf in 'Main\View\MainFrmIntf.pas',
+  WriteReviewPresenter in 'WriteReview\Presenter\WriteReviewPresenter.pas',
+  WriteReviewPresenterIntf in 'WriteReview\Presenter\WriteReviewPresenterIntf.pas',
+  WriteReviewFrm in 'WriteReview\View\WriteReviewFrm.pas' {WriteReviewForm},
+  WriteReviewFrmIntf in 'WriteReview\View\WriteReviewFrmIntf.pas',
   CustomerSession in 'CustomerSession.pas',
   AuthService in 'Services\AuthService.pas',
-  AuthRepositoryIntf in 'Repositories\AuthRepositoryIntf.pas',
-  AuthRepository in 'Repositories\AuthRepository.pas',
   AuthServiceIntf in 'Services\AuthServiceIntf.pas',
-  LoginPresenterIntf in 'Presenters\LoginPresenterIntf.pas',
-  LoginPresenter in 'Presenters\LoginPresenter.pas',
-  LoginFrmIntf in 'Views\LoginFrmIntf.pas';
+  BookServiceClient in 'Services\BookServiceClient.pas',
+  BookServiceClientIntf in 'Services\BookServiceClientIntf.pas',
+  CustomerReviewServiceClient in 'Services\CustomerReviewServiceClient.pas',
+  CustomerReviewServiceClientIntf in 'Services\CustomerReviewServiceClientIntf.pas';
 
 {$R *.res}
 
 var
-  BookRepository: IBookRepository;
+  BookApi: IBookApi;
   BookService: IBookServiceClient;
   MainPresenter: IMainPresenter;
   MainForm: TForm;
@@ -46,8 +46,8 @@ begin
 
   Application.CreateForm(TBookstoreDataModule, BookstoreDataModule);
   Application.CreateForm(TMainForm, MainForm);
-  BookRepository := TBookRepository.Create;
-  BookService := TBookServiceClient.Create(BookRepository);
+  BookApi := TBookApi.Create;
+  BookService := TBookServiceClient.Create(BookApi);
   MainPresenter := TMainPresenter.Create(MainForm as TMainForm, BookService);
 
   Application.Run;

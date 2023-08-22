@@ -10,13 +10,13 @@ uses
 
 type
   TLoginForm = class(TForm, ILoginForm)
+    btnLogin: TButton;
     pnlEmail: TPanel;
     lblEmail: TLabel;
     edtEmail: TEdit;
     pnlPassword: TPanel;
     lblPassword: TLabel;
     edtPassword: TEdit;
-    btnLogin: TButton;
     procedure btnLoginClick(Sender: TObject);
   private
     FPresenter: ILoginPresenter;

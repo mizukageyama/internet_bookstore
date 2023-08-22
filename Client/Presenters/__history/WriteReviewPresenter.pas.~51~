@@ -4,7 +4,7 @@ interface
 
 uses
   WriteReviewPresenterIntf, WriteReviewFrmIntf, CustomerReviewServiceClientIntf,
-  System.SysUtils, Vcl.Dialogs, CustomerReviewDTO;
+  System.SysUtils, Vcl.Dialogs, CustomerReview, Vcl.Forms;
 
 type
   TWriteReviewPresenter = class(TInterfacedObject, IWriteReviewPresenter)
@@ -24,6 +24,9 @@ type
 
 implementation
 
+uses
+  CustomerSession, BookDetailsFrmIntf, BookDetailsFrm;
+
 { TWriteReviewPresenter }
 
 constructor TWriteReviewPresenter.Create(AWriteReviewView: IWriteReviewForm;
@@ -37,7 +40,8 @@ end;
 procedure TWriteReviewPresenter.InitializeView;
 begin
   FWriteReviewView.DisplayBookTitle;
-  FWriteReviewView.DisplayCustomerGreeting('Anna');
+  var CustomerSession := TCustomerSession.Instance;
+  FWriteReviewView.DisplayCustomerGreeting(CustomerSession.GetCustomerName);
   FWriteReviewView.HideReviewValidationMessage;
   HideValidationMessage;
 end;
@@ -50,14 +54,19 @@ begin
   CustomerReview := TCustomerReview.Create;
   ValidateInput(CustomerReview, IsSuccess);
   CustomerReview.SetBookId(BookId);
-  CustomerReview.SetCustomerId(1);
+  var CustomerSession := TCustomerSession.Instance;
+  CustomerReview.SetCustomerId(CustomerSession.GetCustomerID);
 
   if IsSuccess then
   begin
     try
       FCustomerReviewService.CreateCustomerReview(CustomerReview);
       ShowMessage('Review Added Successfully');
-      //Close Write Review Form, should reload the parent
+      FWriteReviewView.CloseForm;
+
+      var BookDetailForm: IBookDetailsForm := FWriteReviewView.GetParentForm
+        as TBookDetailsForm;
+      BookDetailForm.LoadCustomerReviews;
     except
       on E: Exception do
         ShowMessage(E.ToString);
@@ -82,16 +91,19 @@ begin
   begin
     CustomerReview.SetRating(Rating);
     if not CustomerReview.IsRatingInRange then
-      FWriteReviewView.ShowRatingValidationMessage('Rating should be 1-5 range');
+      FWriteReviewView.ShowRatingValidationMessage(
+        'Rating should be 1-5 range');
   end
   else
     FWriteReviewView.ShowRatingValidationMessage('Rating should be a number');
 
   if CustomerReview.IsMoreThan1MB then
-    FWriteReviewView.ShowReviewValidationMessage('Review should be less than 1MB');
+    FWriteReviewView.ShowReviewValidationMessage(
+      'Review should be less than 1MB');
 
   if CustomerReview.IsTooShort then
-    FWriteReviewView.ShowReviewValidationMessage('Review should be 10 or more characters');
+    FWriteReviewView.ShowReviewValidationMessage(
+      'Review should be 10 or more characters');
 
   IsSuccess := CustomerReview.IsValid;
 end;

@@ -44,8 +44,7 @@ uses
 
 { TCustomerReview }
 
-constructor TCustomerReview.Create(const ACustomerReview:
-  ICustomerReviewContext);
+constructor TCustomerReview.Create(const ACustomerReview: ICustomerReviewContext);
 begin
   if not Assigned(ACustomerReview) then
     raise EArgumentNilException.Create('ACustomer');

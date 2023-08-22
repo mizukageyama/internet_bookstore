@@ -4,7 +4,7 @@ interface
 
 uses
   WriteReviewPresenterIntf, WriteReviewFrmIntf, CustomerReviewServiceClientIntf,
-  System.SysUtils, Vcl.Dialogs, CustomerReviewDTO;
+  System.SysUtils, Vcl.Dialogs, CustomerReview, Vcl.Forms;
 
 type
   TWriteReviewPresenter = class(TInterfacedObject, IWriteReviewPresenter)
@@ -24,6 +24,9 @@ type
 
 implementation
 
+uses
+  CustomerSession, BookDetailsFrmIntf, BookDetailsFrm;
+
 { TWriteReviewPresenter }
 
 constructor TWriteReviewPresenter.Create(AWriteReviewView: IWriteReviewForm;
@@ -37,7 +40,8 @@ end;
 procedure TWriteReviewPresenter.InitializeView;
 begin
   FWriteReviewView.DisplayBookTitle;
-  FWriteReviewView.DisplayCustomerGreeting('Anna');
+  var CustomerSession := TCustomerSession.Instance;
+  FWriteReviewView.DisplayCustomerGreeting(CustomerSession.GetCustomerName);
   FWriteReviewView.HideReviewValidationMessage;
   HideValidationMessage;
 end;
@@ -50,13 +54,19 @@ begin
   CustomerReview := TCustomerReview.Create;
   ValidateInput(CustomerReview, IsSuccess);
   CustomerReview.SetBookId(BookId);
-  CustomerReview.SetCustomerId(1);
+  var CustomerSession := TCustomerSession.Instance;
+  CustomerReview.SetCustomerId(CustomerSession.GetCustomerID);
 
   if IsSuccess then
   begin
     try
-      var Response := FCustomerReviewService
-        .CreateCustomerReview(CustomerReview);
+      FCustomerReviewService.CreateCustomerReview(CustomerReview);
+      ShowMessage('Review Added Successfully');
+      FWriteReviewView.CloseForm;
+
+      var BookDetailForm: IBookDetailsForm := FWriteReviewView.GetParentForm
+        as TBookDetailsForm;
+      BookDetailForm.LoadCustomerReviews;
     except
       on E: Exception do
         ShowMessage(E.ToString);

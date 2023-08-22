@@ -1,6 +1,8 @@
 object LoginForm: TLoginForm
   Left = 0
   Top = 0
+  Align = alTop
+  Anchors = [akLeft, akRight]
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Login'
   ClientHeight = 110
@@ -11,7 +13,6 @@ object LoginForm: TLoginForm
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poDesktopCenter
   TextHeight = 15
   object pnlEmail: TPanel
     Left = 0

@@ -91,16 +91,19 @@ begin
   begin
     CustomerReview.SetRating(Rating);
     if not CustomerReview.IsRatingInRange then
-      FWriteReviewView.ShowRatingValidationMessage('Rating should be 1-5 range');
+      FWriteReviewView.ShowRatingValidationMessage(
+        'Rating should be 1-5 range');
   end
   else
     FWriteReviewView.ShowRatingValidationMessage('Rating should be a number');
 
   if CustomerReview.IsMoreThan1MB then
-    FWriteReviewView.ShowReviewValidationMessage('Review should be less than 1MB');
+    FWriteReviewView.ShowReviewValidationMessage(
+      'Review should be less than 1MB');
 
   if CustomerReview.IsTooShort then
-    FWriteReviewView.ShowReviewValidationMessage('Review should be 10 or more characters');
+    FWriteReviewView.ShowReviewValidationMessage(
+      'Review should be 10 or more characters');
 
   IsSuccess := CustomerReview.IsValid;
 end;

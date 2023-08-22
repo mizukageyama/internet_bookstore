@@ -1,11 +1,10 @@
 object LoginForm: TLoginForm
   Left = 0
   Top = 0
-  Align = alTop
-  AutoSize = True
+  BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Login'
-  ClientHeight = 151
-  ClientWidth = 304
+  ClientHeight = 110
+  ClientWidth = 280
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,35 +12,17 @@ object LoginForm: TLoginForm
   Font.Name = 'Segoe UI'
   Font.Style = []
   TextHeight = 15
-  object btnLogin: TButton
-    Left = 165
-    Top = 81
-    Width = 139
-    Height = 70
-    Align = alRight
-    Caption = 'Login'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -15
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 0
-    OnClick = btnLoginClick
-    ExplicitTop = 120
-    ExplicitHeight = 31
-  end
   object pnlEmail: TPanel
     Left = 0
     Top = 0
-    Width = 304
+    Width = 280
     Height = 41
     Align = alTop
     BevelOuter = bvNone
     Padding.Top = 7
     Padding.Bottom = 7
-    TabOrder = 1
-    ExplicitWidth = 343
+    TabOrder = 0
+    ExplicitWidth = 274
     object lblEmail: TLabel
       Left = 0
       Top = 7
@@ -67,21 +48,21 @@ object LoginForm: TLoginForm
       Height = 27
       Align = alLeft
       TabOrder = 0
-      ExplicitLeft = 200
-      ExplicitTop = 0
+      Text = 'thanna1@mit.edu'
+      ExplicitHeight = 23
     end
   end
-  object Panel1: TPanel
+  object pnlPassword: TPanel
     Left = 0
     Top = 41
-    Width = 304
+    Width = 280
     Height = 40
     Align = alTop
     BevelOuter = bvNone
     Padding.Top = 7
     Padding.Bottom = 7
-    TabOrder = 2
-    ExplicitWidth = 343
+    TabOrder = 1
+    ExplicitWidth = 274
     object lblPassword: TLabel
       Left = 0
       Top = 7
@@ -107,9 +88,26 @@ object LoginForm: TLoginForm
       Height = 26
       Align = alLeft
       TabOrder = 0
-      ExplicitLeft = 0
-      ExplicitTop = 0
+      Text = 'cknssmmAoD'
       ExplicitHeight = 23
     end
+  end
+  object btnLogin: TButton
+    Left = 141
+    Top = 81
+    Width = 139
+    Height = 29
+    Align = alRight
+    Caption = 'Login'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+    OnClick = btnLoginClick
+    ExplicitLeft = 135
+    ExplicitHeight = 20
   end
 end

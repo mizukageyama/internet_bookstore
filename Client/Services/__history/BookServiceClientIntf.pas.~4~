@@ -7,7 +7,6 @@ uses
 
 type
   IBookServiceClient = interface
-    ['{2D8683E4-E6BC-4326-A0FD-900064145F80}']
     function CreateBook(const Book: TBook): string;
     function GetBooks: string;
     function GetBookById(const BookId: Integer): string;

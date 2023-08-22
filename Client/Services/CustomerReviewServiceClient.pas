@@ -4,7 +4,7 @@ interface
 
 uses
   CustomerReviewServiceClientIntf, CustomerReviewRepositoryIntf,
-  CustomerReviewDTO, System.Generics.Collections, System.SysUtils;
+  CustomerReview, System.Generics.Collections, System.SysUtils;
 
 type
   TCustomerReviewServiceClient = class(TInterfacedObject,

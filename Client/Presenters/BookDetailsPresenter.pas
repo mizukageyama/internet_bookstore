@@ -5,7 +5,7 @@ interface
 uses
   MainPresenterIntf, BookServiceClientIntf, MainFrmIntf, System.SysUtils,
   Vcl.Dialogs, MVCFramework.DataSet.Utils, MVCFramework.Serializer.Commons,
-  BookstoreDM, BookDTO, BookDetailsFrm, System.Variants, BookDetailsFrmIntf,
+  BookstoreDM, Book, BookDetailsFrm, System.Variants, BookDetailsFrmIntf,
   System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
   CustomerReviewServiceClientIntf, BookDetailsPresenterIntf;
 
@@ -32,11 +32,13 @@ implementation
 
 uses
   WriteReviewFrm, CustomerReviewRepository, CustomerReviewServiceClient,
-  WriteReviewPresenter, LoginFrm, AuthService, AuthRepository, LoginPresenter;
+  WriteReviewPresenter, LoginFrm, AuthService, AuthRepository, LoginPresenter,
+  CustomerSession;
 
 function TBookDetailsPresenter.IsCustomerLoggedIn;
 begin
-  Result := True;
+  var CustomerSession := TCustomerSession.Instance;
+  Result := CustomerSession.IsLoggedIn;
 end;
 
 constructor TBookDetailsPresenter.Create(ABookDetailsView: IBookDetailsForm;
@@ -93,7 +95,7 @@ end;
 
 procedure TBookDetailsPresenter.WriteReview(const Book: TBook);
 begin
-  if not IsCustomerLoggedIn then
+  if IsCustomerLoggedIn then
     ShowWriteReviewForm(Book)
   else
   begin

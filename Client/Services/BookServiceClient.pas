@@ -3,7 +3,7 @@ unit BookServiceClient;
 interface
 
 uses
-  BookServiceClientIntf, BookRepositoryIntf, BookDTO,
+  BookServiceClientIntf, BookRepositoryIntf, Book,
   System.Generics.Collections, System.SysUtils;
 
 type

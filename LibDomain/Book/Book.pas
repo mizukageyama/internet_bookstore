@@ -3,7 +3,7 @@ unit Book;
 interface
 
 uses
-  BookContextIntf;
+  BookContextIntf, JSON;
 
 type
   TBook = class
@@ -17,10 +17,15 @@ type
       ASynopsis: string); overload;
 
     function IsValid: Boolean;
+    function ToJSONBody: TJSONObject;
 
-    property Id: Integer read FId write FId;
-    property Title: string read FTitle write FTitle;
-    property Synopsis: string read FSynopsis write FSynopsis;
+    procedure SetBookId(const BookId: Integer);
+    procedure SetBookSynopsis(const BookSynopsis: string);
+    procedure SetBookTitle(const BookTitle: string);
+
+    property Id: Integer read FId write SetBookId;
+    property Title: string read FTitle write SetBookTitle;
+    property Synopsis: string read FSynopsis write SetBookSynopsis;
   end;
 
 implementation
@@ -54,6 +59,35 @@ end;
 function TBook.IsValid: Boolean;
 begin
   Result := (Title <> '') and (Synopsis <> '');
+end;
+
+procedure TBook.SetBookId(const BookId: Integer);
+begin
+  FId := BookId;
+end;
+
+procedure TBook.SetBookSynopsis(const BookSynopsis: string);
+begin
+  FSynopsis := BookSynopsis;
+end;
+
+procedure TBook.SetBookTitle(const BookTitle: string);
+begin
+  FTitle := BookTitle;
+end;
+
+function TBook.ToJSONBody: TJSONObject;
+begin
+  var JSONBody := TJSONObject.Create;
+  try
+    JSONBody.AddPair('Id', Id);
+    JSONBody.AddPair('Title', Title);
+    JSONBody.AddPair('Synopsis', Synopsis);
+
+    Result := JSONBody;
+  finally
+    JSONBody.Free;
+  end;
 end;
 
 end.

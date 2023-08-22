@@ -3,7 +3,7 @@ unit WriteReviewPresenterIntf;
 interface
 
 uses
-  CustomerReviewDTO;
+  CustomerReview;
 
 type
   IWriteReviewPresenter = interface

@@ -77,6 +77,7 @@ begin
       //JWT will expire in 1 hour
       JWT.Claims.ExpirationTime := Now + EncodeTime(1, 0, 0, 0);
       JWT.Claims.NotBefore := Now - EncodeTime(0, 5, 0, 0);
+      JWT.Claims.IssuedAt := Now;
     end;
 
   FMVC.AddMiddleware(

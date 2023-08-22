@@ -59,7 +59,7 @@ object BookDetailsForm: TBookDetailsForm
       Left = 0
       Top = 10
       Width = 258
-      Height = 31
+      Height = 30
       Align = alLeft
       Caption = 'ICONIX Internet Bookstore'
       Font.Charset = DEFAULT_CHARSET
@@ -69,7 +69,6 @@ object BookDetailsForm: TBookDetailsForm
       Font.Style = []
       ParentFont = False
       Layout = tlCenter
-      ExplicitHeight = 30
     end
     object btnWriteReview: TButton
       Left = 307
@@ -95,7 +94,7 @@ object BookDetailsForm: TBookDetailsForm
     object lblBookReviews: TLabel
       Left = 1
       Top = 1
-      Width = 508
+      Width = 104
       Height = 15
       Align = alTop
       Caption = 'Customer Reviews'
@@ -106,7 +105,6 @@ object BookDetailsForm: TBookDetailsForm
       Font.Style = [fsBold]
       ParentFont = False
       Layout = tlCenter
-      ExplicitWidth = 104
     end
     object dbgReviews: TDBGrid
       Left = 1

@@ -18,7 +18,7 @@ type
       Expiration: TDateTime);
     function IsLoggedIn: Boolean;
     function GetCustomerID: Integer;
-    function CustomerName: string;
+    function GetCustomerName: string;
     function GetToken: string;
     function GetTokenExpiration: TDateTime;
     procedure SetDefaultValue;
@@ -62,7 +62,7 @@ begin
   Result := FIsLoggedIn;
 end;
 
-function TCustomerSession.CustomerName: string;
+function TCustomerSession.GetCustomerName: string;
 begin
   Result := FCustomerName;
 end;

@@ -3,7 +3,7 @@ unit BookServiceClientIntf;
 interface
 
 uses
-  BookDTO, System.Generics.Collections;
+  Book, System.Generics.Collections;
 
 type
   IBookServiceClient = interface

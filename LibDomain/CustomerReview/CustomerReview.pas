@@ -18,22 +18,29 @@ type
     constructor Create(const AId, ACustomerId, ABookId, ARating: Integer;
       const AReview: string); overload;
 
+    function ToJSONBody: string;
     function IsValid: Boolean;
     function IsMoreThan1MB: Boolean;
     function IsTooShort: Boolean;
     function IsRatingInRange: Boolean;
 
-    property Id: Integer read FId write FId;
-    property BookId: Integer read FBookId write FBookId;
-    property CustomerId: Integer read FCustomerId write FCustomerId;
-    property Review: string read FReview write FReview;
-    property Rating: Integer read FRating write FRating;
+    procedure SetBookId(const BookId: Integer);
+    procedure SetCustomerId(const CustomerId: Integer);
+    procedure SetId(const Id: Integer);
+    procedure SetRating(const Rating: Integer);
+    procedure SetReview(const Review: string);
+
+    property Id: Integer read FId write SetId;
+    property BookId: Integer read FBookId write SetBookId;
+    property CustomerId: Integer read FCustomerId write SetCustomerId;
+    property Review: string read FReview write SetReview;
+    property Rating: Integer read FRating write SetRating;
   end;
 
 implementation
 
 uses
-  System.SysUtils;
+  System.SysUtils, JSON;
 
 { TCustomerReview }
 
@@ -87,5 +94,47 @@ function TCustomerReview.IsValid: Boolean;
 begin
   Result := IsRatingInRange and (not IsMoreThan1MB) and (not IsTooShort);
 end;
+
+procedure TCustomerReview.SetBookId(const BookId: Integer);
+begin
+  FBookId := BookId;
+end;
+
+procedure TCustomerReview.SetCustomerId(const CustomerId: Integer);
+begin
+  FCustomerId := CustomerId;
+end;
+
+procedure TCustomerReview.SetId(const Id: Integer);
+begin
+  FId := Id;
+end;
+
+procedure TCustomerReview.SetRating(const Rating: Integer);
+begin
+  FRating := Rating;
+end;
+
+procedure TCustomerReview.SetReview(const Review: string);
+begin
+  FReview := Review;
+end;
+
+function TCustomerReview.ToJSONBody: string;
+begin
+  var JSONBody := TJSONObject.Create;
+  try
+    JSONBody.AddPair('Id', Id);
+    JSONBody.AddPair('BookId', BookId);
+    JSONBody.AddPair('CustomerId', CustomerId);
+    JSONBody.AddPair('Review', Review);
+    JSONBody.AddPair('Rating', Rating);
+
+    Result := JSONBody.ToString;
+  finally
+    JSONBody.Free;
+  end;
+end;
+
 
 end.

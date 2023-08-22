@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.StdCtrls, Vcl.ExtCtrls, BookDTO, WriteReviewFrmIntf,
+  Vcl.StdCtrls, Vcl.ExtCtrls, Book, WriteReviewFrmIntf,
   WriteReviewPresenterIntf;
 
 type
@@ -40,6 +40,7 @@ type
     procedure ShowForm;
     procedure CloseForm;
     function Self: TForm;
+    function GetParentForm: TForm;
     procedure ShowReviewValidationMessage(const ValidationMessage: string);
     procedure HideReviewValidationMessage;
     procedure ShowRatingValidationMessage(const ValidationMessage: string);
@@ -90,6 +91,11 @@ end;
 procedure TWriteReviewForm.FormShow(Sender: TObject);
 begin
   FPresenter.InitializeView;
+end;
+
+function TWriteReviewForm.GetParentForm: TForm;
+begin
+  Result := TForm(Self.Owner);
 end;
 
 function TWriteReviewForm.GetReviewRating: string;

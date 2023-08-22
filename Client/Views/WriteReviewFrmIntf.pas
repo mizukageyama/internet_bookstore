@@ -15,6 +15,7 @@ type
     procedure ShowForm;
     procedure CloseForm;
     function Self: TForm;
+    function GetParentForm: TForm;
     procedure ShowReviewValidationMessage(const ValidationMessage: string);
     procedure HideReviewValidationMessage;
     procedure ShowRatingValidationMessage(const ValidationMessage: string);

@@ -73,23 +73,24 @@ begin
   JWTToken := JSONValue.GetValue<string>('token');
   JWT := TJWT.Create('this_is_my_secret');
 
-  try
-    var Error: string;
-    JWT.LoadToken(JWTToken, Error);
+  var Error: string;
+  if JWT.LoadToken(JWTToken, Error) then
+  begin
+    var CustomerID := JWT.CustomClaims['customer_id'].ToInteger;
+    var CustomerName: string := JWT.CustomClaims['customer_name'];
 
-    //var CustomerID := JWT.Claims['customer_id'].ToInteger;
-    var CustomerName: string := JWT.Claims['customer_name'];
-
-    var CustomerSession := TCustomerSession.Instance;
-    CustomerSession.SetLoggedIn(
-      1,
-      CustomerName,
-      JWTToken,
-      JWT.Claims.ExpirationTime);
-  except
-    on E: Exception do
-      ShowMessage(E.toString);
-  end;
+    try
+      var CustomerSession := TCustomerSession.Instance;
+      CustomerSession.SetLoggedIn(
+        CustomerID,
+        CustomerName,
+        JWTToken,
+        JWT.Claims.ExpirationTime);
+    except
+      on E: Exception do
+        ShowMessage(E.toString);
+    end;
+  end
 end;
 
 procedure TLoginPresenter.ValidateInput(out Username, Password: string;

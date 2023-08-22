@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.ExtCtrls, Vcl.StdCtrls, BookDTO, Data.DB, Vcl.Grids, Vcl.DBGrids,
+  Vcl.ExtCtrls, Vcl.StdCtrls, Book, Data.DB, Vcl.Grids, Vcl.DBGrids,
   BookDetailsFrmIntf, BookDetailsPresenterIntf;
 
 type
@@ -23,11 +23,11 @@ type
   protected
     FBook: TBook;
     FPresenter: IBookDetailsPresenter;
-    procedure LoadCustomerReviews(const BookId: Integer);
     procedure SetBookDetails;
     function Self: TForm;
   public
     constructor Create(const Book: TBook; Owner: TComponent); overload;
+    procedure LoadCustomerReviews;
     procedure SetPresenter(APresenter: IBookDetailsPresenter);
   end;
 
@@ -52,12 +52,12 @@ end;
 procedure TBookDetailsForm.FormShow(Sender: TObject);
 begin
   SetBookDetails;
-  LoadCustomerReviews(FBook.Id);
+  LoadCustomerReviews;
 end;
 
-procedure TBookDetailsForm.LoadCustomerReviews(const BookId: Integer);
+procedure TBookDetailsForm.LoadCustomerReviews;
 begin
-  FPresenter.LoadReviews(BookId);
+  FPresenter.LoadReviews(FBook.Id);
 end;
 
 function TBookDetailsForm.Self: TForm;

@@ -3,7 +3,7 @@ unit CustomerReviewServiceClientIntf;
 interface
 
 uses
-  CustomerReviewDTO;
+  CustomerReview;
 
 type
   ICustomerReviewServiceClient = interface

@@ -3,7 +3,7 @@ unit BookDetailsPresenterIntf;
 interface
 
 uses
-  BookDTO;
+  Book;
 
 type
   IBookDetailsPresenter = interface

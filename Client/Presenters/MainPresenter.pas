@@ -5,7 +5,7 @@ interface
 uses
   MainPresenterIntf, BookServiceClientIntf, MainFrmIntf, System.SysUtils,
   Vcl.Dialogs, MVCFramework.DataSet.Utils, MVCFramework.Serializer.Commons,
-  BookstoreDM, BookDTO, BookDetailsFrm, System.Variants,
+  BookstoreDM, Book, BookDetailsFrm, System.Variants,
   System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms;
 
 type

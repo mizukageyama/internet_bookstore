@@ -125,11 +125,9 @@
         <DCCReference Include="Views\MainFrmIntf.pas"/>
         <DCCReference Include="Services\BookServiceClient.pas"/>
         <DCCReference Include="Repositories\BookRepository.pas"/>
-        <DCCReference Include="Models\BookDTO.pas"/>
         <DCCReference Include="Services\BookServiceClientIntf.pas"/>
         <DCCReference Include="Views\BookDetailsFrmIntf.pas"/>
         <DCCReference Include="Presenters\BookDetailsPresenter.pas"/>
-        <DCCReference Include="Models\CustomerReviewDTO.pas"/>
         <DCCReference Include="Services\CustomerReviewServiceClientIntf.pas"/>
         <DCCReference Include="Presenters\BookDetailsPresenterIntf.pas"/>
         <DCCReference Include="Services\CustomerReviewServiceClient.pas"/>

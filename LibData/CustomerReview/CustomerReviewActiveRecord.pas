@@ -22,6 +22,8 @@ type
     FReview: string;
     [MVCTableField('RATING')]
     FRating: Integer;
+    [MVCTableField('IS_PENDING')]
+    FIsPendng: Boolean;
 
     function GetCustomerReviewId: Integer;
     procedure SetCustomerReviewId(const CustomerReviewId: Integer);
@@ -37,6 +39,9 @@ type
 
     function GetCustomerReviewRating: Integer;
     procedure SetCustomerReviewRating(const Rating: Integer);
+
+    function GetCustomerReviewIsPending: Boolean;
+    procedure SetCustomerReviewIsPending(const IsPending: Boolean);
   public
     constructor Create; overload; override;
     constructor Create(const ACustomerReview: TCustomerReview); overload;
@@ -51,6 +56,8 @@ type
       read GetReview write SetReview;
     property Rating: Integer
       read GetCustomerReviewRating write SetCustomerReviewRating;
+    property IsPending: Boolean
+      read GetCustomerReviewIsPending write SetCustomerReviewIsPending;
   end;
 
 implementation
@@ -66,6 +73,7 @@ begin
   FBookId := ACustomerReview.BookId;
   FReview := ACustomerReview.Review;
   FRating := ACustomerReview.Rating;
+  FIsPendng := ACustomerReview.IsPending;
 end;
 
 constructor TCustomerReviewActiveRecord.Create;
@@ -100,10 +108,21 @@ begin
   Result := FId;
 end;
 
+function TCustomerReviewActiveRecord.GetCustomerReviewIsPending: Boolean;
+begin
+  Result := FIsPendng;
+end;
+
 procedure TCustomerReviewActiveRecord.SetCustomerReviewId(
   const CustomerReviewId: Integer);
 begin
   FId := CustomerReviewId;
+end;
+
+procedure TCustomerReviewActiveRecord.SetCustomerReviewIsPending(
+  const IsPending: Boolean);
+begin
+  FIsPendng := IsPending;
 end;
 
 function TCustomerReviewActiveRecord.GetCustomerReviewRating: Integer;

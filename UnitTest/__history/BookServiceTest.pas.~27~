@@ -1,0 +1,69 @@
+unit BookServiceTest;
+
+interface
+
+uses
+  DUnitX.TestFramework;
+
+type
+  [TestFixture]
+  TBookServiceTest = class
+  private
+    procedure Test2(const AValue1, AValue2: Integer);
+  public
+    [Test]
+    procedure GetBooks_BookListIsEmpty_IsTrue;
+    [Test]
+    procedure GetBooks_BookListIsNotEmpty_IsTrue;
+    [Test]
+    [TestCase('TestFieldsNotEmpty','1,This is a title1,This is a synopsis1')]
+    [TestCase('TestFieldsIsEmpty','1,,This is a synopsis1')]
+    procedure CreateBook_InputValidation_IsSuccess(const AId : Integer;
+      const ATitle, ASynopsis : string);
+  end;
+
+implementation
+
+uses
+  Book, System.Generics.Collections, BookServiceStub;
+
+procedure TBookServiceTest.CreateBook_InputValidation_IsSuccess(
+  const AId: Integer; const ATitle, ASynopsis: string);
+begin
+  var Book := TBook.Create(AId, ATitle, ASynopsis);
+  Assert.IsTrue(Book.IsValid);
+end;
+
+procedure TBookServiceTest.GetBooks_BookListIsEmpty_IsTrue;
+begin
+  var BookList := TObjectList<TBook>.Create;
+  var BookServiceStub := TBookServiceStub.Create(BookList);
+
+  var BookListFromStub := BookServiceStub.GetBooks;
+
+  Assert.IsTrue(BookListFromStub.Count = 0);
+end;
+
+
+procedure TBookServiceTest.GetBooks_BookListIsNotEmpty_IsTrue;
+begin
+  var BookList := TObjectList<TBook>.Create;
+  BookList.Add(TBook.Create(1, 'This is a title1', 'This is a synopsis1'));
+  BookList.Add(TBook.Create(2, 'This is a title2', 'This is a synopsis2'));
+  BookList.Add(TBook.Create(3, 'This is a title3', 'This is a synopsis3'));
+  var BookServiceStub := TBookServiceStub.Create(BookList);
+
+  var BookListFromStub := BookServiceStub.GetBooks;
+
+  Assert.IsTrue(BookListFromStub.Count > 0);
+end;
+
+procedure TBookServiceTest.Test2(const AValue1 : Integer;
+  const AValue2 : Integer);
+begin
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TBookServiceTest);
+
+end.

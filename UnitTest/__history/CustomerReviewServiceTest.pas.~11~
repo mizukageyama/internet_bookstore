@@ -1,0 +1,61 @@
+unit CustomerReviewServiceTest;
+
+interface
+
+uses
+  DUnitX.TestFramework;
+
+type
+  [TestFixture]
+  TCustomerReviewServiceTest = class
+  public
+    [Test]
+    [TestCase('TestFieldsNotEmpty','1,This is a title1,This is a synopsis1')]
+    procedure CreateCustomerReview_ReviewMoreThan1MB_FailValidation(const AId, ABookId,
+      ACustomerId : Integer; const AReview : string; const ARating: Integer);
+    [Test]
+    procedure CreateCustomerReview_RatingInRange_PassValidation(const AId, ABookId,
+      ACustomerId : Integer; const AReview : string; const ARating: Integer);
+    [Test]
+    procedure CreateCustomerReview_IsTooShort_FailValidation(const AId, ABookId,
+      ACustomerId : Integer; const AReview : string; const ARating: Integer);
+  end;
+
+implementation
+
+uses
+  CustomerReview;//, CustomerReviewServiceStub;
+
+{ TCustomerReviewServiceTest }
+
+procedure TCustomerReviewServiceTest.CreateCustomerReview_ReviewMoreThan1MB_FailValidation(
+  const AId, ABookId, ACustomerId: Integer; const AReview: string;
+  const ARating: Integer);
+begin
+  var CustomerReview := TCustomerReview.Create(AId, ACustomerId, ABookId,
+    ARating, AReview, False);
+  Assert.IsFalse(CustomerReview.IsMoreThan1MB);
+end;
+
+procedure TCustomerReviewServiceTest.CreateCustomerReview_IsTooShort_FailValidation(
+  const AId, ABookId, ACustomerId: Integer; const AReview: string;
+  const ARating: Integer);
+begin
+  var CustomerReview := TCustomerReview.Create(AId, ACustomerId, ABookId,
+    ARating, AReview, False);
+  Assert.IsFalse(CustomerReview.IsTooShort);
+end;
+
+procedure TCustomerReviewServiceTest.CreateCustomerReview_RatingInRange_PassValidation(
+  const AId, ABookId, ACustomerId: Integer; const AReview: string;
+  const ARating: Integer);
+begin
+  var CustomerReview := TCustomerReview.Create(AId, ACustomerId, ABookId,
+    ARating, AReview, False);
+  Assert.IsTrue(CustomerReview.IsRatingInRange);
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TCustomerReviewServiceTest);
+
+end.

@@ -23,7 +23,7 @@ type
   protected
     FBook: TBook;
     FPresenter: IBookDetailsPresenter;
-    procedure SetBookDetails;
+    procedure SetBookDetails(const Book: TBook);
     function Self: TForm;
   public
     constructor Create(const Book: TBook; Owner: TComponent); overload;
@@ -51,7 +51,7 @@ end;
 
 procedure TBookDetailsForm.FormShow(Sender: TObject);
 begin
-  SetBookDetails;
+  FPresenter.DisplayBookDetails(FBook);
   LoadCustomerReviews;
 end;
 
@@ -65,10 +65,10 @@ begin
   Result := Self;
 end;
 
-procedure TBookDetailsForm.SetBookDetails;
+procedure TBookDetailsForm.SetBookDetails(const Book: TBook);
 begin
-  lblBookTitle.Caption := FBook.Title;
-  lblSynopsis.Caption := FBook.Synopsis;
+  lblBookTitle.Caption := Book.Title;
+  lblSynopsis.Caption := Book.Synopsis;
 end;
 
 procedure TBookDetailsForm.SetPresenter(APresenter: IBookDetailsPresenter);

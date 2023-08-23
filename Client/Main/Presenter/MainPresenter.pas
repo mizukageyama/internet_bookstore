@@ -80,21 +80,26 @@ var
 
   SelectedBook: TBook;
 
-  CustomerReviewService: ICustomerReviewService;
+  CustomerReviewProxy: ICustomerReviewService;
   BookDetailsPresenter: IBookDetailsPresenter;
   BookDetailsForm: TForm;
 begin
   BookstoreDM := BookstoreDataModule;
 
   BookId := (BookstoreDM.fdmemBookId.Value);
+
+  //Use Service
+  //If Service Return is nil, then must show message dialog that book no
+  //longer exists then refresh
+
   BookTitle := (BookstoreDM.fdmemBookTitle.Value);
   BookSynopsis := (BookstoreDM.fdmemBookSynopsis.Value);
   SelectedBook := TBook.Create(BookId, BookTitle, BookSynopsis);
 
   BookDetailsForm := TBookDetailsForm.Create(SelectedBook, FMainView.Self);
-  CustomerReviewService := TCustomerReviewServiceProxy.Create;
+  CustomerReviewProxy := TCustomerReviewServiceProxy.Create;
   BookDetailsPresenter := TBookDetailsPresenter
-    .Create(BookDetailsForm as TBookDetailsForm, CustomerReviewService);
+    .Create(BookDetailsForm as TBookDetailsForm, CustomerReviewProxy);
 
   BookDetailsForm.Show;
 end;

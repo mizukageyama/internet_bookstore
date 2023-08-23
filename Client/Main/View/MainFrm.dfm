@@ -61,7 +61,7 @@ object MainForm: TMainForm
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitWidth = 609
+    ExplicitWidth = 611
     object lblWelcome: TLabel
       Left = 0
       Top = 0

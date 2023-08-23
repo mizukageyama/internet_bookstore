@@ -22,6 +22,7 @@ type
     procedure PopulateReviewsTable(const CustomerReviews: TObjectList<TCustomerReview>);
     procedure ShowWriteReviewForm(const Book: TBook);
     procedure ShowLoginForm(const Book: TBook);
+    procedure DisplayBookDetails(const Book: TBook);
   public
     constructor Create(ABookDetailsView: IBookDetailsForm;
       ABookDetailsService: ICustomerReviewService);
@@ -34,6 +35,11 @@ implementation
 uses
   WriteReviewFrm, CustomerReviewServiceProxy, WriteReviewPresenter, LoginFrm,
   LoginPresenter, CustomerSession;
+
+procedure TBookDetailsPresenter.DisplayBookDetails(const Book: TBook);
+begin
+  FBookDetailsView.SetBookDetails(Book);
+end;
 
 function TBookDetailsPresenter.IsCustomerLoggedIn;
 begin

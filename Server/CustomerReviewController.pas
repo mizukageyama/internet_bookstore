@@ -58,6 +58,7 @@ end;
 procedure TCustomerReviewController.CreateCustomerReview;
 begin
   var CustomerReview := Context.Request.BodyAs<TCustomerReview>;
+  CustomerReview.SetIsPending(True);
 
   if not CustomerReview.IsValid then
   begin

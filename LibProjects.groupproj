@@ -15,6 +15,9 @@
         <Projects Include="Client\InternetBookstore.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="UnitTest\InternetBookstoreTest.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -59,14 +62,23 @@
     <Target Name="InternetBookstore:Make">
         <MSBuild Projects="Client\InternetBookstore.dproj" Targets="Make"/>
     </Target>
+    <Target Name="InternetBookstoreTest">
+        <MSBuild Projects="UnitTest\InternetBookstoreTest.dproj"/>
+    </Target>
+    <Target Name="InternetBookstoreTest:Clean">
+        <MSBuild Projects="UnitTest\InternetBookstoreTest.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="InternetBookstoreTest:Make">
+        <MSBuild Projects="UnitTest\InternetBookstoreTest.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="LibDomain;LibData;InternetBookstoreServer;InternetBookstore"/>
+        <CallTarget Targets="LibDomain;LibData;InternetBookstoreServer;InternetBookstore;InternetBookstoreTest"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="LibDomain:Clean;LibData:Clean;InternetBookstoreServer:Clean;InternetBookstore:Clean"/>
+        <CallTarget Targets="LibDomain:Clean;LibData:Clean;InternetBookstoreServer:Clean;InternetBookstore:Clean;InternetBookstoreTest:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="LibDomain:Make;LibData:Make;InternetBookstoreServer:Make;InternetBookstore:Make"/>
+        <CallTarget Targets="LibDomain:Make;LibData:Make;InternetBookstoreServer:Make;InternetBookstore:Make;InternetBookstoreTest:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

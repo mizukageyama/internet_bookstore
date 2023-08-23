@@ -27,7 +27,7 @@ uses
 {$R *.res}
 
 var
-  BookService: IBookService;
+  BookServiceProxy: IBookService;
   MainPresenter: IMainPresenter;
   MainForm: TForm;
 begin
@@ -36,8 +36,9 @@ begin
 
   Application.CreateForm(TBookstoreDataModule, BookstoreDataModule);
   Application.CreateForm(TMainForm, MainForm);
-  BookService := TBookServiceProxy.Create;
-  MainPresenter := TMainPresenter.Create(MainForm as TMainForm, BookService);
+  BookServiceProxy := TBookServiceProxy.Create;
+  MainPresenter := TMainPresenter.Create(MainForm as TMainForm,
+    BookServiceProxy);
 
   Application.Run;
 end.

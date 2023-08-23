@@ -51,7 +51,7 @@ begin
   var CustomerReviewAR := TCustomerReviewActiveRecord.Create;
 
   var ARList := CustomerReviewAR.Where(TCustomerReviewActiveRecord,
-    ' WHERE BOOK_ID = ?', [CustomerReviewBookId]);
+    ' WHERE BOOK_ID = ? AND IS_PENDING = ?', [CustomerReviewBookId, 0]);
 
   var CustomerReviewList := TObjectList<TCustomerReview>.Create;
 

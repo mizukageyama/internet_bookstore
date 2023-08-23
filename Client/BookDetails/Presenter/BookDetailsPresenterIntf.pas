@@ -13,6 +13,7 @@ type
     function IsCustomerLoggedIn: Boolean;
     procedure PopulateReviewsTable(const CustomerReviews:
       TObjectList<TCustomerReview>);
+    procedure DisplayBookDetails(const Book: TBook);
   end;
 
 implementation

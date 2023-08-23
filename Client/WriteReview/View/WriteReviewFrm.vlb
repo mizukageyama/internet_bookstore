@@ -29,9 +29,9 @@ Coordinates=262,78,44,58
 [lblGreeting]
 Coordinates=316,78,53,58
 
-[btnSaveReview]
-Coordinates=406,214,59,58
-
 [lblBookTitle]
 Coordinates=115,78,53,58
+
+[btnSubmitReview]
+Coordinates=406,214,59,58
 

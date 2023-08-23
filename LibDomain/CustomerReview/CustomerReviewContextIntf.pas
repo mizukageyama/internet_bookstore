@@ -20,6 +20,9 @@ type
     function GetCustomerReviewRating: Integer;
     procedure SetCustomerReviewRating(const Rating: Integer);
 
+    function GetCustomerReviewIsPending: Boolean;
+    procedure SetCustomerReviewIsPending(const IsPending: Boolean);
+
     property Id: Integer
       read GetCustomerReviewId write SetCustomerReviewId;
 
@@ -34,6 +37,9 @@ type
 
     property Rating: Integer
       read GetCustomerReviewRating write SetCustomerReviewRating;
+
+    property IsPending: Boolean
+      read GetCustomerReviewIsPending write SetCustomerReviewIsPending;
   end;
 
 implementation

@@ -13,7 +13,7 @@ type
     FCustomerReviewService: ICustomerReviewService;
   protected
     procedure InitializeView;
-    procedure SaveReview(const BookId: Integer);
+    procedure SubmitReview(const BookId: Integer);
     procedure ValidateInput(out CustomerReview: TCustomerReview;
       out IsSuccess: Boolean);
     procedure HideValidationMessage;
@@ -46,7 +46,7 @@ begin
   HideValidationMessage;
 end;
 
-procedure TWriteReviewPresenter.SaveReview(const BookId: Integer);
+procedure TWriteReviewPresenter.SubmitReview(const BookId: Integer);
 var
   CustomerReview: TCustomerReview;
   IsSuccess: Boolean;
@@ -54,6 +54,7 @@ begin
   CustomerReview := TCustomerReview.Create;
   ValidateInput(CustomerReview, IsSuccess);
   CustomerReview.SetBookId(BookId);
+
   var CustomerSession := TCustomerSession.Instance;
   CustomerReview.SetCustomerId(CustomerSession.GetCustomerID);
 
@@ -61,12 +62,8 @@ begin
   begin
     try
       FCustomerReviewService.CreateCustomerReview(CustomerReview);
-      ShowMessage('Review Added Successfully');
+      ShowMessage('Review is sent to admin for approval');
       FWriteReviewView.CloseForm;
-
-      var BookDetailForm: IBookDetailsForm := FWriteReviewView.GetParentForm
-        as TBookDetailsForm;
-      BookDetailForm.LoadCustomerReviews;
     except
       on E: Exception do
         ShowMessage(E.ToString);

@@ -55,7 +55,7 @@ object BookDetailsForm: TBookDetailsForm
     BevelOuter = bvNone
     Padding.Top = 10
     TabOrder = 0
-    ExplicitWidth = 504
+    ExplicitWidth = 506
     object lblTitle: TLabel
       Left = 0
       Top = 10
@@ -81,7 +81,7 @@ object BookDetailsForm: TBookDetailsForm
       Caption = 'Write a Review for this book'
       TabOrder = 0
       OnClick = btnWriteReviewClick
-      ExplicitLeft = 301
+      ExplicitLeft = 303
     end
   end
   object pnlReviews: TPanel
@@ -91,8 +91,8 @@ object BookDetailsForm: TBookDetailsForm
     Height = 314
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 135
-    ExplicitWidth = 504
+    ExplicitTop = 143
+    ExplicitWidth = 506
     object lblBookReviews: TLabel
       Left = 1
       Top = 1

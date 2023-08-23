@@ -12,7 +12,7 @@ type
   TWriteReviewForm = class(TForm, IWriteReviewForm)
     lblBookTitle: TLabel;
     pnlBottom: TPanel;
-    btnSaveReview: TButton;
+    btnSubmitReview: TButton;
     pnlGreeting: TPanel;
     lblGreeting: TLabel;
     pnlRating: TPanel;
@@ -27,7 +27,7 @@ type
     lblReviewValidationMessage: TLabel;
     pnlValidation: TPanel;
     procedure FormShow(Sender: TObject);
-    procedure btnSaveReviewClick(Sender: TObject);
+    procedure btnSubmitReviewClick(Sender: TObject);
   protected
     FPresenter: IWriteReviewPresenter;
     FBook: TBook;
@@ -56,9 +56,9 @@ implementation
 
 { TWriteReviewForm }
 
-procedure TWriteReviewForm.btnSaveReviewClick(Sender: TObject);
+procedure TWriteReviewForm.btnSubmitReviewClick(Sender: TObject);
 begin
-  FPresenter.SaveReview(FBook.Id);
+  FPresenter.SubmitReview(FBook.Id);
 end;
 
 procedure TWriteReviewForm.CloseForm;

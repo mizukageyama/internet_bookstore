@@ -86,7 +86,7 @@ end;
 procedure TBookDetailsPresenter.ShowLoginForm(const Book: TBook);
 begin
   var LoginForm := TLoginForm.Create(FBookDetailsView.Self);
-  var LoginPresenter := TLoginPresenter.Create(LoginForm as TLoginForm);
+  var LoginPresenter := TLoginPresenter .Create(LoginForm as TLoginForm);
 
   LoginPresenter.OnLoginSuccess := procedure
   begin
@@ -99,9 +99,9 @@ end;
 procedure TBookDetailsPresenter.ShowWriteReviewForm(const Book: TBook);
 begin
   var ReviewForm := TWriteReviewForm.Create(Book, FBookDetailsView.Self);
-  var CustomerReviewServiceProxy := TCustomerReviewServiceProxy.Create;
+  var CustomerReviewService := TCustomerReviewServiceProxy.Create;
   var WriteReviewPresenter := TWriteReviewPresenter
-    .Create(ReviewForm as TWriteReviewForm, CustomerReviewServiceProxy);
+    .Create(ReviewForm as TWriteReviewForm, CustomerReviewService);
 
   ReviewForm.Show;
 end;

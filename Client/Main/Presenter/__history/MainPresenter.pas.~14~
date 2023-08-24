@@ -6,7 +6,8 @@ uses
   MainPresenterIntf, BookServiceIntf, MainFrmIntf, System.SysUtils,
   Vcl.Dialogs, MVCFramework.DataSet.Utils, MVCFramework.Serializer.Commons,
   BookstoreDM, Book, BookDetailsFrm, System.Variants,
-  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms;
+  System.Generics.Collections, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms;
 
 type
   TMainPresenter = class(TInterfacedObject, IMainPresenter)
@@ -16,7 +17,7 @@ type
   protected
     procedure LoadBooks;
     procedure ShowBookDetails;
-    procedure PopulateBookTable(JSONData: string);
+    procedure PopulateBookTable(const Books: TObjectList<TBook>);
   public
     constructor Create(AMainView: IMainFrm; AMainService: IBookService);
   end;
@@ -35,6 +36,7 @@ begin
   FMainView := AMainView;
   FMainService := AMainService;
   FMainView.SetPresenter(Self);
+  FCurrentPage := 1;
 end;
 
 procedure TMainPresenter.LoadBooks;
@@ -42,16 +44,10 @@ begin
   try
     var Books := FMainService.GetBooks;
     PopulateBookTable(Books);
-    FMainView.EnablePrevButton;
-    FMainView.EnableNextButton;
-    FMainView.SetPageInfo(1, 4);
   except
     on E: Exception do
     begin
       ShowMessage(E.ToString);
-      FMainView.DisablePrevButton;
-      FMainView.DisableNextButton;
-      FMainView.SetNoResult;
     end;
   end;
 end;
@@ -65,7 +61,9 @@ begin
  for var Book in Books do
   begin
     BookstoreDM.fdmemBook.Append;
-    BookstoreDM.fdmemBook.FieldByName('Title').AsString := Book.ti;
+    BookstoreDM.fdmemBook.FieldByName('Id').AsInteger := Book.Id;
+    BookstoreDM.fdmemBook.FieldByName('Title').AsString := Book.Title;
+    BookstoreDM.fdmemBook.FieldByName('Synopsis').AsString := Book.Synopsis;
     BookstoreDM.fdmemBook.Post;
   end;
 
@@ -78,26 +76,29 @@ var
   BookId: Integer;
   BookTitle: string;
   BookSynopsis: string;
+
   SelectedBook: TBook;
-  CustomerReviewApi: ICustomerReviewApi;
-  CustomerReviewService: ICustomerReviewService;
+
+  CustomerReviewProxy: ICustomerReviewService;
   BookDetailsPresenter: IBookDetailsPresenter;
   BookDetailsForm: TForm;
 begin
-  //FMainView.HideForm;
   BookstoreDM := BookstoreDataModule;
 
   BookId := (BookstoreDM.fdmemBookId.Value);
+
+  //Use Service
+  //If Service Return is nil, then must show message dialog that book no
+  //longer exists then refresh
+
   BookTitle := (BookstoreDM.fdmemBookTitle.Value);
   BookSynopsis := (BookstoreDM.fdmemBookSynopsis.Value);
   SelectedBook := TBook.Create(BookId, BookTitle, BookSynopsis);
 
   BookDetailsForm := TBookDetailsForm.Create(SelectedBook, FMainView.Self);
-  CustomerReviewApi := TCustomerReviewApi.Create;
-  CustomerReviewService := TCustomerReviewServiceClient
-    .Create(CustomerReviewApi);
+  CustomerReviewProxy := TCustomerReviewServiceProxy.Create;
   BookDetailsPresenter := TBookDetailsPresenter
-    .Create(BookDetailsForm as TBookDetailsForm, CustomerReviewService);
+    .Create(BookDetailsForm as TBookDetailsForm, CustomerReviewProxy);
 
   BookDetailsForm.Show;
 end;

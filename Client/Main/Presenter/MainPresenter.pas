@@ -14,7 +14,6 @@ type
   private
     FMainView: IMainFrm;
     FMainService: IBookService;
-    FCurrentPage: Integer;
   protected
     procedure LoadBooks;
     procedure ShowBookDetails;
@@ -37,7 +36,6 @@ begin
   FMainView := AMainView;
   FMainService := AMainService;
   FMainView.SetPresenter(Self);
-  FCurrentPage := 1;
 end;
 
 procedure TMainPresenter.LoadBooks;

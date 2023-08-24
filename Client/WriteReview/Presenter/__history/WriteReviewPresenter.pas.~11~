@@ -100,7 +100,7 @@ begin
 
   if CustomerReview.IsTooShort then
     FWriteReviewView.ShowReviewValidationMessage(
-      'Review should not be less than 10 characters');
+      'Review should be 10 or more characters');
 
   IsSuccess := CustomerReview.IsValid;
 end;

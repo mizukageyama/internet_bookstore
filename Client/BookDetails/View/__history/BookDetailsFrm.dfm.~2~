@@ -73,14 +73,15 @@ object BookDetailsForm: TBookDetailsForm
       ExplicitHeight = 30
     end
     object btnWriteReview: TButton
-      Left = 376
+      Left = 307
       Top = 10
-      Width = 134
+      Width = 203
       Height = 31
       Align = alRight
-      Caption = 'Write Review'
+      Caption = 'Write a Review for this book'
       TabOrder = 0
       OnClick = btnWriteReviewClick
+      ExplicitLeft = 303
     end
   end
   object pnlReviews: TPanel

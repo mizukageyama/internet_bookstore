@@ -10,7 +10,7 @@ type
   TWriteReviewPresenter = class(TInterfacedObject, IWriteReviewPresenter)
   private
     FWriteReviewView: IWriteReviewForm;
-    FCustomerReviewServiceProxy: ICustomerReviewService;
+    FCustomerReviewService: ICustomerReviewService;
   protected
     procedure InitializeView;
     procedure SubmitReview(const BookId: Integer);
@@ -33,7 +33,7 @@ constructor TWriteReviewPresenter.Create(AWriteReviewView: IWriteReviewForm;
   ACustomerReviewService: ICustomerReviewService);
 begin
   FWriteReviewView := AWriteReviewView;
-  FCustomerReviewServiceProxy := ACustomerReviewService;
+  FCustomerReviewService := ACustomerReviewService;
   FWriteReviewView.SetPresenter(Self);
 end;
 
@@ -61,7 +61,7 @@ begin
   if IsSuccess then
   begin
     try
-      FCustomerReviewServiceProxy.CreateCustomerReview(CustomerReview);
+      FCustomerReviewService.CreateCustomerReview(CustomerReview);
       ShowMessage('Review is sent to admin for approval');
       FWriteReviewView.CloseForm;
     except
@@ -89,7 +89,7 @@ begin
     CustomerReview.SetRating(Rating);
     if not CustomerReview.IsRatingInRange then
       FWriteReviewView.ShowRatingValidationMessage(
-        'Rating should be within 1-5 range');
+        'Rating should be 1-5 range');
   end
   else
     FWriteReviewView.ShowRatingValidationMessage('Rating should be a number');
@@ -100,7 +100,7 @@ begin
 
   if CustomerReview.IsTooShort then
     FWriteReviewView.ShowReviewValidationMessage(
-      'Review should not be less than 10 characters');
+      'Review should be 10 or more characters');
 
   IsSuccess := CustomerReview.IsValid;
 end;

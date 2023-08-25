@@ -16,13 +16,15 @@ object BookstoreDataModule: TBookstoreDataModule
     Left = 88
     Top = 120
     object fdMemBookId: TIntegerField
-      FieldName = 'id'
+      FieldName = 'Id'
     end
     object fdMemBookTitle: TStringField
-      FieldName = 'title'
+      FieldName = 'Title'
+      Size = 255
     end
     object fdMemBookSynopsis: TStringField
-      FieldName = 'synopsis'
+      FieldName = 'Synopsis'
+      Size = 255
     end
   end
   object dsBook: TDataSource
@@ -56,6 +58,24 @@ object BookstoreDataModule: TBookstoreDataModule
     UpdateOptions.AutoCommitUpdates = True
     Left = 400
     Top = 120
+    object fdMemCustomerReviewId: TIntegerField
+      FieldName = 'Id'
+    end
+    object fdMemCustomerReviewBookId: TIntegerField
+      DisplayLabel = 'Book Id'
+      FieldName = 'BookId'
+    end
+    object fdMemCustomerReviewCustomerId: TIntegerField
+      DisplayLabel = 'Customer Id'
+      FieldName = 'CustomerId'
+    end
+    object fdMemCustomerReviewRating: TIntegerField
+      FieldName = 'Rating'
+    end
+    object fdMemCustomerReviewReview: TStringField
+      FieldName = 'Review'
+      Size = 255
+    end
   end
   object dsCustomerReview: TDataSource
     DataSet = fdMemCustomerReview

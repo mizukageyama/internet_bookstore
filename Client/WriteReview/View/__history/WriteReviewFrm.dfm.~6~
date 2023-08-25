@@ -42,8 +42,6 @@ object WriteReviewForm: TWriteReviewForm
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    ExplicitTop = 320
-    ExplicitWidth = 524
     object btnSubmitReview: TButton
       Left = 0
       Top = 0
@@ -63,7 +61,6 @@ object WriteReviewForm: TWriteReviewForm
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitWidth = 524
     object lblGreeting: TLabel
       Left = 0
       Top = 0
@@ -92,8 +89,6 @@ object WriteReviewForm: TWriteReviewForm
     Padding.Top = 7
     Padding.Bottom = 7
     TabOrder = 2
-    ExplicitTop = 257
-    ExplicitWidth = 524
     object lblRating: TLabel
       Left = 0
       Top = 7
@@ -177,8 +172,6 @@ object WriteReviewForm: TWriteReviewForm
     Padding.Top = 7
     Padding.Bottom = 7
     TabOrder = 3
-    ExplicitWidth = 524
-    ExplicitHeight = 205
     object blbReview: TLabel
       Left = 0
       Top = 7
@@ -205,7 +198,6 @@ object WriteReviewForm: TWriteReviewForm
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitHeight = 191
       object lblReviewValidationMessage: TLabel
         Left = 0
         Top = 172
@@ -219,6 +211,7 @@ object WriteReviewForm: TWriteReviewForm
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
+        ExplicitTop = 181
         ExplicitWidth = 129
       end
       object memReview: TMemo
@@ -234,7 +227,6 @@ object WriteReviewForm: TWriteReviewForm
         Font.Style = []
         ParentFont = False
         TabOrder = 0
-        ExplicitHeight = 171
       end
     end
   end

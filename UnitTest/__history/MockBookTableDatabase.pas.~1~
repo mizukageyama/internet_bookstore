@@ -1,0 +1,75 @@
+unit MockBookTableDatabase;
+
+interface
+
+uses
+  Book, System.Generics.Collections;
+
+type
+  TMockDatabase = class
+  private
+    FBooks: TDictionary<Integer, TBook>;
+    FNextBookId: Integer;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure AddBook(const Book: TBook);
+    function GetAllBooks: TObjectList<TBook>;
+    function GetBookById(BookId: Integer): TBook;
+    procedure UpdateBook(const Book: TBook);
+    procedure DeleteBook(BookId: Integer);
+  end;
+
+var
+  MockDatabase: TMockDatabase; // Global instance of the mock database
+
+implementation
+
+constructor TMockDatabase.Create;
+begin
+  FBooks := TDictionary<Integer, TBook>.Create;
+  FNextBookId := 1;
+end;
+
+destructor TMockDatabase.Destroy;
+begin
+  FBooks.Free;
+  inherited;
+end;
+
+procedure TMockDatabase.AddBook(const Book: TBook);
+begin
+  Book.Id := FNextBookId;
+  FBooks.Add(FNextBookId, Book);
+  Inc(FNextBookId);
+end;
+
+function TMockDatabase.GetAllBooks: TObjectList<TBook>;
+var
+  Book: TBook;
+begin
+  Result := TObjectList<TBook>.Create(True);
+  for Book in FBooks.Values do
+    Result.Add(Book);
+end;
+
+function TMockDatabase.GetBookById(BookId: Integer): TBook;
+begin
+  if FBooks.TryGetValue(BookId, Result) then
+    Exit
+  else
+    Result := nil;
+end;
+
+procedure TMockDatabase.UpdateBook(const Book: TBook);
+begin
+  FBooks[Book.Id] := Book;
+end;
+
+procedure TMockDatabase.DeleteBook(BookId: Integer);
+begin
+  FBooks.Remove(BookId);
+end;
+
+end.

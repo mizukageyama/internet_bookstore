@@ -1,0 +1,97 @@
+unit BookActiveRecordDaoTest;
+
+interface
+
+uses
+  DUnitX.TestFramework, Book, BookActiveRecordDaoStub,
+  System.Generics.Collections, MockBookTableDatabase, BookDAOIntf;
+
+type
+  [TestFixture]
+  TBookDAOUnitTests = class
+  private
+    FBookDAO: IBookDAO;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+
+    [Test]
+    procedure TestInsertSuccess;
+    [Test]
+    procedure TestSelectSuccess;
+    [Test]
+    procedure TestSelectWhereIdSuccess;
+    [Test]
+    procedure TestUpdateSuccess;
+    [Test]
+    procedure TestDeleteSuccess;
+  end;
+
+implementation
+
+procedure TBookDAOUnitTests.Setup;
+begin
+  var FMockDatabase := TMockBookTableDatabase.Create;
+  FBookDAO := TBookActiveRecordDaoStub.Create(FMockDatabase);
+end;
+
+procedure TBookDAOUnitTests.TearDown;
+begin
+  FBookDAO := nil;
+end;
+
+procedure TBookDAOUnitTests.TestInsertSuccess;
+begin
+  var Book := TBook.Create;
+  Book.Title := 'Sample Book';
+  Book.Synopsis := 'A sample book synopsis.';
+
+  FBookDAO.Insert(Book);
+
+  Assert.IsTrue(MockDatabase.Contains(Book.Id));
+end;
+
+procedure TBookDAOUnitTests.TestSelectSuccess;
+begin
+  var Books := FBookDAO.Select;
+  Assert.IsNotNull(Books);
+end;
+
+procedure TBookDAOUnitTests.TestSelectWhereIdSuccess;
+begin
+  var BookId := 1;
+  var SelectedBook := FBookDAO.SelectWhereId(BookId);
+
+  Assert.IsNotNull(SelectedBook);
+end;
+
+procedure TBookDAOUnitTests.TestUpdateSuccess;
+begin
+  var Book := FBookDAO.SelectWhereId(1);
+  if Assigned(Book) then
+  begin
+    Book.Title := 'Updated Title';
+    Book.Synopsis := 'Updated Synopsis';
+
+    FBookDAO.Update(Book);
+
+    Assert.AreEqual(Book.Title, MockDatabase.GetBookById(1).Title);
+    Assert.AreEqual(Book.Synopsis, MockDatabase.GetBookById(1).Synopsis);
+  end;
+end;
+
+procedure TBookDAOUnitTests.TestDeleteSuccess;
+begin
+  var BookId := 1;
+
+  FBookDAO.Delete(BookId);
+
+  Assert.IsFalse(MockDatabase.Contains(BookId));
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TBookDAOUnitTests);
+
+end.

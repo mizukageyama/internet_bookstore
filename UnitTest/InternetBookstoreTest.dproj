@@ -88,8 +88,12 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="BookServiceTest.pas"/>
-        <DCCReference Include="BookServiceStub.pas"/>
         <DCCReference Include="CustomerReviewServiceTest.pas"/>
+        <DCCReference Include="BookActiveRecordDaoTest.pas"/>
+        <DCCReference Include="BookActiveRecordDaoStub.pas"/>
+        <DCCReference Include="MockBookTableDatabase.pas"/>
+        <DCCReference Include="MockCustomerReviewTableDatabase.pas"/>
+        <DCCReference Include="CustomerReviewARDaoStub.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

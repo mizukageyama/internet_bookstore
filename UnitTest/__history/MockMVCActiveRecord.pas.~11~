@@ -1,0 +1,54 @@
+unit MockMVCActiveRecord;
+
+interface
+
+uses
+  System.Generics.Collections, MVCFramework.ActiveRecord;
+
+type
+  TMockMVCActiveRecord = class
+  private
+    class var MockDatabase: TDictionary<Integer, TMVCActiveRecord>;
+    class var NextMockID: Integer;
+  public
+    constructor Create; virtual;
+    function All(const aClass: TMVCActiveRecordClass): TObjectList<TMVCActiveRecord>;
+
+
+  end;
+
+  TMockActiveRecordEntity = class abstract(TMockMVCActiveRecord)
+  public
+    function QueryInterface(const IID: TGUID; out Obj): HRESULT; stdcall;
+    function _AddRef: Integer; stdcall;
+    function _Release: Integer; stdcall;
+  end;
+
+implementation
+
+{ TMockMVCActiveRecord }
+
+constructor TMockMVCActiveRecord.Create;
+begin
+
+end;
+
+{ TMockActiveRecordEntity }
+
+function TMockActiveRecordEntity.QueryInterface(const IID: TGUID;
+  out Obj): HRESULT;
+begin
+  Result := -1;
+end;
+
+function TMockActiveRecordEntity._AddRef: Integer;
+begin
+  Result := -1;
+end;
+
+function TMockActiveRecordEntity._Release: Integer;
+begin
+  Result := -1;
+end;
+
+end.

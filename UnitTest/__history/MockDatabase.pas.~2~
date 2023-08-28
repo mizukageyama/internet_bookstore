@@ -1,0 +1,13 @@
+unit MockDatabase;
+
+interface
+
+type
+  TMockDatabase = class
+  public
+
+  end;
+
+implementation
+
+end.

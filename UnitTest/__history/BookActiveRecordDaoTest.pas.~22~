@@ -1,0 +1,102 @@
+unit BookActiveRecordDaoTest;
+
+interface
+
+uses
+  DUnitX.TestFramework, Book, BookActiveRecordDaoStub,
+  System.Generics.Collections;
+
+type
+  [TestFixture]
+  TBookActiveRecordDaoTest = class
+  private
+    FBookDAO: TBookActiveRecordDAOStub;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+
+    [Test]
+    procedure TestInsert(const Id: Integer; const Title, Synopsis: string);
+    [Test]
+    procedure TestDelete(const BookId: Integer);
+    [Test]
+    procedure TestSelectWhereId;
+    [Test]
+    procedure TestSelect;
+    [Test]
+    procedure TestUpdate(const Id: Integer; const Title, Synopsis: string);
+  end;
+
+implementation
+
+procedure TBookActiveRecordDaoTest.Setup;
+begin
+  FBookDAO := TBookActiveRecordDAOStub.Create;
+end;
+
+procedure TBookActiveRecordDaoTest.TearDown;
+begin
+  FBookDAO.Free;
+end;
+
+[Test]
+procedure TBookActiveRecordDaoTest.TestInsert(const Id: Integer;
+  const Title, Synopsis: string);
+begin
+  var Book := TBook.Create(Id, Title, Synopsis);
+  FBookDAO.Insert(Book);
+  var IsSaved := FBookDAO.IsFoundInDatabase(Book.Title);
+
+  Assert.IsTrue(IsSaved, 'Book is successfully saved');
+end;
+
+[Test]
+procedure TBookActiveRecordDaoTest.TestDelete(const BookId: Integer);
+begin
+  FBookDAO.Delete(BookId);
+  var IsDeleted := FBookDAO.IsFoundInDatabase(BookId);
+
+  Assert.IsFalse(IsDeleted, 'Book is successfully deleted');
+end;
+
+[Test]
+procedure TBookActiveRecordDaoTest.TestSelectWhereId;
+begin
+  var BookToFind := TBook.Create(1, 'The Great Adventure',
+    'In a world of magic and mystery, a young hero embarks on a quest to ' +
+    'save the realm from an ancient evil that threatens to engulf ' +
+    'everything in darkness.');
+
+  var Book := FBookDAO.SelectWhereId(1);
+
+  Assert.IsTrue((Book.Title = BookToFind.Title) and
+    (Book.Synopsis = BookToFind.Synopsis), 'Book found');
+end;
+
+[Test]
+procedure TBookActiveRecordDaoTest.TestSelect;
+begin
+  var BookList := FBookDAO.Select;
+
+  Assert.IsTrue(BookList.Count <> 0);
+end;
+
+[Test]
+procedure TBookActiveRecordDaoTest.TestUpdate(const Id: Integer;
+  const Title, Synopsis: string);
+begin
+  var NewBookDetails := TBook.Create(Id, Title, Synopsis);
+  FBookDAO.Update(NewBookDetails);
+
+  var BookFromDatabase := FBookDAO.SelectWhereId(Id);
+
+  Assert.IsTrue((NewBookDetails.Title = BookFromDatabase.Title) and
+    (NewBookDetails.Synopsis = BookFromDatabase.Synopsis), 'Book updated');
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TBookActiveRecordDaoTest);
+
+end.

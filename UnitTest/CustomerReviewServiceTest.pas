@@ -3,12 +3,26 @@ unit CustomerReviewServiceTest;
 interface
 
 uses
-  DUnitX.TestFramework;
+  DUnitX.TestFramework, CustomerReviewService, CustomerReviewDaoIntf,
+  CustomerReviewServiceIntf, CustomerReview, MockCustomerReviewTableDatabase,
+  CustomerReviewARDaoStub;
 
 type
   [TestFixture]
   TCustomerReviewServiceTest = class
+  private
+    FCustomerReviewService: ICustomerReviewService;
+    FMockCustomerReviewDAO: ICustomerReviewDAO;
+    FMockDatabase: TMockCustomerReviewTableDatabase;
   public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+
+    [Test]
+    procedure TestInsert;
+
     [Test]
     [TestCase('RatingInRange','1,2,3,Hello world. This is my review,4')]
     procedure CreateCustomerReview_RatingInRange_PassValidation(const AId,
@@ -29,10 +43,24 @@ type
 
 implementation
 
-uses
-  CustomerReview;
-
 { TCustomerReviewServiceTest }
+
+procedure TCustomerReviewServiceTest.TestInsert;
+begin
+  var Review := TCustomerReview.Create;
+  Review.BookId := 1;
+  Review.Review := 'The book is amazing!';
+  Review.Rating := 4;
+
+  var ListBeforeInsert := FCustomerReviewService
+    .GetCustomerReviewsByBookId(Review.BookId);
+  FCustomerReviewService.CreateCustomerReview(Review);
+
+  var ListAfterInsert := FCustomerReviewService
+    .GetCustomerReviewsByBookId(Review.BookId);
+
+  Assert.AreEqual<Integer>(ListAfterInsert.Count, ListBeforeInsert.Count + 1);
+end;
 
 procedure TCustomerReviewServiceTest
   .CreateCustomerReview_IsTooShort_FailValidation(
@@ -62,6 +90,20 @@ begin
   var CustomerReview := TCustomerReview.Create(AId, ACustomerId, ABookId,
     ARating, AReview, False);
   Assert.IsFalse(CustomerReview.IsRatingInRange);
+end;
+
+procedure TCustomerReviewServiceTest.Setup;
+begin
+  FMockDatabase := TMockCustomerReviewTableDatabase.Create;
+  FMockCustomerReviewDAO := TCustomerReviewARDaoStub.Create(FMockDatabase);
+  FCustomerReviewService := TCustomerReviewService
+    .Create(FMockCustomerReviewDAO);
+end;
+
+procedure TCustomerReviewServiceTest.TearDown;
+begin
+  FCustomerReviewService := nil;
+  FMockCustomerReviewDAO := nil;
 end;
 
 initialization

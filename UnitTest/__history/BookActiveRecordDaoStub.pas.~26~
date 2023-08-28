@@ -1,0 +1,47 @@
+unit BookActiveRecordDaoStub;
+
+interface
+
+uses
+  BookDAOIntf, Book, System.Generics.Collections, System.SysUtils,
+  MockBookTableDatabase;
+
+type
+  TBookActiveRecordDaoStub = class(TInterfacedObject, IBookDAO)
+  public
+    procedure Insert(const Book: TBook);
+    function Select: TObjectList<TBook>;
+    function SelectWhereId(const BookId: Integer): TBook;
+    procedure Update(const Book: TBook);
+    procedure Delete(const BookId: Integer);
+  end;
+
+implementation
+
+procedure TBookActiveRecordDaoStub.Insert(const Book: TBook);
+begin
+  MockDatabase.AddBook(Book);
+end;
+
+function TBookActiveRecordDaoStub.Select: TObjectList<TBook>;
+begin
+  Result := MockDatabase.GetAllBooks;
+end;
+
+function TBookActiveRecordDaoStub.SelectWhereId(const BookId: Integer): TBook;
+begin
+  Result := MockDatabase.GetBookById(BookId);
+end;
+
+procedure TBookActiveRecordDaoStub.Update(const Book: TBook);
+begin
+  MockDatabase.UpdateBook(Book);
+end;
+
+procedure TBookActiveRecordDaoStub.Delete(const BookId: Integer);
+begin
+  MockDatabase.DeleteBook(BookId);
+end;
+
+end.
+

@@ -1,0 +1,60 @@
+unit CustomerReviewActiveRecordServiceStub;
+
+interface
+
+uses
+  CustomerReviewServiceIntf, CustomerReview, System.Generics.Collections,
+  MockCustomerReviewTableDatabase;
+
+type
+  TCustomerReviewARServiceStub = class(TInterfacedObject, ICustomerReviewService)
+  private
+    FMockDatabase: TMockCustomerReviewTableDatabase;
+  public
+  procedure CreateCustomerReview(const CustomerReview: TCustomerReview);
+    function GetCustomerReviewsByBookId(const BookId: Integer):
+      TObjectList<TCustomerReview>;
+    function GetCustomerReviewById(const CustomerReviewId: Integer):
+      TCustomerReview;
+    procedure UpdateCustomerReview(const CustomerReview: TCustomerReview);
+    procedure DeleteCustomerReview(const CustomerReviewId: Integer);
+  end;
+
+implementation
+
+{ TCustomerReviewARServiceStub }
+
+
+{ TCustomerReviewARServiceStub }
+
+procedure TCustomerReviewARServiceStub.CreateCustomerReview(
+  const CustomerReview: TCustomerReview);
+begin
+
+end;
+
+procedure TCustomerReviewARServiceStub.DeleteCustomerReview(
+  const CustomerReviewId: Integer);
+begin
+
+end;
+
+function TCustomerReviewARServiceStub.GetCustomerReviewById(
+  const CustomerReviewId: Integer): TCustomerReview;
+begin
+
+end;
+
+function TCustomerReviewARServiceStub.GetCustomerReviewsByBookId(
+  const BookId: Integer): TObjectList<TCustomerReview>;
+begin
+
+end;
+
+procedure TCustomerReviewARServiceStub.UpdateCustomerReview(
+  const CustomerReview: TCustomerReview);
+begin
+
+end;
+
+end.

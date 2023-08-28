@@ -1,0 +1,95 @@
+unit BookActiveRecordDaoStub;
+
+interface
+
+uses
+  BookDAOIntf, Book, System.Generics.Collections, System.SysUtils;
+
+type
+  TBookActiveRecordDaoStub = class(TInterfacedObject, IBookDAO)
+  public
+    procedure Insert(const Book: TBook);
+    function Select: TObjectList<TBook>;
+    function SelectWhereId(const BookId: Integer): TBook;
+    procedure Update(const Book: TBook);
+    procedure Delete(const BookId: Integer);
+
+    function IsFoundInDatabase(const BookId: Integer): Boolean; overload;
+    function IsFoundInDatabase(const BookTitle: string): Boolean; overload;
+  end;
+
+implementation
+
+uses
+  BookActiveRecord, BookContextIntf, MockBookActiveRecord;
+
+{ TBookActiveRecordDaoStub }
+
+procedure TBookActiveRecordDaoStub.Insert(const Book: TBook);
+begin
+  var BookAR := TMockBookActiveRecord.Create(Book);
+  try
+    BookAR.MockInsert;
+  finally
+    BookAR.Free;
+  end;
+end;
+
+function TBookActiveRecordDaoStub.IsFoundInDatabase(
+  const BookId: Integer): Boolean;
+begin
+  Result := TMockBookActiveRecord.MockLoadByPK(BookId);
+end;
+
+procedure TBookActiveRecordDaoStub.Delete(const BookId: Integer);
+begin
+  var BookAR := TMockBookActiveRecord.Create;
+  try
+    BookAR.Id := BookId;
+    BookAR.MockDelete(True);
+  finally
+    BookAR.Free;
+  end;
+end;
+
+function TBookActiveRecordDaoStub.SelectWhereId(const BookId: Integer): TBook;
+begin
+  var BookAR := TMockBookActiveRecord.Create;
+  try
+    if not TMockBookActiveRecord.MockLoadByPK(BookId) then
+      raise Exception.Create(Classname + ': Book with ' +
+        'ID ' + BookId.ToString + ' not found');
+
+    var Book := TBook.Create(BookAR);
+    Result := Book;
+  finally
+    BookAR.Free;
+  end;
+end;
+
+function TBookActiveRecordDaoStub.Select: TObjectList<TBook>;
+begin
+  var BookAR := TMockBookActiveRecord.Create;
+  var ARList := BookAR.MockAll;
+  var BookList := TObjectList<TBook>.Create;
+
+  for var ARItem in ARList do
+  begin
+    var Book := TBook.Create(ARItem);
+    BookList.Add(Book);
+  end;
+
+  Result := BookList;
+end;
+
+procedure TBookActiveRecordDaoStub.Update(const Book: TBook);
+begin
+  var BookAR := TMockBookActiveRecord.Create(Book);
+  try
+    BookAR.MockUpdate(True);
+  finally
+    BookAR.Free;
+  end;
+end;
+
+end.

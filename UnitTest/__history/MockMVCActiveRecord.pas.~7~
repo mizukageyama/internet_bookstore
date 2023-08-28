@@ -1,0 +1,46 @@
+unit MockMVCActiveRecord;
+
+interface
+
+type
+  TMockMVCActiveRecord = class
+  public
+    constructor Create; overload; virtual;
+
+  end;
+
+  TMockActiveRecordEntity = class abstract(TMockMVCActiveRecord)
+  public
+    function QueryInterface(const IID: TGUID; out Obj): HRESULT; stdcall;
+    function _AddRef: Integer; stdcall;
+    function _Release: Integer; stdcall;
+  end;
+
+implementation
+
+{ TMockMVCActiveRecord }
+
+constructor TMockMVCActiveRecord.Create;
+begin
+
+end;
+
+{ TMockActiveRecordEntity }
+
+function TMockActiveRecordEntity.QueryInterface(const IID: TGUID;
+  out Obj): HRESULT;
+begin
+  Result := -1;
+end;
+
+function TMockActiveRecordEntity._AddRef: Integer;
+begin
+  Result := -1;
+end;
+
+function TMockActiveRecordEntity._Release: Integer;
+begin
+  Result := -1;
+end;
+
+end.

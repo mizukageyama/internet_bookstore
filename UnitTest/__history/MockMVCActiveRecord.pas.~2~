@@ -1,0 +1,12 @@
+unit MockMVCActiveRecord;
+
+interface
+
+type
+  TMockMVCActiveRecord = class
+
+  end;
+
+implementation
+
+end.

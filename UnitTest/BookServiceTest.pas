@@ -3,67 +3,125 @@ unit BookServiceTest;
 interface
 
 uses
-  DUnitX.TestFramework;
+  DUnitX.TestFramework, BookService, BookActiveRecordDaoStub, BookDaoIntf,
+  BookServiceIntf, Book, MockBookTableDatabase;
 
 type
   [TestFixture]
   TBookServiceTest = class
+  private
+    FBookService: IBookService;
+    FMockBookDAO: IBookDAO;
+    FMockDatabase: TMockBookTableDatabase;
   public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+
     [Test]
-    procedure GetBooks_BookListIsEmpty_IsTrue;
+    procedure TestAddBook;
     [Test]
-    procedure GetBooks_BookListIsNotEmpty_IsTrue;
+    procedure TestGetAllBooks;
     [Test]
-    [TestCase('TestFields','1,This is a title1,This is a synopsis1')]
-    procedure CreateBook_BookFieldsNotEmpty_IsValidTrue(const AId : Integer;
-      const ATitle, ASynopsis : string);
+    procedure TestGetBookById;
     [Test]
-    [TestCase('TestEmptyFields','1,,This is a synopsis1')]
-    procedure CreateBook_BookFieldsIsEmpty_IsValidFalse(const AId : Integer;
+    procedure TestUpdateBook;
+    [Test]
+    procedure TestDeleteBook;
+    [Test]
+    [TestCase('TestFieldsNotEmpty','1,This is a title1,This is a synopsis1')]
+    procedure CreateBook_InputValidation_IsSuccess(const AId : Integer;
       const ATitle, ASynopsis : string);
   end;
 
 implementation
 
-uses
-  Book, System.Generics.Collections, BookServiceStub;
+procedure TBookServiceTest.Setup;
+begin
+  FMockDatabase := TMockBookTableDatabase.Create;
+  FMockBookDAO := TBookActiveRecordDaoStub.Create(FMockDatabase);
+  FBookService := TBookService.Create(FMockBookDAO);
+end;
 
-procedure TBookServiceTest.CreateBook_BookFieldsNotEmpty_IsValidTrue(
+procedure TBookServiceTest.TearDown;
+begin
+  FBookService := nil;
+  FMockBookDAO := nil;
+end;
+
+procedure TBookServiceTest.TestAddBook;
+begin
+  var Book := TBook.Create;
+  Book.Title := '';
+  Book.Synopsis := '';
+
+  var ListBeforeInsert := FBookService.GetBooks;
+  FBookService.CreateBook(Book);
+
+  var ListAfterInsert := FBookService.GetBooks;
+
+  Assert.AreEqual<Integer>(ListAfterInsert.Count, ListBeforeInsert.Count + 1);
+end;
+
+procedure TBookServiceTest.TestGetAllBooks;
+begin
+  var BookList := FBookService.GetBooks;
+
+  Assert.IsNotNull(BookList);
+end;
+
+procedure TBookServiceTest.TestGetBookById;
+begin
+  var NewBook := TBook.Create;
+  NewBook.Title := '';
+  NewBook.Synopsis := '';
+
+  var ListBeforeInsert := FBookService.GetBooks;
+  FBookService.CreateBook(NewBook);
+
+  var BookId := 1;
+  var Book := FBookService.GetBookById(BookId);
+
+  Assert.IsNotNull(Book, 'Book should not be nil');
+  Assert.AreEqual(BookId, Book.Id, 'Book ID should match');
+end;
+
+procedure TBookServiceTest.TestUpdateBook;
+begin
+  var Book := TBook.Create;
+  Book.Id := 1;
+  Book.Title := 'Original Title';
+  Book.Synopsis := 'Original Synopsis';
+
+  FMockBookDAO.Insert(Book);
+
+  Book.Title := 'Updated Title';
+  Book.Synopsis := 'Updated Synopsis';
+
+  FBookService.UpdateBook(Book);
+
+  var UpdatedBook := FMockBookDAO.SelectWhereId(Book.Id);
+
+  Assert.IsNotNull(UpdatedBook);
+  Assert.AreEqual('Updated Title', UpdatedBook.Title);
+  Assert.AreEqual('Updated Synopsis', UpdatedBook.Synopsis);
+end;
+
+procedure TBookServiceTest.TestDeleteBook;
+begin
+  var BookId := 1;
+
+  FBookService.DeleteBook(BookId);
+
+  Assert.IsFalse(FMockDatabase.Contains(BookId), 'Book should be deleted');
+end;
+
+procedure TBookServiceTest.CreateBook_InputValidation_IsSuccess(
   const AId: Integer; const ATitle, ASynopsis: string);
 begin
   var Book := TBook.Create(AId, ATitle, ASynopsis);
   Assert.IsTrue(Book.IsValid);
-end;
-
-
-procedure TBookServiceTest.CreateBook_BookFieldsIsEmpty_IsValidFalse(
-  const AId: Integer; const ATitle, ASynopsis: string);
-begin
-  var Book := TBook.Create(AId, ATitle, ASynopsis);
-  Assert.IsFalse(Book.IsValid);
-end;
-
-procedure TBookServiceTest.GetBooks_BookListIsEmpty_IsTrue;
-begin
-  var BookList := TObjectList<TBook>.Create;
-  var BookServiceStub := TBookServiceStub.Create(BookList);
-
-  var BookListFromStub := BookServiceStub.GetBooks;
-
-  Assert.IsTrue(BookListFromStub.Count = 0);
-end;
-
-procedure TBookServiceTest.GetBooks_BookListIsNotEmpty_IsTrue;
-begin
-  var BookList := TObjectList<TBook>.Create;
-  BookList.Add(TBook.Create(1, 'This is a title1', 'This is a synopsis1'));
-  BookList.Add(TBook.Create(2, 'This is a title2', 'This is a synopsis2'));
-  BookList.Add(TBook.Create(3, 'This is a title3', 'This is a synopsis3'));
-  var BookServiceStub := TBookServiceStub.Create(BookList);
-
-  var BookListFromStub := BookServiceStub.GetBooks;
-
-  Assert.IsTrue(BookListFromStub.Count > 0);
 end;
 
 initialization

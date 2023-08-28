@@ -91,12 +91,12 @@
         <DCCReference Include="loggerproRT.dcp"/>
         <DCCReference Include="dmvcframeworkRT.dcp"/>
         <DCCReference Include="ActiveRecordEntity.pas"/>
-        <DCCReference Include="Book\BookActiveRecord.pas"/>
         <DCCReference Include="Book\BookActiveRecordDAO.pas"/>
         <DCCReference Include="Customer\CustomerActiveRecordDAO.pas"/>
         <DCCReference Include="Customer\CustomerActiveRecord.pas"/>
         <DCCReference Include="CustomerReview\CustomerReviewActiveRecord.pas"/>
         <DCCReference Include="CustomerReview\CustomerReviewActiveRecordDAO.pas"/>
+        <DCCReference Include="Book\BookActiveRecord.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

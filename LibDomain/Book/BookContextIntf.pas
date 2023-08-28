@@ -4,7 +4,7 @@ interface
 
 type
   IBookContext = interface
-    ['{B6B02FFE-9D3D-4D73-9501-9B12E140F0E3}']
+    ['{09373C52-A6BD-478C-8703-AF3EF11488D1}']
     function GetBookId: Integer;
     procedure SetBookId(const BookId: Integer);
 

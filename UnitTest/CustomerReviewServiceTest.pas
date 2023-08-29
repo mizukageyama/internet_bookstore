@@ -21,31 +21,33 @@ type
     procedure TearDown;
 
     [Test]
-    procedure TestInsert;
-
+    procedure Test_CreateCustomerReview_NewCustomerReview_Inserted;
     [Test]
-    [TestCase('RatingInRange','1,2,3,Hello world. This is my review,4')]
-    procedure CreateCustomerReview_RatingInRange_PassValidation(const AId,
+    [TestCase('Test_Rating_In_Range','1,2,3,Hello world. This is my review,4')]
+    procedure Test_CreateCustomerReview_RatingInRange_PassValidation(const AId,
       ABookId, ACustomerId : Integer; const AReview : string;
       const ARating: Integer);
     [Test]
-    [TestCase('ZeroRating','1,2,3,Hello world. This is my review,0')]
-    [TestCase('NegativeRating','1,2,3,Hello world. This is my review,-100')]
-    procedure CreateCustomerReview_RatingNotInRange_FailValidation(const AId,
-      ABookId, ACustomerId : Integer; const AReview : string;
+    [TestCase('Test_Zero_Rating','1,2,3,Hello world. This is my review,0')]
+    [TestCase('Test_Negative_Rating','1,2,3,Hello world. ' +
+      'This is my review,-100')]
+    procedure Test_CreateCustomerReview_RatingNotInRange_FailValidation(
+      const AId, ABookId, ACustomerId : Integer; const AReview : string;
       const ARating: Integer);
     [Test]
-    [TestCase('EmptyReview','1,2,3,,4')]
-    [TestCase('Review4CharactersOnly','1,2,3,Hello,4')]
-    procedure CreateCustomerReview_IsTooShort_FailValidation(const AId, ABookId,
-      ACustomerId : Integer; const AReview : string; const ARating: Integer);
+    [TestCase('Test_Empty_Review','1,2,3,,4')]
+    [TestCase('Test_Review_4_Characters_Only','1,2,3,Hello,4')]
+    procedure Test_CreateCustomerReview_IsTooShort_FailValidation(const AId,
+      ABookId, ACustomerId : Integer; const AReview : string;
+      const ARating: Integer);
   end;
 
 implementation
 
 { TCustomerReviewServiceTest }
 
-procedure TCustomerReviewServiceTest.TestInsert;
+procedure TCustomerReviewServiceTest
+  .Test_CreateCustomerReview_NewCustomerReview_Inserted;
 begin
   var Review := TCustomerReview.Create;
   Review.BookId := 1;
@@ -63,7 +65,7 @@ begin
 end;
 
 procedure TCustomerReviewServiceTest
-  .CreateCustomerReview_IsTooShort_FailValidation(
+  .Test_CreateCustomerReview_IsTooShort_FailValidation(
   const AId, ABookId, ACustomerId: Integer; const AReview: string;
   const ARating: Integer);
 begin
@@ -73,7 +75,7 @@ begin
 end;
 
 procedure TCustomerReviewServiceTest
-  .CreateCustomerReview_RatingInRange_PassValidation(
+  .Test_CreateCustomerReview_RatingInRange_PassValidation(
   const AId, ABookId, ACustomerId: Integer; const AReview: string;
   const ARating: Integer);
 begin
@@ -83,7 +85,7 @@ begin
 end;
 
 procedure TCustomerReviewServiceTest
-  .CreateCustomerReview_RatingNotInRange_FailValidation(
+  .Test_CreateCustomerReview_RatingNotInRange_FailValidation(
   const AId, ABookId, ACustomerId: Integer; const AReview: string;
   const ARating: Integer);
 begin

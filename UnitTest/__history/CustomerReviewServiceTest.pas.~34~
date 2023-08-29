@@ -48,13 +48,16 @@ implementation
 procedure TCustomerReviewServiceTest.TestInsert;
 begin
   var Review := TCustomerReview.Create;
+  Review.BookId := 1;
   Review.Review := 'The book is amazing!';
   Review.Rating := 4;
 
-  var ListBeforeInsert := FCustomerReviewService.;
+  var ListBeforeInsert := FCustomerReviewService
+    .GetCustomerReviewsByBookId(Review.BookId);
   FCustomerReviewService.CreateCustomerReview(Review);
 
-  var ListAfterInsert := FCustomerReviewService.GetReviews;
+  var ListAfterInsert := FCustomerReviewService
+    .GetCustomerReviewsByBookId(Review.BookId);
 
   Assert.AreEqual<Integer>(ListAfterInsert.Count, ListBeforeInsert.Count + 1);
 end;
@@ -91,7 +94,7 @@ end;
 
 procedure TCustomerReviewServiceTest.Setup;
 begin
-  FCustomerReviewService := TMockCustomerReviewTableDatabase.Create;
+  FMockDatabase := TMockCustomerReviewTableDatabase.Create;
   FMockCustomerReviewDAO := TCustomerReviewARDaoStub.Create(FMockDatabase);
   FCustomerReviewService := TCustomerReviewService
     .Create(FMockCustomerReviewDAO);

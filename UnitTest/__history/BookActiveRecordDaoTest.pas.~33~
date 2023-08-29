@@ -11,6 +11,7 @@ type
   TBookDAOUnitTests = class
   private
     FBookDAO: IBookDAO;
+    FMockDatabase: TMockBookTableDatabase;
   public
     [Setup]
     procedure Setup;
@@ -33,7 +34,8 @@ implementation
 
 procedure TBookDAOUnitTests.Setup;
 begin
-  FBookDAO := TBookActiveRecordDaoStub.Create;
+  FMockDatabase := TMockBookTableDatabase.Create;
+  FBookDAO := TBookActiveRecordDaoStub.Create(FMockDatabase);
 end;
 
 procedure TBookDAOUnitTests.TearDown;
@@ -42,79 +44,58 @@ begin
 end;
 
 procedure TBookDAOUnitTests.TestInsertSuccess;
-var
-  Book: TBook;
 begin
-  Book := TBook.Create;
+  var Book := TBook.Create;
   Book.Title := 'Sample Book';
   Book.Synopsis := 'A sample book synopsis.';
 
   FBookDAO.Insert(Book);
 
-  Assert.IsTrue(MockDatabase.Contains(Book.Id));
+  Assert.IsTrue(FMockDatabase.Contains(Book.Id));
 end;
 
 procedure TBookDAOUnitTests.TestSelectSuccess;
-var
-  Books: TObjectList<TBook>;
 begin
-  Books := FBookDAO.Select;
+  var Books := FBookDAO.Select;
   Assert.IsNotNull(Books);
 end;
 
 procedure TBookDAOUnitTests.TestSelectWhereIdSuccess;
-var
-  BookId: Integer;
-  NewBook: TBook;
-  SelectedBook: TBook;
 begin
-  NewBook := TBook.Create;
-  NewBook.Title := 'Sample Book';
-  NewBook.Synopsis := 'A sample NewBook synopsis.';
+  var NewBook := TBook.Create;
+  NewBook.Title := '';
+  NewBook.Synopsis := '';
+
   FBookDAO.Insert(NewBook);
 
-  BookId := 1;
-  SelectedBook := FBookDAO.SelectWhereId(BookId);
+  var BookId := 1;
+  var SelectedBook := FBookDAO.SelectWhereId(BookId);
 
   Assert.IsNotNull(SelectedBook);
 end;
 
 procedure TBookDAOUnitTests.TestUpdateSuccess;
-var
-  Book: TBook;
-  NewBook: TBook;
 begin
-  NewBook := TBook.Create;
-  NewBook.Title := 'Sample Book';
-  NewBook.Synopsis := 'A sample NewBook synopsis.';
-  FBookDAO.Insert(NewBook);
-
-  Book := FBookDAO.SelectWhereId(1);
+  var Book := FBookDAO.SelectWhereId(1);
   if Assigned(Book) then
   begin
-    // Modify some properties of the book
     Book.Title := 'Updated Title';
     Book.Synopsis := 'Updated Synopsis';
 
     FBookDAO.Update(Book);
 
-    // Check if the book's properties are updated in the mock database
-    Assert.AreEqual(Book.Title, TMockBookTableDatabase.GetBookById(1).Title);
-    Assert.AreEqual(Book.Synopsis, MockDatabase.GetBookById(1).Synopsis);
+    Assert.AreEqual(Book.Title, FMockDatabase.GetBookById(1).Title);
+    Assert.AreEqual(Book.Synopsis, FMockDatabase.GetBookById(1).Synopsis);
   end;
 end;
 
 procedure TBookDAOUnitTests.TestDeleteSuccess;
-var
-  BookId: Integer;
 begin
-  // Assuming there is a book with the specified BookId in the mock database
-  BookId := 1;
+  var BookId := 1;
 
   FBookDAO.Delete(BookId);
 
-  // Check if the book was removed from the mock database
-  Assert.IsFalse(MockDatabase.Contains(BookId));
+  Assert.IsFalse(FMockDatabase.Contains(BookId));
 end;
 
 initialization

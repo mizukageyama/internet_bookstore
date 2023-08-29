@@ -20,15 +20,19 @@ type
     procedure TearDown;
 
     [Test]
-    procedure TestAddBook;
+    procedure Test_CreateBook_NewBook_Inserted;
     [Test]
-    procedure TestGetAllBooks;
+    procedure Test_GetBooks_BookList_NotNull;
     [Test]
     procedure TestGetBookById;
     [Test]
-    procedure TestUpdateBook;
+    procedure Test_UpdateBook_NewBookDetails_Updated;
     [Test]
     procedure TestDeleteBook;
+    [Test]
+    [TestCase('Test_Fields_Not_Empty','1,This is a title1,This is a synopsis1')]
+    procedure TestInputValidation(const AId : Integer;
+      const ATitle, ASynopsis : string);
   end;
 
 implementation
@@ -46,7 +50,7 @@ begin
   FMockBookDAO := nil;
 end;
 
-procedure TBookServiceTest.TestAddBook;
+procedure TBookServiceTest.Test_CreateBook_NewBook_Inserted;
 begin
   var Book := TBook.Create;
   Book.Title := '';
@@ -60,7 +64,7 @@ begin
   Assert.AreEqual<Integer>(ListAfterInsert.Count, ListBeforeInsert.Count + 1);
 end;
 
-procedure TBookServiceTest.TestGetAllBooks;
+procedure TBookServiceTest.Test_GetBooks_BookList_NotNull;
 begin
   var BookList := FBookService.GetBooks;
 
@@ -69,6 +73,12 @@ end;
 
 procedure TBookServiceTest.TestGetBookById;
 begin
+  var NewBook := TBook.Create;
+  NewBook.Title := '';
+  NewBook.Synopsis := '';
+
+  FBookService.CreateBook(NewBook);
+
   var BookId := 1;
   var Book := FBookService.GetBookById(BookId);
 
@@ -76,9 +86,25 @@ begin
   Assert.AreEqual(BookId, Book.Id, 'Book ID should match');
 end;
 
-procedure TBookServiceTest.TestUpdateBook;
+procedure TBookServiceTest.Test_UpdateBook_NewBookDetails_Updated;
 begin
-  // Write test for UpdateBook method of BookService
+  var Book := TBook.Create;
+  Book.Id := 1;
+  Book.Title := 'Original Title';
+  Book.Synopsis := 'Original Synopsis';
+
+  FMockBookDAO.Insert(Book);
+
+  Book.Title := 'Updated Title';
+  Book.Synopsis := 'Updated Synopsis';
+
+  FBookService.UpdateBook(Book);
+
+  var UpdatedBook := FMockBookDAO.SelectWhereId(Book.Id);
+
+  Assert.IsNotNull(UpdatedBook);
+  Assert.AreEqual('Updated Title', UpdatedBook.Title);
+  Assert.AreEqual('Updated Synopsis', UpdatedBook.Synopsis);
 end;
 
 procedure TBookServiceTest.TestDeleteBook;
@@ -88,6 +114,13 @@ begin
   FBookService.DeleteBook(BookId);
 
   Assert.IsFalse(FMockDatabase.Contains(BookId), 'Book should be deleted');
+end;
+
+procedure TBookServiceTest.TestInputValidation(
+  const AId: Integer; const ATitle, ASynopsis: string);
+begin
+  var Book := TBook.Create(AId, ATitle, ASynopsis);
+  Assert.IsTrue(Book.IsValid);
 end;
 
 initialization

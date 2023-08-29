@@ -25,7 +25,7 @@ type
     [Test]
     procedure Test_SelectWhereId_BookWithId_NotNull;
     [Test]
-    procedure Test_Update_NewBookDetails_EqualToNewDetails;
+    procedure TestUpdateSuccess;
     [Test]
     procedure Test_Delete_BookId_NotInDatabase;
   end;
@@ -74,7 +74,7 @@ begin
   Assert.IsNotNull(SelectedBook);
 end;
 
-procedure TBookDAOUnitTests.Test_Update_NewBookDetails_EqualToNewDetails;
+procedure TBookDAOUnitTests.TestUpdateSuccess;
 begin
   var Book := FBookDAO.SelectWhereId(1);
   if Assigned(Book) then

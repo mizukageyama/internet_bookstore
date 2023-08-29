@@ -20,18 +20,18 @@ type
     procedure TearDown;
 
     [Test]
-    procedure TestAddBook;
+    procedure Test_CreateBook_NewBook_Inserted;
     [Test]
-    procedure TestGetAllBooks;
+    procedure Test_GetBooks_BookList_NotNull;
     [Test]
     procedure TestGetBookById;
     [Test]
-    procedure TestUpdateBook;
+    procedure Test_UpdateBook_NewBookDetails_EqualToNewDetails;
     [Test]
-    procedure TestDeleteBook;
+    procedure Test_DeleteBook_BookId_NotInDatabase;
     [Test]
-    [TestCase('TestFieldsNotEmpty','1,This is a title1,This is a synopsis1')]
-    procedure CreateBook_InputValidation_IsSuccess(const AId : Integer;
+    [TestCase('Test_Fields_Not_Empty','1,This is a title1,This is a synopsis1')]
+    procedure TestInputValidation(const AId : Integer;
       const ATitle, ASynopsis : string);
   end;
 
@@ -50,7 +50,7 @@ begin
   FMockBookDAO := nil;
 end;
 
-procedure TBookServiceTest.TestAddBook;
+procedure TBookServiceTest.Test_CreateBook_NewBook_Inserted;
 begin
   var Book := TBook.Create;
   Book.Title := '';
@@ -64,7 +64,7 @@ begin
   Assert.AreEqual<Integer>(ListAfterInsert.Count, ListBeforeInsert.Count + 1);
 end;
 
-procedure TBookServiceTest.TestGetAllBooks;
+procedure TBookServiceTest.Test_GetBooks_BookList_NotNull;
 begin
   var BookList := FBookService.GetBooks;
 
@@ -86,7 +86,7 @@ begin
   Assert.AreEqual(BookId, Book.Id, 'Book ID should match');
 end;
 
-procedure TBookServiceTest.TestUpdateBook;
+procedure TBookServiceTest.Test_UpdateBook_NewBookDetails_EqualToNewDetails;
 begin
   var Book := TBook.Create;
   Book.Id := 1;
@@ -107,7 +107,7 @@ begin
   Assert.AreEqual('Updated Synopsis', UpdatedBook.Synopsis);
 end;
 
-procedure TBookServiceTest.TestDeleteBook;
+procedure TBookServiceTest.Test_DeleteBook_BookId_NotInDatabase;
 begin
   var BookId := 1;
 
@@ -116,7 +116,7 @@ begin
   Assert.IsFalse(FMockDatabase.Contains(BookId), 'Book should be deleted');
 end;
 
-procedure TBookServiceTest.CreateBook_InputValidation_IsSuccess(
+procedure TBookServiceTest.TestInputValidation(
   const AId: Integer; const ATitle, ASynopsis: string);
 begin
   var Book := TBook.Create(AId, ATitle, ASynopsis);

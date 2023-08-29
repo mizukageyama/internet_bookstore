@@ -5,7 +5,7 @@ interface
 uses
   DUnitX.TestFramework, CustomerReviewService, CustomerReviewDaoIntf,
   CustomerReviewServiceIntf, CustomerReview, MockCustomerReviewTableDatabase,
-  CustomerReviewActiveRecordServiceStub;
+  CustomerReviewARDaoStub;
 
 type
   [TestFixture]
@@ -22,7 +22,6 @@ type
 
     [Test]
     procedure TestInsert;
-
     [Test]
     [TestCase('RatingInRange','1,2,3,Hello world. This is my review,4')]
     procedure CreateCustomerReview_RatingInRange_PassValidation(const AId,
@@ -48,13 +47,16 @@ implementation
 procedure TCustomerReviewServiceTest.TestInsert;
 begin
   var Review := TCustomerReview.Create;
+  Review.BookId := 1;
   Review.Review := 'The book is amazing!';
   Review.Rating := 4;
 
-  var ListBeforeInsert := FCustomerReviewService.;
+  var ListBeforeInsert := FCustomerReviewService
+    .GetCustomerReviewsByBookId(Review.BookId);
   FCustomerReviewService.CreateCustomerReview(Review);
 
-  var ListAfterInsert := FCustomerReviewService.GetReviews;
+  var ListAfterInsert := FCustomerReviewService
+    .GetCustomerReviewsByBookId(Review.BookId);
 
   Assert.AreEqual<Integer>(ListAfterInsert.Count, ListBeforeInsert.Count + 1);
 end;
@@ -91,8 +93,8 @@ end;
 
 procedure TCustomerReviewServiceTest.Setup;
 begin
-  FCustomerReviewService := TMockCustomerReviewTableDatabase.Create;
-  FMockCustomerReviewDAO := TCustomerReviewARServiceStub.Create(FMockDatabase);
+  FMockDatabase := TMockCustomerReviewTableDatabase.Create;
+  FMockCustomerReviewDAO := TCustomerReviewARDaoStub.Create(FMockDatabase);
   FCustomerReviewService := TCustomerReviewService
     .Create(FMockCustomerReviewDAO);
 end;

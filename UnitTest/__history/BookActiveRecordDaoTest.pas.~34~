@@ -23,11 +23,11 @@ type
     [Test]
     procedure Test_Select_Books_NotNull;
     [Test]
-    procedure Test_SelectWhereId_BookWithId_NotNull;
+    procedure TestSelectWhereIdSuccess;
     [Test]
-    procedure Test_Update_NewBookDetails_EqualToNewDetails;
+    procedure TestUpdateSuccess;
     [Test]
-    procedure Test_Delete_BookId_NotInDatabase;
+    procedure TestDeleteSuccess;
   end;
 
 implementation
@@ -60,7 +60,7 @@ begin
   Assert.IsNotNull(Books);
 end;
 
-procedure TBookDAOUnitTests.Test_SelectWhereId_BookWithId_NotNull;
+procedure TBookDAOUnitTests.TestSelectWhereIdSuccess;
 begin
   var NewBook := TBook.Create;
   NewBook.Title := '';
@@ -74,7 +74,7 @@ begin
   Assert.IsNotNull(SelectedBook);
 end;
 
-procedure TBookDAOUnitTests.Test_Update_NewBookDetails_EqualToNewDetails;
+procedure TBookDAOUnitTests.TestUpdateSuccess;
 begin
   var Book := FBookDAO.SelectWhereId(1);
   if Assigned(Book) then
@@ -89,7 +89,7 @@ begin
   end;
 end;
 
-procedure TBookDAOUnitTests.Test_Delete_BookId_NotInDatabase;
+procedure TBookDAOUnitTests.TestDeleteSuccess;
 begin
   var BookId := 1;
 

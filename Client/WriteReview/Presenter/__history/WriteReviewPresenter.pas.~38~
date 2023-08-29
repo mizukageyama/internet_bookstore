@@ -26,7 +26,8 @@ type
 implementation
 
 uses
-  CustomerSession, BookDetailsFrmIntf, BookDetailsFrm, BookServiceProxy;
+  CustomerSession, BookDetailsFrmIntf, BookDetailsFrm, BookServiceProxy,
+  StatusCodeException, SYSCONST;
 
 { TWriteReviewPresenter }
 
@@ -57,21 +58,25 @@ begin
   CustomerReview := TCustomerReview.Create;
   ValidateInput(CustomerReview, IsValidationSuccess);
 
-  //check if book still exists in the database
   try
     var BookServiceProxy := TBookServiceProxy.Create;
     var Book := BookServiceProxy.GetBookById(FBook.Id);
-    CustomerReview.SetBookId(FBook.Id);
   except
-    on E: Exception do
-    begin
-      ShowMessage(E.ToString);
-    end;
+    on E: TStatusCodeException do
+      begin
+        case E.StatusCode of
+          NotFound: ShowMessage('Book no longer exists');
+          else
+            ShowMessage(E.ToString);
+        end;
+        Exit;
+      end;
   end;
 
   var CustomerSession := TCustomerSession.Instance;
   var Customer := CustomerSession.GetLoggedInCustomer;
   CustomerReview.SetCustomerId(Customer.Id);
+  CustomerReview.SetBookId(FBook.Id);
 
   if IsValidationSuccess then
   begin
@@ -80,9 +85,16 @@ begin
       ShowMessage('Review is sent to admin for approval');
       FWriteReviewView.CloseForm;
     except
-      on E: Exception do
+     on E: TStatusCodeException do
       begin
-        ShowMessage(E.ToString);
+        case E.StatusCode of
+          UnAuthorized:
+            begin
+
+            end
+          else
+            ShowMessage(E.ToString);
+        end;
       end;
     end;
   end;

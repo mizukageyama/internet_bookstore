@@ -3,8 +3,8 @@ unit BookServiceProxy;
 interface
 
 uses
-  BookServiceIntf, BookApiIntf, Book, System.Generics.Collections,
-  System.SysUtils, MVCFramework.RESTClient.Intf, MVCFramework.RESTClient;
+  BookServiceIntf, Book, System.Generics.Collections, System.SysUtils,
+  MVCFramework.RESTClient.Intf, MVCFramework.RESTClient;
 
 type
   TBookServiceProxy = class(TInterfacedObject, IBookService)
@@ -26,7 +26,7 @@ type
 implementation
 
 uses
-  REST.JSON, JSON;
+  REST.JSON, JSON, CustomerSession;
 
 { TBookServiceProxy }
 
@@ -43,8 +43,10 @@ end;
 procedure TBookServiceProxy.CreateBook(const Book: TBook);
 var
   Response: IMVCRESTResponse;
+  CustomerSession: TCustomerSession;
 begin
-  FRESTClient.SetBearerAuthorization('token');
+  CustomerSession := TCustomerSession.Instance;
+  FRESTClient.SetBearerAuthorization(CustomerSession.GetToken);
   FRESTClient.AddBody(Book.ToJSONBody, 'application/json');
   Response := FRESTClient.POST(ENDPOINT);
 
@@ -52,18 +54,20 @@ begin
     raise Exception.Create('Unable to create book');
 end;
 
-procedure TBookServiceClient.DeleteBook(const BookId: Integer);
+procedure TBookServiceProxy.DeleteBook(const BookId: Integer);
 var
   Response: IMVCRESTResponse;
+  CustomerSession: TCustomerSession;
 begin
-  FRESTClient.SetBearerAuthorization('token');
+  CustomerSession := TCustomerSession.Instance;
+  FRESTClient.SetBearerAuthorization(CustomerSession.GetToken);
   Response := FRESTClient.DELETE(ENDPOINT + '/'+ BookId.toString);
 
   if Response.StatusCode <> 204 then
     raise Exception.Create('Unable to delete book');
 end;
 
-function TBookServiceClient.GetBookById(const BookId: Integer): TBook;
+function TBookServiceProxy.GetBookById(const BookId: Integer): TBook;
 var
   Response: IMVCRESTResponse;
 begin
@@ -79,24 +83,42 @@ begin
   Result := Book;
 end;
 
-function TBookServiceClient.GetBooks: string;
+function TBookServiceProxy.GetBooks: TObjectList<TBook>;
+var
+  Response: IMVCRESTResponse;
 begin
-  var Response := FApi.GetBooks;
+  Response := FRESTClient.GET(ENDPOINT);
+  FRESTClient.ClearQueryParams;
 
   if Response.StatusCode <> 200 then
     raise Exception.Create('Something went wrong');
 
-  Result := Response.Content;
+  var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
+  var BookArray := JSONValue.GetValue<TJSONArray>('data');
+  var BookList := TObjectList<TBook>.Create;
+
+  for var I := 0 to BookArray.Count - 1 do
+  begin
+    var BookJSON := BookArray.Items[I].ToString;
+    var Book := TJSON.JsonToObject<TBook>(BookJSON);
+    BookList.Add(Book);
+  end;
+
+  Result := BookList;
 end;
 
-function TBookServiceClient.UpdateBook(const Book: TBook): string;
+procedure TBookServiceProxy.UpdateBook(const Book: TBook);
+var
+  Response: IMVCRESTResponse;
+  CustomerSession: TCustomerSession;
 begin
-  var Response := FApi.UpdateBook(Book.ToJSONBody);
+  CustomerSession := TCustomerSession.Instance;
+  FRESTClient.SetBearerAuthorization(CustomerSession.GetToken);
+  FRESTClient.AddBody(Book.ToJSONBody, 'application/json');
+  Response := FRESTClient.PUT(ENDPOINT);
 
   if Response.StatusCode <> 200 then
     raise Exception.Create('Unable to update book');
-
-  Result := Response.Content;
 end;
 
 end.

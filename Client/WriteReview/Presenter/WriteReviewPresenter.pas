@@ -78,16 +78,25 @@ begin
   CustomerReview.SetCustomerId(Customer.Id);
   CustomerReview.SetBookId(FBook.Id);
 
-  if IsValidationSuccess then
-  begin
-    try
-      FCustomerReviewServiceProxy.CreateCustomerReview(CustomerReview);
-      ShowMessage('Review is sent to admin for approval');
-      FWriteReviewView.CloseForm;
-    except
-      on E: TStatusCodeException do
-        ShowMessage(E.ToString);
+  if not IsValidationSuccess then
+    Exit;
+
+  try
+    FCustomerReviewServiceProxy.CreateCustomerReview(CustomerReview);
+    ShowMessage('Review is sent to admin for approval');
+    FWriteReviewView.CloseForm;
+  except
+   on E: TStatusCodeException do
+   begin
+    case E.StatusCode of
+      UnAuthorized:
+        begin
+          CustomerSession.SetDefaultValue;
+        end
+    else
+      ShowMessage(E.ToString);
     end;
+   end;
   end;
 end;
 

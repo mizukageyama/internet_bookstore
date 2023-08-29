@@ -28,7 +28,7 @@ type
 implementation
 
 uses
-  JSON, CustomerSession, MVCFramework.JWT;
+  JSON, CustomerSession, MVCFramework.JWT, SYSCONST, StatusCodeException;
 
 { TLoginPresenter }
 
@@ -63,8 +63,17 @@ begin
       if Assigned(FOnLoginSuccess) then
         FOnLoginSuccess;
     except
-      on E: Exception do
-        ShowMessage(E.toString);
+       on E: TStatusCodeException do
+       begin
+        case E.StatusCode of
+          UnAuthorized:
+            begin
+              ShowMessage('Invalid password');
+            end
+        else
+          ShowMessage(E.ToString);
+        end;
+       end;
     end;
   end
   else

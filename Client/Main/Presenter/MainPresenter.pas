@@ -72,21 +72,18 @@ end;
 procedure TMainPresenter.ShowBookDetails;
 var
   BookstoreDM: TBookstoreDataModule;
-  BookId: Integer;
-  BookTitle: string;
-  BookSynopsis: string;
-
+  SelectedBookId: Integer;
   SelectedBook: TBook;
 
-  CustomerReviewProxy: ICustomerReviewService;
+  CustomerReviewServiceProxy: ICustomerReviewService;
   BookDetailsPresenter: IBookDetailsPresenter;
   BookDetailsForm: TForm;
 begin
   BookstoreDM := BookstoreDataModule;
-  BookId := (BookstoreDM.fdmemBookId.Value);
+  SelectedBookId := (BookstoreDM.fdmemBookId.Value);
 
   try
-    SelectedBook := FMainService.GetBookById(BookId);
+    SelectedBook := FMainService.GetBookById(SelectedBookId);
   except
     on E: TStatusCodeException do
       begin
@@ -104,9 +101,9 @@ begin
   end;
 
   BookDetailsForm := TBookDetailsForm.Create(FMainView.Self);
-  CustomerReviewProxy := TCustomerReviewServiceProxy.Create;
+  CustomerReviewServiceProxy := TCustomerReviewServiceProxy.Create;
   BookDetailsPresenter := TBookDetailsPresenter
-    .Create(BookDetailsForm as TBookDetailsForm, CustomerReviewProxy,
+    .Create(BookDetailsForm as TBookDetailsForm, CustomerReviewServiceProxy,
     SelectedBook);
 
   BookDetailsForm.Show;

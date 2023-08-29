@@ -3,8 +3,8 @@ unit BookServiceProxy;
 interface
 
 uses
-  BookServiceIntf, BookApiIntf, Book, System.Generics.Collections,
-  System.SysUtils, MVCFramework.RESTClient.Intf, MVCFramework.RESTClient;
+  BookServiceIntf, Book, System.Generics.Collections, System.SysUtils,
+  MVCFramework.RESTClient.Intf, MVCFramework.RESTClient;
 
 type
   TBookServiceProxy = class(TInterfacedObject, IBookService)
@@ -54,7 +54,7 @@ begin
     raise Exception.Create('Unable to create book');
 end;
 
-procedure TBookServiceClient.DeleteBook(const BookId: Integer);
+procedure TBookServiceProxy.DeleteBook(const BookId: Integer);
 var
   Response: IMVCRESTResponse;
   CustomerSession: TCustomerSession;
@@ -67,7 +67,7 @@ begin
     raise Exception.Create('Unable to delete book');
 end;
 
-function TBookServiceClient.GetBookById(const BookId: Integer): TBook;
+function TBookServiceProxy.GetBookById(const BookId: Integer): TBook;
 var
   Response: IMVCRESTResponse;
 begin
@@ -77,13 +77,19 @@ begin
     raise Exception.Create('Something went wrong');
 
   var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
-  var Data := JSONValue.GetValue<string>('data');
-  var Book := TJSON.JsonToObject<TBook>(Data);
+  if Assigned(JSONValue) then
+  begin
+    var Data := JSONValue.GetValue<string>('data');
+    var Book := TJSON.JsonToObject<TBook>(Data);
+    Result := Book;
+  end
+  else
+    raise Exception.Create('Parsing JSON');
 
-  Result := Book;
+
 end;
 
-function TBookServiceClient.GetBooks: TObjectList<TBook>;
+function TBookServiceProxy.GetBooks: TObjectList<TBook>;
 var
   Response: IMVCRESTResponse;
 begin
@@ -107,7 +113,7 @@ begin
   Result := BookList;
 end;
 
-function TBookServiceClient.UpdateBook(const Book: TBook): string;
+procedure TBookServiceProxy.UpdateBook(const Book: TBook);
 var
   Response: IMVCRESTResponse;
   CustomerSession: TCustomerSession;
@@ -119,8 +125,6 @@ begin
 
   if Response.StatusCode <> 200 then
     raise Exception.Create('Unable to update book');
-
-  Result := Response.Content;
 end;
 
 end.

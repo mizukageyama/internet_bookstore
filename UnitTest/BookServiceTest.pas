@@ -77,7 +77,6 @@ begin
   NewBook.Title := '';
   NewBook.Synopsis := '';
 
-  var ListBeforeInsert := FBookService.GetBooks;
   FBookService.CreateBook(NewBook);
 
   var BookId := 1;

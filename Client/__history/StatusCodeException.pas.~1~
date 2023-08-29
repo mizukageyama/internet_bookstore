@@ -1,0 +1,7 @@
+unit StatusCodeException;
+
+interface
+
+implementation
+
+end.

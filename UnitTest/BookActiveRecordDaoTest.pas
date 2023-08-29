@@ -66,7 +66,6 @@ begin
   NewBook.Title := '';
   NewBook.Synopsis := '';
 
-  var ListBeforeInsert := FBookDAO.Select;
   FBookDAO.Insert(NewBook);
 
   var BookId := 1;

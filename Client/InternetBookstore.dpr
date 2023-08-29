@@ -22,7 +22,10 @@ uses
   WriteReviewFrmIntf in 'WriteReview\View\WriteReviewFrmIntf.pas',
   CustomerSession in 'CustomerSession.pas',
   BookServiceProxy in 'ProxyServices\BookServiceProxy.pas',
-  CustomerReviewServiceProxy in 'ProxyServices\CustomerReviewServiceProxy.pas';
+  CustomerReviewServiceProxy in 'ProxyServices\CustomerReviewServiceProxy.pas',
+  ResponseStatusMapper in 'ResponseStatusMapper.pas',
+  StatusCodeException in 'StatusCodeException.pas',
+  SYSCONST in 'SYSCONST.pas';
 
 {$R *.res}
 

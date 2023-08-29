@@ -78,12 +78,7 @@ end;
 
 function TCustomerReview.IsMoreThan1MB: Boolean;
 begin
-  var MaxSizeBytes: Integer := 1 * 1024 * 1024;
-
-  if (Length(Review) * SizeOf(Char)) <= MaxSizeBytes then
-    Result := False
-  else
-    Result := True;
+  Result := (Length(Review) >= 10000);
 end;
 
 function TCustomerReview.IsRatingInRange: Boolean;

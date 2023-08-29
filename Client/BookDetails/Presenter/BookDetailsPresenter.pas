@@ -15,17 +15,18 @@ type
   private
     FBookDetailsView: IBookDetailsForm;
     FBookDetailsService: ICustomerReviewService;
+    FBook: TBook;
   protected
-    procedure LoadReviews(const BookId: Integer);
-    procedure WriteReview(const Book: TBook);
+    procedure LoadReviews;
+    procedure WriteReview;
     function IsCustomerLoggedIn: Boolean;
     procedure PopulateReviewsTable(const CustomerReviews: TObjectList<TCustomerReview>);
     procedure ShowWriteReviewForm(const Book: TBook);
     procedure ShowLoginForm(const Book: TBook);
-    procedure DisplayBookDetails(const Book: TBook);
+    procedure DisplayBookDetails;
   public
     constructor Create(ABookDetailsView: IBookDetailsForm;
-      ABookDetailsService: ICustomerReviewService);
+      ABookDetailsService: ICustomerReviewService; ABook: TBook);
   end;
 
 implementation
@@ -36,9 +37,9 @@ uses
   WriteReviewFrm, CustomerReviewServiceProxy, WriteReviewPresenter, LoginFrm,
   LoginPresenter, CustomerSession;
 
-procedure TBookDetailsPresenter.DisplayBookDetails(const Book: TBook);
+procedure TBookDetailsPresenter.DisplayBookDetails;
 begin
-  FBookDetailsView.SetBookDetails(Book);
+  FBookDetailsView.SetBookDetails(FBook);
 end;
 
 function TBookDetailsPresenter.IsCustomerLoggedIn;
@@ -48,16 +49,18 @@ begin
 end;
 
 constructor TBookDetailsPresenter.Create(ABookDetailsView: IBookDetailsForm;
-  ABookDetailsService: ICustomerReviewService);
+  ABookDetailsService: ICustomerReviewService; ABook: TBook);
 begin
   FBookDetailsView := ABookDetailsView;
   FBookDetailsService := ABookDetailsService;
   FBookDetailsView.SetPresenter(Self);
+  FBook := ABook;
 end;
 
-procedure TBookDetailsPresenter.LoadReviews(const BookId: Integer);
+procedure TBookDetailsPresenter.LoadReviews;
 begin
-  var CustomerReviews := FBookDetailsService.GetCustomerReviewsByBookId(BookId);
+  var CustomerReviews := FBookDetailsService
+    .GetCustomerReviewsByBookId(FBook.Id);
   PopulateReviewsTable(CustomerReviews);
 end;
 
@@ -98,21 +101,21 @@ end;
 
 procedure TBookDetailsPresenter.ShowWriteReviewForm(const Book: TBook);
 begin
-  var ReviewForm := TWriteReviewForm.Create(Book, FBookDetailsView.Self);
+  var ReviewForm := TWriteReviewForm.Create(FBookDetailsView.Self);
   var CustomerReviewServiceProxy := TCustomerReviewServiceProxy.Create;
   var WriteReviewPresenter := TWriteReviewPresenter
-    .Create(ReviewForm as TWriteReviewForm, CustomerReviewServiceProxy);
+    .Create(ReviewForm as TWriteReviewForm, CustomerReviewServiceProxy, Book);
 
   ReviewForm.Show;
 end;
 
-procedure TBookDetailsPresenter.WriteReview(const Book: TBook);
+procedure TBookDetailsPresenter.WriteReview;
 begin
   if IsCustomerLoggedIn then
-    ShowWriteReviewForm(Book)
+    ShowWriteReviewForm(FBook)
   else
   begin
-    ShowLoginForm(Book);
+    ShowLoginForm(FBook);
   end;
 end;
 

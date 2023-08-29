@@ -2,12 +2,14 @@ unit CustomerSession;
 
 interface
 
+uses
+  Customer;
+
 type
   TCustomerSession = class
   private
     class var FInstance: TCustomerSession;
-    FCustomerID: Integer;
-    FCustomerName: string;
+    FCustomer: TCustomer;
     FToken: string;
     FExpiration: TDateTime;
     FIsLoggedIn: Boolean;
@@ -17,8 +19,7 @@ type
     procedure SetLoggedIn(CustomerID: Integer; CustomerName, Token: string;
       Expiration: TDateTime);
     function IsLoggedIn: Boolean;
-    function GetCustomerID: Integer;
-    function GetCustomerName: string;
+    function GetLoggedInCustomer: TCustomer;
     function GetToken: string;
     function GetTokenExpiration: TDateTime;
     procedure SetDefaultValue;
@@ -42,8 +43,9 @@ procedure TCustomerSession.SetLoggedIn(CustomerID: Integer; CustomerName,
   Token: string; Expiration: TDateTime);
 begin
   FIsLoggedIn := True;
-  FCustomerID := CustomerID;
-  FCustomerName := CustomerName;
+  FCustomer := TCustomer.Create;
+  FCustomer.Id := CustomerID;
+  FCustomer.FirstName := CustomerName;
   FToken := Token;
   FExpiration := Expiration;
 end;
@@ -51,8 +53,7 @@ end;
 procedure TCustomerSession.SetDefaultValue;
 begin
   FIsLoggedIn := False;
-  FCustomerID := 0;
-  FCustomerName := '';
+  FCustomer := nil;
   FToken := '';
   FExpiration := 0;
 end;
@@ -62,14 +63,9 @@ begin
   Result := FIsLoggedIn;
 end;
 
-function TCustomerSession.GetCustomerName: string;
+function TCustomerSession.GetLoggedInCustomer: TCustomer;
 begin
-  Result := FCustomerName;
-end;
-
-function TCustomerSession.GetCustomerID: Integer;
-begin
-  Result := FCustomerID;
+  Result := FCustomer;
 end;
 
 function TCustomerSession.GetToken: string;

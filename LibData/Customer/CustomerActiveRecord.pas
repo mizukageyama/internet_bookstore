@@ -46,7 +46,7 @@ type
     property LastName: string read GetLastName write SetLastName;
     property Email: string read GetEmail write SetEmail;
     [MVCDoNotSerialize]
-    property Password: string read GetPassword write SetPassword;
+    property Password: string read GetPassword;
   end;
 
 implementation

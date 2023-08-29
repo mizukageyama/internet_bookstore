@@ -1,0 +1,23 @@
+unit ResponseHandler;
+
+interface
+
+type
+  TStatusCode = (
+    OK,
+    Error,
+    NotFound,
+    Forbidden,
+    Unauthorized
+  );
+
+  TResponseHandler = class
+  public
+    class function Result(const StatusCode: Integer): TStatusCode;
+  end;
+
+  var StatusCode: TStatusCode;
+
+implementation
+
+end.

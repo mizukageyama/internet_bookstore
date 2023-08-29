@@ -23,7 +23,7 @@ type
     [MVCTableField('RATING')]
     FRating: NullableInt64;
     [MVCTableField('IS_PENDING')]
-    FIsPendng: NullableBoolean;
+    FIsPendng: NullableInt64;
 
     function GetCustomerReviewId: Integer;
     procedure SetCustomerReviewId(const CustomerReviewId: Integer);
@@ -73,7 +73,10 @@ begin
   FBookId := ACustomerReview.BookId;
   FReview := ACustomerReview.Review;
   FRating := ACustomerReview.Rating;
-  FIsPendng := ACustomerReview.IsPending;
+  if ACustomerReview.IsPending then
+    FIsPendng := 1
+  else
+    FIsPendng := 0;
 end;
 
 constructor TCustomerReviewActiveRecord.Create;
@@ -110,7 +113,10 @@ end;
 
 function TCustomerReviewActiveRecord.GetCustomerReviewIsPending: Boolean;
 begin
-  Result := FIsPendng;
+  if FIsPendng = 1 then
+    Result := True
+  else
+    Result := False;
 end;
 
 procedure TCustomerReviewActiveRecord.SetCustomerReviewId(
@@ -122,7 +128,10 @@ end;
 procedure TCustomerReviewActiveRecord.SetCustomerReviewIsPending(
   const IsPending: Boolean);
 begin
-  FIsPendng := IsPending;
+  if IsPending then
+    FIsPendng := 1
+  else
+    FIsPendng := 0;
 end;
 
 function TCustomerReviewActiveRecord.GetCustomerReviewRating: Integer;

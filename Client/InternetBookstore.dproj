@@ -129,6 +129,9 @@
         <DCCReference Include="CustomerSession.pas"/>
         <DCCReference Include="ProxyServices\BookServiceProxy.pas"/>
         <DCCReference Include="ProxyServices\CustomerReviewServiceProxy.pas"/>
+        <DCCReference Include="ResponseStatusMapper.pas"/>
+        <DCCReference Include="StatusCodeException.pas"/>
+        <DCCReference Include="SYSCONST.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

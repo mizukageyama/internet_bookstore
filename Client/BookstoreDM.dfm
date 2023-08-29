@@ -1,6 +1,7 @@
 object BookstoreDataModule: TBookstoreDataModule
-  Height = 333
-  Width = 473
+  Height = 416
+  Width = 591
+  PixelsPerInch = 120
   object fdMemBook: TFDMemTable
     FieldDefs = <>
     IndexDefs = <>
@@ -12,8 +13,8 @@ object BookstoreDataModule: TBookstoreDataModule
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 70
-    Top = 96
+    Left = 88
+    Top = 120
     object fdMemBookId: TIntegerField
       FieldName = 'Id'
     end
@@ -28,8 +29,8 @@ object BookstoreDataModule: TBookstoreDataModule
   end
   object dsBook: TDataSource
     DataSet = fdMemBook
-    Left = 70
-    Top = 173
+    Left = 88
+    Top = 216
   end
   object fdMemCustomer: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -39,13 +40,13 @@ object BookstoreDataModule: TBookstoreDataModule
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 179
-    Top = 96
+    Left = 224
+    Top = 120
   end
   object dsCustomer: TDataSource
     DataSet = fdMemCustomer
-    Left = 179
-    Top = 173
+    Left = 224
+    Top = 216
   end
   object fdMemCustomerReview: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -55,8 +56,8 @@ object BookstoreDataModule: TBookstoreDataModule
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 320
-    Top = 96
+    Left = 400
+    Top = 120
     object fdMemCustomerReviewId: TIntegerField
       FieldName = 'Id'
     end
@@ -78,7 +79,7 @@ object BookstoreDataModule: TBookstoreDataModule
   end
   object dsCustomerReview: TDataSource
     DataSet = fdMemCustomerReview
-    Left = 320
-    Top = 173
+    Left = 400
+    Top = 216
   end
 end

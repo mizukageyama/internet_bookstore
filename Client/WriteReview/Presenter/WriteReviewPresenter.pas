@@ -4,68 +4,88 @@ interface
 
 uses
   WriteReviewPresenterIntf, WriteReviewFrmIntf, CustomerReviewServiceIntf,
-  System.SysUtils, Vcl.Dialogs, CustomerReview, Vcl.Forms;
+  System.SysUtils, Vcl.Dialogs, CustomerReview, Vcl.Forms, Book;
 
 type
   TWriteReviewPresenter = class(TInterfacedObject, IWriteReviewPresenter)
   private
     FWriteReviewView: IWriteReviewForm;
     FCustomerReviewServiceProxy: ICustomerReviewService;
+    FBook: TBook;
   protected
     procedure InitializeView;
-    procedure SubmitReview(const BookId: Integer);
+    procedure SubmitReview;
     procedure ValidateInput(out CustomerReview: TCustomerReview;
       out IsSuccess: Boolean);
     procedure HideValidationMessage;
   public
     constructor Create(AWriteReviewView: IWriteReviewForm;
-      ACustomerReviewService: ICustomerReviewService);
+      ACustomerReviewService: ICustomerReviewService; ABook: TBook);
   end;
 
 implementation
 
 uses
-  CustomerSession, BookDetailsFrmIntf, BookDetailsFrm;
+  CustomerSession, BookDetailsFrmIntf, BookDetailsFrm, BookServiceProxy,
+  StatusCodeException, SYSCONST;
 
 { TWriteReviewPresenter }
 
 constructor TWriteReviewPresenter.Create(AWriteReviewView: IWriteReviewForm;
-  ACustomerReviewService: ICustomerReviewService);
+  ACustomerReviewService: ICustomerReviewService; ABook: TBook);
 begin
   FWriteReviewView := AWriteReviewView;
   FCustomerReviewServiceProxy := ACustomerReviewService;
   FWriteReviewView.SetPresenter(Self);
+  FBook := ABook;
 end;
 
 procedure TWriteReviewPresenter.InitializeView;
 begin
-  FWriteReviewView.DisplayBookTitle;
+  FWriteReviewView.DisplayBookTitle(FBook.Title);
   var CustomerSession := TCustomerSession.Instance;
-  FWriteReviewView.DisplayCustomerGreeting(CustomerSession.GetCustomerName);
+  var Customer := CustomerSession.GetLoggedInCustomer;
+  FWriteReviewView.DisplayCustomerGreeting(Customer.FirstName);
   FWriteReviewView.HideReviewValidationMessage;
   HideValidationMessage;
 end;
 
-procedure TWriteReviewPresenter.SubmitReview(const BookId: Integer);
+procedure TWriteReviewPresenter.SubmitReview;
 var
   CustomerReview: TCustomerReview;
-  IsSuccess: Boolean;
+  IsValidationSuccess: Boolean;
 begin
   CustomerReview := TCustomerReview.Create;
-  ValidateInput(CustomerReview, IsSuccess);
-  CustomerReview.SetBookId(BookId);
+  ValidateInput(CustomerReview, IsValidationSuccess);
+
+  try
+    var BookServiceProxy := TBookServiceProxy.Create;
+    var Book := BookServiceProxy.GetBookById(FBook.Id);
+  except
+    on E: TStatusCodeException do
+      begin
+        case E.StatusCode of
+          NotFound: ShowMessage('Book no longer exists');
+          else
+            ShowMessage(E.ToString);
+        end;
+        Exit;
+      end;
+  end;
 
   var CustomerSession := TCustomerSession.Instance;
-  CustomerReview.SetCustomerId(CustomerSession.GetCustomerID);
+  var Customer := CustomerSession.GetLoggedInCustomer;
+  CustomerReview.SetCustomerId(Customer.Id);
+  CustomerReview.SetBookId(FBook.Id);
 
-  if IsSuccess then
+  if IsValidationSuccess then
   begin
     try
       FCustomerReviewServiceProxy.CreateCustomerReview(CustomerReview);
       ShowMessage('Review is sent to admin for approval');
       FWriteReviewView.CloseForm;
     except
-      on E: Exception do
+      on E: TStatusCodeException do
         ShowMessage(E.ToString);
     end;
   end;

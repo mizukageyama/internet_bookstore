@@ -46,7 +46,6 @@ begin
   var CustomerSession := TCustomerSession.Instance;
   var Customer := CustomerSession.GetLoggedInCustomer;
   FWriteReviewView.DisplayCustomerGreeting(Customer.FirstName);
-  FWriteReviewView.HideReviewValidationMessage;
   HideValidationMessage;
 end;
 
@@ -55,10 +54,15 @@ var
   CustomerReview: TCustomerReview;
   IsValidationSuccess: Boolean;
 begin
+
   CustomerReview := TCustomerReview.Create;
+  var CustomerSession := TCustomerSession.Instance;
+  var Customer := CustomerSession.GetLoggedInCustomer;
+  CustomerReview.CustomerId := Customer.Id;
+  CustomerReview.BookId := FBook.Id;
+
   ValidateInput(CustomerReview, IsValidationSuccess);
 
-  //check if book still exists in the database
   try
     var BookServiceProxy := TBookServiceProxy.Create;
     var Book := BookServiceProxy.GetBookById(FBook.Id);
@@ -74,23 +78,28 @@ begin
       end;
   end;
 
-  var CustomerSession := TCustomerSession.Instance;
-  var Customer := CustomerSession.GetLoggedInCustomer;
-  CustomerReview.SetCustomerId(Customer.Id);
-  CustomerReview.SetBookId(FBook.Id);
+  if not IsValidationSuccess then
+    Exit;
 
-  if IsValidationSuccess then
-  begin
-    try
-      FCustomerReviewServiceProxy.CreateCustomerReview(CustomerReview);
-      ShowMessage('Review is sent to admin for approval');
-      FWriteReviewView.CloseForm;
-    except
-      on E: Exception do
-      begin
-        ShowMessage(E.ToString);
-      end;
+  try
+    FCustomerReviewServiceProxy.CreateCustomerReview(CustomerReview);
+    ShowMessage('Review is sent to admin for approval');
+    FWriteReviewView.CloseForm;
+  except
+   on E: TStatusCodeException do
+   begin
+    case E.StatusCode of
+      UnAuthorized:
+        begin
+          CustomerSession.SetDefaultValue;
+          ShowMessage('Session expired. Please login again');
+          FWriteReviewView.CloseForm;
+        end;
+      NotFound: ShowMessage('Book no longer exists');
+    else
+      ShowMessage(E.ToString);
     end;
+   end;
   end;
 end;
 

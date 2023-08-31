@@ -10,7 +10,7 @@ type
   private
     class var FInstance: TCustomerSession;
     FCustomer: TCustomer;
-    FToken: string;
+    FJwtToken: string;
     FExpiration: TDateTime;
     FIsLoggedIn: Boolean;
     constructor Create;
@@ -20,7 +20,7 @@ type
       Expiration: TDateTime);
     function IsLoggedIn: Boolean;
     function GetLoggedInCustomer: TCustomer;
-    function GetToken: string;
+    function GetJwtToken: string;
     function GetTokenExpiration: TDateTime;
     procedure SetDefaultValue;
   end;
@@ -46,7 +46,7 @@ begin
   FCustomer := TCustomer.Create;
   FCustomer.Id := CustomerID;
   FCustomer.FirstName := CustomerName;
-  FToken := Token;
+  FJwtToken := Token;
   FExpiration := Expiration;
 end;
 
@@ -54,7 +54,7 @@ procedure TCustomerSession.SetDefaultValue;
 begin
   FIsLoggedIn := False;
   FCustomer := nil;
-  FToken := '';
+  FJwtToken := '';
   FExpiration := 0;
 end;
 
@@ -68,9 +68,9 @@ begin
   Result := FCustomer;
 end;
 
-function TCustomerSession.GetToken: string;
+function TCustomerSession.GetJWTToken: string;
 begin
-  Result := FToken;
+  Result := FJwtToken;
 end;
 
 function TCustomerSession.GetTokenExpiration: TDateTime;

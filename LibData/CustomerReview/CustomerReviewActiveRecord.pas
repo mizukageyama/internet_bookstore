@@ -64,7 +64,8 @@ implementation
 
 { TCustomerReviewActiveRecord }
 
-constructor TCustomerReviewActiveRecord.Create(const ACustomerReview: TCustomerReview);
+constructor TCustomerReviewActiveRecord.Create(const ACustomerReview:
+  TCustomerReview);
 begin
   inherited Create(True);
 

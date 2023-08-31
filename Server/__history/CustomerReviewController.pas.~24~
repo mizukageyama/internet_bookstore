@@ -4,12 +4,11 @@ interface
 
 uses
   MVCFramework, MVCFramework.Commons, MVCFramework.Serializer.Commons,
-  MVCFramework.ActiveRecord, System.Generics.Collections, CustomerServiceIntf,
-  CustomerReview, System.SysUtils, MVCFramework.Logger;
+  MVCFramework.ActiveRecord, System.Generics.Collections,
+  CustomerReview, System.SysUtils, System.Classes, CustomerReviewServiceIntf;
 
 type
-  [MVCPath('/api/reviews')]
-  TCustomerController = class(TMVCController)
+  TCustomerReviewController = class(TMVCController)
   private
     FService: ICustomerReviewService;
   public
@@ -21,7 +20,7 @@ type
     [MVCPath('/single/($ReviewId)')]
     [MVCHTTPMethod([httpGET])]
     [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
-    procedure GetCustomerReviewsByBookId(const BookId: Integer);
+    procedure GetCustomerReviewById(const ReviewId: Integer);
 
     [MVCPath()]
     [MVCHTTPMethod([httpPOST])]
@@ -47,9 +46,6 @@ implementation
 
 { TCustomerReviewController }
 
-uses
-  CustomerReviewDAO;
-
 constructor TCustomerReviewController.Create(const AService: ICustomerReviewService);
 begin
  if not Assigned(AService) then
@@ -62,10 +58,11 @@ end;
 procedure TCustomerReviewController.CreateCustomerReview;
 begin
   var CustomerReview := Context.Request.BodyAs<TCustomerReview>;
+  CustomerReview.SetIsPending(True);
 
   if not CustomerReview.IsValid then
   begin
-    raise EMVCException.Create(400, 'Invalid Request');
+    raise EMVCException.Create(400, 'Please check the review, and rating');
   end;
 
   FService.CreateCustomerReview(CustomerReview);
@@ -75,15 +72,22 @@ end;
 procedure TCustomerReviewController.DeleteCustomerReview(
   const CustomerReviewId: Integer);
 begin
-  FService.DeleteCustomer(CustomerReviewId);
+  FService.DeleteCustomerReview(CustomerReviewId);
   Render(204, '');
 end;
 
 procedure TCustomerReviewController.GetCustomerReviewsByBookId(const BookId:
   Integer);
 begin
-  var Customer := FService.;
-  Render(ObjectDict().Add('data', Customer));
+  var CustomerReviews := FService.GetCustomerReviewsByBookId(BookId);
+  Render(ObjectDict().Add('data', CustomerReviews));
+end;
+
+procedure TCustomerReviewController.GetCustomerReviewById(const ReviewId:
+  Integer);
+begin
+  var CustomerReview := FService.GetCustomerReviewById(ReviewId);
+  Render(ObjectDict().Add('data', CustomerReview));
 end;
 
 procedure TCustomerReviewController.UpdateCustomerReview(
@@ -97,7 +101,7 @@ begin
     raise EMVCException.Create(400, 'Invalid Request');
   end;
 
-  FService.UpdateCustomer(CustomerReview);
+  FService.UpdateCustomerReview(CustomerReview);
   Render(HTTP_STATUS.OK, '');
 end;
 

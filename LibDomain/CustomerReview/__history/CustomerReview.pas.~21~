@@ -25,9 +25,9 @@ type
     function IsTooShort: Boolean;
     function IsRatingInRange: Boolean;
 
-    procedure SetId(const Id: Integer);
     procedure SetBookId(const BookId: Integer);
     procedure SetCustomerId(const CustomerId: Integer);
+    procedure SetId(const Id: Integer);
     procedure SetRating(const Rating: Integer);
     procedure SetReview(const Review: string);
     procedure SetIsPending(const IsPending: Boolean);

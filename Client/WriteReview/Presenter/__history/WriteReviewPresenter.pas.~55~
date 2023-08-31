@@ -26,7 +26,8 @@ type
 implementation
 
 uses
-  CustomerSession, BookDetailsFrmIntf, BookDetailsFrm, BookServiceProxy;
+  CustomerSession, BookDetailsFrmIntf, BookDetailsFrm, BookServiceProxy,
+  StatusCodeException, SYSCONST;
 
 { TWriteReviewPresenter }
 
@@ -45,7 +46,6 @@ begin
   var CustomerSession := TCustomerSession.Instance;
   var Customer := CustomerSession.GetLoggedInCustomer;
   FWriteReviewView.DisplayCustomerGreeting(Customer.FirstName);
-  FWriteReviewView.HideReviewValidationMessage;
   HideValidationMessage;
 end;
 
@@ -53,39 +53,39 @@ procedure TWriteReviewPresenter.SubmitReview;
 var
   CustomerReview: TCustomerReview;
   IsValidationSuccess: Boolean;
+  ReviewText: string;
+  Rating: Integer;
 begin
-  CustomerReview := TCustomerReview.Create;
   ValidateInput(CustomerReview, IsValidationSuccess);
 
-  //check if book still exists in the database
-  try
-    var BookServiceProxy := TBookServiceProxy.Create;
-    var Book := BookServiceProxy.GetBookById(FBook.Id);
-  except
-    on E: Exception do
-    begin
-      ShowMessage(E.ToString);
-      Exit;
-    end;
-  end;
+  if not IsValidationSuccess then
+    Exit;
 
+  CustomerReview := TCustomerReview.Create;
   var CustomerSession := TCustomerSession.Instance;
   var Customer := CustomerSession.GetLoggedInCustomer;
-  CustomerReview.SetCustomerId(Customer.Id);
-  CustomerReview.SetBookId(FBook.Id);
+  CustomerReview.CustomerId := Customer.Id;
+  CustomerReview.BookId := FBook.Id;
 
-  if IsValidationSuccess then
-  begin
-    try
-      FCustomerReviewServiceProxy.CreateCustomerReview(CustomerReview);
-      ShowMessage('Review is sent to admin for approval');
-      FWriteReviewView.CloseForm;
-    except
-      on E: Exception do
-      begin
-        ShowMessage(E.ToString);
-      end;
+  try
+    FCustomerReviewServiceProxy.CreateCustomerReview(CustomerReview);
+    ShowMessage('Review is sent to admin for approval');
+    FWriteReviewView.CloseForm;
+  except
+   on E: TStatusCodeException do
+   begin
+    case E.StatusCode of
+      UnAuthorized:
+        begin
+          CustomerSession.SetDefaultValue;
+          ShowMessage('Session expired. Please login again');
+          FWriteReviewView.CloseForm;
+        end;
+      NotFound: ShowMessage('Book no longer exists');
+    else
+      ShowMessage(E.ToString);
     end;
+   end;
   end;
 end;
 
@@ -99,28 +99,39 @@ begin
   ReviewInput := FWriteReviewView.GetReviewText;
   RatingInput := FWriteReviewView.GetReviewRating;
 
-  CustomerReview.SetReview(ReviewInput);
+  CustomerReview.Review := ReviewInput;
+  IsSuccess := True;
   HideValidationMessage;
 
   if TryStrToInt(RatingInput, Rating) then
   begin
-    CustomerReview.SetRating(Rating);
+    CustomerReview.Rating := Rating;
     if not CustomerReview.IsRatingInRange then
+    begin
       FWriteReviewView.ShowRatingValidationMessage(
         'Rating should be within 1-5 range');
+      IsSuccess := False;
+    end;
   end
   else
+  begin
     FWriteReviewView.ShowRatingValidationMessage('Rating should be a number');
+    IsSuccess := False;
+  end;
 
   if CustomerReview.IsMoreThan1MB then
+  begin
     FWriteReviewView.ShowReviewValidationMessage(
       'Review should be less than 1MB');
+    IsSuccess := False;
+  end;
 
   if CustomerReview.IsTooShort then
+  begin
     FWriteReviewView.ShowReviewValidationMessage(
       'Review should not be less than 10 characters');
-
-  IsSuccess := CustomerReview.IsValid;
+    IsSuccess := False;
+  end;
 end;
 
 procedure TWriteReviewPresenter.HideValidationMessage;

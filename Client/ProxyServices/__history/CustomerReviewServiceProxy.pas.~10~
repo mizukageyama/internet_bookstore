@@ -3,7 +3,7 @@ unit CustomerReviewServiceProxy;
 interface
 
 uses
-  CustomerReviewServiceIntf, CustomerReviewApiIntf, MVCFramework.DataSet.Utils,
+  CustomerReviewServiceIntf, MVCFramework.DataSet.Utils,
   CustomerReview, System.Generics.Collections, System.SysUtils,
   MVCFramework.RESTClient.Intf, MVCFramework.RESTClient;
 
@@ -24,17 +24,19 @@ type
     procedure UpdateCustomerReview(const CustomerReview: TCustomerReview);
     procedure DeleteCustomerReview(const CustomerReviewId: Integer);
   public
-    constructor Create(AApi: ICustomerReviewApi); overload;
+    constructor Create;
+    destructor Destroy;
   end;
 
 implementation
 
 uses
-  REST.JSON, JSON, CustomerSession;
+  REST.JSON, JSON, CustomerSession, StatusCodeException, SYSCONST,
+  ResponseStatusMapper;
 
-{ TCustomerReviewServiceClient }
+{ TCustomerReviewServiceProxy }
 
-constructor TCustomerReviewServiceProxy.Create(AApi: ICustomerReviewApi);
+constructor TCustomerReviewServiceProxy.Create;
 begin
   FRESTClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
 end;
@@ -50,8 +52,10 @@ begin
   FRESTClient.AddBody(CustomerReview.ToJSONBody, 'application/json');
   Response := FRESTClient.POST(ENDPOINT);
 
-  if Response.StatusCode <> 201 then
-    raise Exception.Create('Unable to create review');
+  var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
+  if ResponseStatus <> OK then
+    raise TStatusCodeException.Create(ResponseStatus,
+      'Unable to create review');
 end;
 
 procedure TCustomerReviewServiceProxy.DeleteCustomerReview(
@@ -65,8 +69,10 @@ begin
   FRESTClient.SetBearerAuthorization('token');
   Response := FRESTClient.DELETE(ENDPOINT + '/'+ CustomerReviewId.toString);
 
-  if Response.StatusCode <> 204 then
-    raise Exception.Create('Unable to delete review');
+  var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
+  if ResponseStatus <> OK then
+    raise TStatusCodeException.Create(ResponseStatus,
+      'Unable to delete review');
 end;
 
 function TCustomerReviewServiceProxy.GetCustomerReviewById(
@@ -76,11 +82,12 @@ var
 begin
   Response := FRESTClient.GET(ENDPOINT + '/'+ CustomerReviewId.toString);
 
-  if Response.StatusCode <> 200 then
-    raise Exception.Create('Something went wrong');
+  var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
+  if ResponseStatus <> OK then
+    raise TStatusCodeException.Create(ResponseStatus, 'Something went wrong');
 
   var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
-  var Data := JSONValue.GetValue<string>('data');
+  var Data := JSONValue.GetValue<TJSONObject>('data');
   var CustomerReview := TJSON.JsonToObject<TCustomerReview>(Data);
 
   Result := CustomerReview;
@@ -93,8 +100,9 @@ var
 begin
   Response := FRESTClient.GET(ENDPOINT + '/'+ BookId.toString);
 
-  if Response.StatusCode <> 200 then
-    raise Exception.Create('Something went wrong');
+  var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
+  if ResponseStatus <> OK then
+    raise TStatusCodeException.Create(ResponseStatus, 'Something went wrong');
 
   var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
   var CustomerArray := JSONValue.GetValue<TJSONArray>('data');
@@ -121,8 +129,15 @@ begin
   FRESTClient.AddBody(CustomerReview.ToJSONBody, 'application/json');
   Response := FRESTClient.PUT(ENDPOINT);
 
-  if Response.StatusCode <> 200 then
-    raise Exception.Create('Unable to update review');
+  var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
+  if ResponseStatus <> OK then
+    raise TStatusCodeException.Create(ResponseStatus,
+      'Unable to update review');
+end;
+
+destructor TCustomerReviewServiceProxy.Destroy;
+begin
+  FRESTClient := nil;
 end;
 
 end.

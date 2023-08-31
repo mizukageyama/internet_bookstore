@@ -47,7 +47,7 @@ var
   CustomerSession: TCustomerSession;
 begin
   CustomerSession := TCustomerSession.Instance;
-  FRESTClient.SetBearerAuthorization(CustomerSession.GetToken);
+  FRESTClient.SetBearerAuthorization(CustomerSession.GetJWTToken);
   FRESTClient.AddBody(Book.ToJSONBody, 'application/json');
   Response := FRESTClient.POST(ENDPOINT);
 
@@ -62,7 +62,7 @@ var
   CustomerSession: TCustomerSession;
 begin
   CustomerSession := TCustomerSession.Instance;
-  FRESTClient.SetBearerAuthorization(CustomerSession.GetToken);
+  FRESTClient.SetBearerAuthorization(CustomerSession.GetJWTToken);
   Response := FRESTClient.DELETE(ENDPOINT + '/'+ BookId.toString);
 
   var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
@@ -118,7 +118,7 @@ var
   CustomerSession: TCustomerSession;
 begin
   CustomerSession := TCustomerSession.Instance;
-  FRESTClient.SetBearerAuthorization(CustomerSession.GetToken);
+  FRESTClient.SetBearerAuthorization(CustomerSession.GetJWTToken);
   FRESTClient.AddBody(Book.ToJSONBody, 'application/json');
   Response := FRESTClient.PUT(ENDPOINT);
 

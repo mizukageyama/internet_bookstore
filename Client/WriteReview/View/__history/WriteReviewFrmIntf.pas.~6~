@@ -9,7 +9,7 @@ type
   IWriteReviewForm = interface
     ['{CA877568-6A73-44DF-9B42-577E46E44AB7}']
     procedure DisplayBookTitle(const BookTitle: string);
-    procedure DisplayCustomerGreeting(const CustomerName: string);
+    procedure DisplayCustomerGreeting(const Customer: string);
     function GetReviewText: string;
     function GetReviewRating: string;
     procedure HideForm;

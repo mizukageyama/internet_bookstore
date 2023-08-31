@@ -26,7 +26,6 @@ type
     function Self: TForm;
     function GetParentForm: TForm;
   public
-    constructor Create(Owner: TComponent); overload;
     procedure LoadCustomerReviews;
     procedure SetPresenter(APresenter: IBookDetailsPresenter);
   end;
@@ -41,11 +40,6 @@ uses
 procedure TBookDetailsForm.btnWriteReviewClick(Sender: TObject);
 begin
   FPresenter.WriteReview;
-end;
-
-constructor TBookDetailsForm.Create(Owner: TComponent);
-begin
-  inherited Create(Owner);
 end;
 
 procedure TBookDetailsForm.FormShow(Sender: TObject);

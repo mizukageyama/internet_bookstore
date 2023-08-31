@@ -2,8 +2,8 @@ object BookDetailsForm: TBookDetailsForm
   Left = 0
   Top = 0
   Caption = 'Book Details'
-  ClientHeight = 458
-  ClientWidth = 510
+  ClientHeight = 449
+  ClientWidth = 504
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,7 +16,7 @@ object BookDetailsForm: TBookDetailsForm
   object lblBookTitle: TLabel
     Left = 0
     Top = 41
-    Width = 510
+    Width = 504
     Height = 20
     Align = alTop
     Caption = 'Title'
@@ -31,8 +31,8 @@ object BookDetailsForm: TBookDetailsForm
   object lblSynopsis: TLabel
     Left = 0
     Top = 61
-    Width = 510
-    Height = 83
+    Width = 504
+    Height = 74
     Margins.Top = 10
     Align = alClient
     Caption = 'Synopsis'
@@ -49,18 +49,17 @@ object BookDetailsForm: TBookDetailsForm
   object pnlBottom: TPanel
     Left = 0
     Top = 0
-    Width = 510
+    Width = 504
     Height = 41
     Align = alTop
     BevelOuter = bvNone
     Padding.Top = 10
     TabOrder = 0
-    ExplicitWidth = 506
     object lblTitle: TLabel
       Left = 0
       Top = 10
       Width = 258
-      Height = 31
+      Height = 30
       Align = alLeft
       Caption = 'ICONIX Internet Bookstore'
       Font.Charset = DEFAULT_CHARSET
@@ -70,7 +69,6 @@ object BookDetailsForm: TBookDetailsForm
       Font.Style = []
       ParentFont = False
       Layout = tlCenter
-      ExplicitHeight = 30
     end
     object btnWriteReview: TButton
       Left = 376
@@ -81,22 +79,20 @@ object BookDetailsForm: TBookDetailsForm
       Caption = 'Write Review'
       TabOrder = 0
       OnClick = btnWriteReviewClick
-      ExplicitLeft = 372
+      ExplicitLeft = 370
     end
   end
   object pnlReviews: TPanel
     Left = 0
-    Top = 144
-    Width = 510
+    Top = 135
+    Width = 504
     Height = 314
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 143
-    ExplicitWidth = 506
     object lblBookReviews: TLabel
       Left = 1
       Top = 1
-      Width = 508
+      Width = 104
       Height = 15
       Align = alTop
       Caption = 'Customer Reviews'
@@ -107,7 +103,6 @@ object BookDetailsForm: TBookDetailsForm
       Font.Style = [fsBold]
       ParentFont = False
       Layout = tlCenter
-      ExplicitWidth = 104
     end
     object dbgReviews: TDBGrid
       Left = 1

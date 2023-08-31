@@ -45,7 +45,6 @@ type
     procedure ShowRatingValidationMessage(const ValidationMessage: string);
     procedure HideRatingValidationMessage;
   public
-    constructor Create(Owner: TComponent); overload;
     procedure SetPresenter(Presenter: IWriteReviewPresenter);
   end;
 
@@ -63,11 +62,6 @@ end;
 procedure TWriteReviewForm.CloseForm;
 begin
   Self.Close;
-end;
-
-constructor TWriteReviewForm.Create(Owner: TComponent);
-begin
-  inherited Create(Owner);
 end;
 
 procedure TWriteReviewForm.SetPresenter(Presenter: IWriteReviewPresenter);

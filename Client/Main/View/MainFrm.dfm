@@ -61,10 +61,11 @@ object MainForm: TMainForm
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitWidth = 605
     object lblWelcome: TLabel
       Left = 0
       Top = 0
-      Width = 615
+      Width = 609
       Height = 25
       Align = alTop
       Caption = 'Welcome to our streamlined Internet Bookstore.'

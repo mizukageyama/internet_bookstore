@@ -25,7 +25,7 @@ type
 implementation
 
 uses
-  BookDetailsPresenterIntf, BookDetailsPresenter,
+  BookDetailsPresenterIntf, BookDetailsPresenter, SYSCONST, StatusCodeException,
   CustomerReviewServiceIntf, CustomerReviewServiceProxy;
 
 { TMainPresenter }
@@ -72,36 +72,38 @@ end;
 procedure TMainPresenter.ShowBookDetails;
 var
   BookstoreDM: TBookstoreDataModule;
-  BookId: Integer;
-  BookTitle: string;
-  BookSynopsis: string;
-
+  SelectedBookId: Integer;
   SelectedBook: TBook;
 
-  CustomerReviewProxy: ICustomerReviewService;
+  CustomerReviewServiceProxy: ICustomerReviewService;
   BookDetailsPresenter: IBookDetailsPresenter;
   BookDetailsForm: TForm;
 begin
   BookstoreDM := BookstoreDataModule;
+  SelectedBookId := (BookstoreDM.fdmemBookId.Value);
 
-  BookId := (BookstoreDM.fdmemBookId.Value);
-
-  //Use Service
-  //If Service Return is nil, then must show message dialog that book no
-  //longer exists then refresh
   try
-    SelectedBook := FMainService.GetBookById(BookId);
+    SelectedBook := FMainService.GetBookById(SelectedBookId);
   except
-    on E: Exception do
-      ShowMessage(E.ToString);
+    on E: TStatusCodeException do
+      begin
+        case E.StatusCode of
+          NotFound:
+            begin
+              ShowMessage('Book no longer exists');
+              LoadBooks;
+            end;
+        else
+          ShowMessage(E.ToString);
+        end;
+        Exit;
+      end;
   end;
 
-  //SelectedBook := TBook.Create(BookId, BookTitle, BookSynopsis);
-
-  BookDetailsForm := TBookDetailsForm.Create(FMainView.Self);
-  CustomerReviewProxy := TCustomerReviewServiceProxy.Create;
+  BookDetailsForm := TBookDetailsForm.Create;
+  CustomerReviewServiceProxy := TCustomerReviewServiceProxy.Create;
   BookDetailsPresenter := TBookDetailsPresenter
-    .Create(BookDetailsForm as TBookDetailsForm, CustomerReviewProxy,
+    .Create(BookDetailsForm as TBookDetailsForm, CustomerReviewServiceProxy,
     SelectedBook);
 
   BookDetailsForm.Show;

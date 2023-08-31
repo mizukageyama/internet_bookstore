@@ -21,12 +21,12 @@ type
     procedure btnWriteReviewClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   protected
-    FBook: TBook;
     FPresenter: IBookDetailsPresenter;
     procedure SetBookDetails(const Book: TBook);
     function Self: TForm;
+    function GetParentForm: TForm;
   public
-    constructor Create(const Book: TBook; Owner: TComponent); overload;
+    constructor Create(Owner: TComponent); overload;
     procedure LoadCustomerReviews;
     procedure SetPresenter(APresenter: IBookDetailsPresenter);
   end;
@@ -40,24 +40,28 @@ uses
 
 procedure TBookDetailsForm.btnWriteReviewClick(Sender: TObject);
 begin
-  FPresenter.WriteReview(FBook);
+  FPresenter.WriteReview;
 end;
 
-constructor TBookDetailsForm.Create(const Book: TBook; Owner: TComponent);
+constructor TBookDetailsForm.Create(Owner: TComponent);
 begin
   inherited Create(Owner);
-  FBook := Book;
 end;
 
 procedure TBookDetailsForm.FormShow(Sender: TObject);
 begin
-  FPresenter.DisplayBookDetails(FBook);
+  FPresenter.DisplayBookDetails;
   LoadCustomerReviews;
+end;
+
+function TBookDetailsForm.GetParentForm: TForm;
+begin
+  Result := TForm(Self.Owner);
 end;
 
 procedure TBookDetailsForm.LoadCustomerReviews;
 begin
-  FPresenter.LoadReviews(FBook.Id);
+  FPresenter.LoadReviews;
 end;
 
 function TBookDetailsForm.Self: TForm;

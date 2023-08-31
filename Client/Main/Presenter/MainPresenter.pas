@@ -100,7 +100,7 @@ begin
       end;
   end;
 
-  BookDetailsForm := TBookDetailsForm.Create(FMainView.Self);
+  BookDetailsForm := TBookDetailsForm.Create(nil);
   CustomerReviewServiceProxy := TCustomerReviewServiceProxy.Create;
   BookDetailsPresenter := TBookDetailsPresenter
     .Create(BookDetailsForm as TBookDetailsForm, CustomerReviewServiceProxy,

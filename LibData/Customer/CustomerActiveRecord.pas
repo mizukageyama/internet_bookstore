@@ -41,6 +41,10 @@ type
     constructor Create; overload; override;
     constructor Create(const ACustomer: TCustomer); overload;
 
+    function QueryInterface(const IID: TGUID; out Obj): HRESULT; stdcall;
+    function _AddRef: Integer; stdcall;
+    function _Release: Integer; stdcall;
+
     property Id: Integer read GetCustomerId write SetCustomerId;
     property FirstName: string read GetFirstName write SetFirstName;
     property LastName: string read GetLastName write SetLastName;
@@ -118,5 +122,22 @@ procedure TCustomerActiveRecord.SetPassword(const CustomerPassword: string);
 begin
   FPassword:= CustomerPassword;
 end;
+
+function TCustomerActiveRecord.QueryInterface(const IID: TGUID;
+  out Obj): HRESULT;
+begin
+  Result := -1;
+end;
+
+function TCustomerActiveRecord._AddRef: Integer;
+begin
+  Result := -1;
+end;
+
+function TCustomerActiveRecord._Release: Integer;
+begin
+  Result := -1;
+end;
+
 
 end.

@@ -9,9 +9,9 @@ type
   ILoginView = interface
     function GetUsername: string;
     function GetPassword: string;
-    procedure ShowForm;
     procedure CloseForm;
     procedure SetPresenter(APresenter: ILoginPresenter);
+    procedure ShowMessageDialog(const Msg: string);
   end;
 
 implementation

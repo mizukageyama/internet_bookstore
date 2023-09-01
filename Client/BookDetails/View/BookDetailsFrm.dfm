@@ -2,7 +2,7 @@ object BookDetailsView: TBookDetailsView
   Left = 0
   Top = 0
   Caption = 'Book Details'
-  ClientHeight = 170
+  ClientHeight = 161
   ClientWidth = 504
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -10,7 +10,7 @@ object BookDetailsView: TBookDetailsView
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poOwnerFormCenter
+  Position = poScreenCenter
   OnShow = FormShow
   TextHeight = 15
   object lblBookTitle: TLabel
@@ -32,7 +32,7 @@ object BookDetailsView: TBookDetailsView
     Left = 0
     Top = 61
     Width = 504
-    Height = 109
+    Height = 100
     Margins.Top = 10
     Align = alClient
     Caption = 'Synopsis'

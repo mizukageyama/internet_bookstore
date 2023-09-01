@@ -10,7 +10,7 @@ object MainView: TMainView
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  Position = poDesktopCenter
+  Position = poScreenCenter
   OnShow = FormShow
   TextHeight = 15
   object lblTitle: TLabel

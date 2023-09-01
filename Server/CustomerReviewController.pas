@@ -10,7 +10,7 @@ uses
 type
   TCustomerReviewController = class(TMVCController)
   private
-    FService: ICustomerReviewService;
+    FCustomerReviewService: ICustomerReviewService;
   public
     [MVCPath('/($BookId)')]
     [MVCHTTPMethod([httpGET])]
@@ -52,7 +52,7 @@ begin
     raise EArgumentNilException.Create('AService');
 
   inherited Create;
-  FService := AService;
+  FCustomerReviewService := AService;
 end;
 
 procedure TCustomerReviewController.CreateCustomerReview;
@@ -65,28 +65,28 @@ begin
     raise EMVCException.Create(400, 'Please check the review, and rating');
   end;
 
-  FService.CreateCustomerReview(CustomerReview);
+  FCustomerReviewService.CreateCustomerReview(CustomerReview);
   Render201Created('/api/customers/' + CustomerReview.ID.ToString);
 end;
 
 procedure TCustomerReviewController.DeleteCustomerReview(
   const CustomerReviewId: Integer);
 begin
-  FService.DeleteCustomerReview(CustomerReviewId);
+  FCustomerReviewService.DeleteCustomerReview(CustomerReviewId);
   Render(204, '');
 end;
 
 procedure TCustomerReviewController.GetCustomerReviewsByBookId(const BookId:
   Integer);
 begin
-  var CustomerReviews := FService.GetCustomerReviewsByBookId(BookId);
+  var CustomerReviews := FCustomerReviewService.GetCustomerReviewsByBookId(BookId);
   Render(ObjectDict().Add('data', CustomerReviews));
 end;
 
 procedure TCustomerReviewController.GetCustomerReviewById(const ReviewId:
   Integer);
 begin
-  var CustomerReview := FService.GetCustomerReviewById(ReviewId);
+  var CustomerReview := FCustomerReviewService.GetCustomerReviewById(ReviewId);
   Render(ObjectDict().Add('data', CustomerReview));
 end;
 
@@ -101,7 +101,7 @@ begin
     raise EMVCException.Create(400, 'Invalid Request');
   end;
 
-  FService.UpdateCustomerReview(CustomerReview);
+  FCustomerReviewService.UpdateCustomerReview(CustomerReview);
   Render(HTTP_STATUS.OK, '');
 end;
 

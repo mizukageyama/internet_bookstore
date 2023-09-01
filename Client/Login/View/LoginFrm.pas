@@ -20,12 +20,13 @@ type
     procedure btnLoginClick(Sender: TObject);
   private
     FPresenter: ILoginPresenter;
+    procedure ShowForm;
   public
     procedure SetPresenter(APresenter: ILoginPresenter);
     function GetUsername: string;
     function Getpassword: string;
-    procedure ShowForm;
     procedure CloseForm;
+    procedure ShowMessageDialog(const Msg: string);
   end;
 
 implementation
@@ -62,6 +63,11 @@ end;
 procedure TLoginView.ShowForm;
 begin
   Self.Show;
+end;
+
+procedure TLoginView.ShowMessageDialog(const Msg: string);
+begin
+  ShowMessage(Msg);
 end;
 
 end.

@@ -52,10 +52,10 @@ procedure TBookDetailsPresenter.WriteReview;
 begin
   var CustomerSession := TCustomerSession.Instance;
   if CustomerSession.IsLoggedIn then
-    ShowWriteReviewForm
+    ShowWriteReviewView
   else
   begin
-    ShowLoginForm;
+    ShowLoginView;
   end;
 end;
 

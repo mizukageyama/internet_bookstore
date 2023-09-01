@@ -10,7 +10,7 @@ uses
 type
   TCustomerController = class(TMVCController)
   private
-    FService: ICustomerService;
+    FCustomerService: ICustomerService;
   public
     [MVCPath()]
     [MVCHTTPMethod([httpGET])]
@@ -52,7 +52,7 @@ begin
     raise EArgumentNilException.Create('AService');
 
   inherited Create;
-  FService := AService;
+  FCustomerService := AService;
 end;
 
 procedure TCustomerController.CreateCustomer;
@@ -64,25 +64,25 @@ begin
     raise EMVCException.Create(400, 'Invalid Request');
   end;
 
-  FService.CreateCustomer(Customer);
+  FCustomerService.CreateCustomer(Customer);
   Render201Created('/api/customers/' + Customer.ID.ToString);
 end;
 
 procedure TCustomerController.DeleteCustomer(const CustomerId: Integer);
 begin
-  FService.DeleteCustomer(CustomerId);
+  FCustomerService.DeleteCustomer(CustomerId);
   Render(204, '');
 end;
 
 procedure TCustomerController.GetCustomerById(const CustomerId: Integer);
 begin
-  var Customer := FService.GetCustomerById(CustomerId);
+  var Customer := FCustomerService.GetCustomerById(CustomerId);
   Render(ObjectDict().Add('data', Customer));
 end;
 
 procedure TCustomerController.GetCustomers;
 begin
-  var Customer := FService.GetCustomers;
+  var Customer := FCustomerService.GetCustomers;
   Render(ObjectDict().Add('data', Customer));
 end;
 
@@ -96,7 +96,7 @@ begin
     raise EMVCException.Create(HTTP_STATUS.BadRequest, 'Invalid Request');
   end;
 
-  FService.UpdateCustomer(Customer);
+  FCustomerService.UpdateCustomer(Customer);
   Render(HTTP_STATUS.OK, '');
 end;
 

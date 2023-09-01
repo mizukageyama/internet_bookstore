@@ -10,7 +10,7 @@ uses
 type
   TBookController = class(TMVCController)
   private
-    FService: IBookService;
+    FBookService: IBookService;
   public
     [MVCPath()]
     [MVCHTTPMethod([httpGET])]
@@ -55,7 +55,7 @@ begin
     raise EArgumentNilException.Create('AService');
 
   inherited Create;
-  FService := AService;
+  FBookService := AService;
 end;
 
 procedure TBookController.CreateBook;
@@ -67,25 +67,25 @@ begin
     raise EMVCException.Create(400, 'Invalid Request');
   end; 
      
-  FService.CreateBook(Book);
+  FBookService.CreateBook(Book);
   Render201Created('/api/books/' + Book.ID.ToString);
 end;
 
 procedure TBookController.DeleteBook(const BookId: Integer);
 begin
-  FService.DeleteBook(BookId);
+  FBookService.DeleteBook(BookId);
   Render(204, '');
 end;
 
 procedure TBookController.GetBookById(const BookId: Integer);
 begin
-  var Book := FService.GetBookById(BookId);
+  var Book := FBookService.GetBookById(BookId);
   Render(ObjectDict().Add('data', Book));
 end;
 
 procedure TBookController.GetBooks;
 begin
-  var Books := FService.GetBooks;
+  var Books := FBookService.GetBooks;
   Render(ObjectDict().Add('data', Books));
 end;
 
@@ -99,7 +99,7 @@ begin
     raise EMVCException.Create(400, 'Invalid Request');
   end;
 
-  FService.UpdateBook(Book);
+  FBookService.UpdateBook(Book);
   Render(HTTP_STATUS.OK, '');
 end;
 

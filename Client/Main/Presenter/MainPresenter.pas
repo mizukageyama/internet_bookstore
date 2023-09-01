@@ -13,7 +13,7 @@ type
   TMainPresenter = class(TInterfacedObject, IMainPresenter)
   private
     FMainView: IMainView;
-    FMainService: IBookService;
+    FBookServiceProxy: IBookService;
   protected
     procedure LoadBooks;
     procedure ShowBookDetails;
@@ -34,14 +34,14 @@ constructor TMainPresenter.Create(AMainView: IMainView;
   AMainService: IBookService);
 begin
   FMainView := AMainView;
-  FMainService := AMainService;
+  FBookServiceProxy := AMainService;
   FMainView.SetPresenter(Self);
 end;
 
 procedure TMainPresenter.LoadBooks;
 begin
   try
-    var Books := FMainService.GetBooks;
+    var Books := FBookServiceProxy.GetBooks;
     PopulateBookTable(Books);
   except
     on E: Exception do

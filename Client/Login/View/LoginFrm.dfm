@@ -1,4 +1,4 @@
-object LoginForm: TLoginForm
+object LoginView: TLoginView
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]

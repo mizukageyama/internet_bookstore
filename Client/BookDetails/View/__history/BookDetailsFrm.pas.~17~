@@ -1,0 +1,55 @@
+unit BookDetailsFrm;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.ExtCtrls, Vcl.StdCtrls, Book, Data.DB, Vcl.Grids, Vcl.DBGrids,
+  BookDetailsFrmIntf, BookDetailsPresenterIntf;
+
+type
+  TBookDetailsForm = class(TForm, IBookDetailsView)
+    lblTitle: TLabel;
+    lblBookTitle: TLabel;
+    lblSynopsis: TLabel;
+    btnWriteReview: TButton;
+    pnlBottom: TPanel;
+    procedure btnWriteReviewClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    FPresenter: IBookDetailsPresenter;
+  public
+    procedure SetPresenter(APresenter: IBookDetailsPresenter);
+    procedure SetBookDetails(const Book: TBook);
+  end;
+
+implementation
+
+{$R *.dfm}
+
+uses
+  LoginFrm, WriteReviewFrm;
+
+procedure TBookDetailsForm.btnWriteReviewClick(Sender: TObject);
+begin
+  FPresenter.WriteReview;
+end;
+
+procedure TBookDetailsForm.FormShow(Sender: TObject);
+begin
+  FPresenter.DisplayBookDetails;
+  LoadCustomerReviews;
+end;
+
+procedure TBookDetailsForm.SetBookDetails(const Book: TBook);
+begin
+  lblBookTitle.Caption := Book.Title;
+  lblSynopsis.Caption := Book.Synopsis;
+end;
+
+procedure TBookDetailsForm.SetPresenter(APresenter: IBookDetailsPresenter);
+begin
+  FPresenter := APresenter;
+end;
+
+end.

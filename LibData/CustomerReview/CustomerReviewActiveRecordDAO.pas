@@ -20,7 +20,7 @@ type
 implementation
 
 uses
-  CustomerReviewActiveRecord, CustomerReviewContextIntf;
+  CustomerReviewActiveRecord, CustomerReviewContextIntf, BookActiveRecord;
 
 { TCustomerReviewActiveRecordDAO }
 
@@ -37,6 +37,15 @@ end;
 
 procedure TCustomerReviewActiveRecordDAO.Insert(const CustomerReview: TCustomerReview);
 begin
+  var BookAR := TBookActiveRecord.Create;
+  try
+    if not BookAR.LoadByPK(CustomerReview.BookId) then
+      raise EMVCActiveRecordNotFound.Create(Classname + ': Book with ' +
+        'ID ' + CustomerReview.BookId.ToString + ' not found');
+  finally
+    BookAR.Free;
+  end;
+
   var CustomerReviewAR := TCustomerReviewActiveRecord.Create(CustomerReview);
   try
     CustomerReviewAR.Insert;

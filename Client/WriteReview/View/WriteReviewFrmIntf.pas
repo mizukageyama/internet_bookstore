@@ -3,25 +3,21 @@ unit WriteReviewFrmIntf;
 interface
 
 uses
-  Vcl.Forms, WriteReviewPresenterIntf;
+  WriteReviewPresenterIntf, Customer, Book;
 
 type
-  IWriteReviewForm = interface
+  IWriteReviewView= interface
     ['{CA877568-6A73-44DF-9B42-577E46E44AB7}']
-    procedure DisplayBookTitle(const BookTitle: string);
-    procedure DisplayCustomerGreeting(const CustomerName: string);
+    procedure SetPresenter(APresenter: IWriteReviewPresenter);
+    procedure DisplayCustomerGreeting(const Customer: TCustomer);
+    procedure DisplayBookTitle(const Book: TBook);
     function GetReviewText: string;
     function GetReviewRating: string;
-    procedure HideForm;
-    procedure ShowForm;
     procedure CloseForm;
-    function Self: TForm;
-    function GetParentForm: TForm;
+    procedure ShowMessageDialog(const Msg: string);
     procedure ShowReviewValidationMessage(const ValidationMessage: string);
-    procedure HideReviewValidationMessage;
     procedure ShowRatingValidationMessage(const ValidationMessage: string);
-    procedure HideRatingValidationMessage;
-    procedure SetPresenter(APresenter: IWriteReviewPresenter);
+    procedure HideValidationMessage;
   end;
 
 implementation

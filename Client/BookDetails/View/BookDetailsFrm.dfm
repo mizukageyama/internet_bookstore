@@ -1,8 +1,8 @@
-object BookDetailsForm: TBookDetailsForm
+object BookDetailsView: TBookDetailsView
   Left = 0
   Top = 0
   Caption = 'Book Details'
-  ClientHeight = 449
+  ClientHeight = 170
   ClientWidth = 504
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -32,7 +32,7 @@ object BookDetailsForm: TBookDetailsForm
     Left = 0
     Top = 61
     Width = 504
-    Height = 74
+    Height = 109
     Margins.Top = 10
     Align = alClient
     Caption = 'Synopsis'
@@ -55,13 +55,14 @@ object BookDetailsForm: TBookDetailsForm
     BevelOuter = bvNone
     Padding.Top = 10
     TabOrder = 0
+    ExplicitWidth = 498
     object lblTitle: TLabel
       Left = 0
       Top = 10
-      Width = 258
-      Height = 30
+      Width = 120
+      Height = 31
       Align = alLeft
-      Caption = 'ICONIX Internet Bookstore'
+      Caption = 'Book Details'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -22
@@ -69,9 +70,10 @@ object BookDetailsForm: TBookDetailsForm
       Font.Style = []
       ParentFont = False
       Layout = tlCenter
+      ExplicitHeight = 30
     end
     object btnWriteReview: TButton
-      Left = 376
+      Left = 370
       Top = 10
       Width = 134
       Height = 31
@@ -79,64 +81,7 @@ object BookDetailsForm: TBookDetailsForm
       Caption = 'Write Review'
       TabOrder = 0
       OnClick = btnWriteReviewClick
-      ExplicitLeft = 370
-    end
-  end
-  object pnlReviews: TPanel
-    Left = 0
-    Top = 135
-    Width = 504
-    Height = 314
-    Align = alBottom
-    TabOrder = 1
-    object lblBookReviews: TLabel
-      Left = 1
-      Top = 1
-      Width = 104
-      Height = 15
-      Align = alTop
-      Caption = 'Customer Reviews'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-      Layout = tlCenter
-    end
-    object dbgReviews: TDBGrid
-      Left = 1
-      Top = 16
-      Width = 508
-      Height = 297
-      Align = alClient
-      DataSource = BookstoreDataModule.dsCustomerReview
-      ReadOnly = True
-      TabOrder = 0
-      TitleFont.Charset = DEFAULT_CHARSET
-      TitleFont.Color = clWindowText
-      TitleFont.Height = -12
-      TitleFont.Name = 'Segoe UI'
-      TitleFont.Style = []
-      Columns = <
-        item
-          Expanded = False
-          FieldName = 'CustomerId'
-          Title.Caption = 'Customer'
-          Width = 92
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'Review'
-          Width = 306
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'Rating'
-          Visible = True
-        end>
+      ExplicitLeft = 364
     end
   end
 end

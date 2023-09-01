@@ -12,14 +12,14 @@ uses
 type
   TMainPresenter = class(TInterfacedObject, IMainPresenter)
   private
-    FMainView: IMainFrm;
+    FMainView: IMainView;
     FMainService: IBookService;
   protected
     procedure LoadBooks;
     procedure ShowBookDetails;
     procedure PopulateBookTable(const Books: TObjectList<TBook>);
   public
-    constructor Create(AMainView: IMainFrm; AMainService: IBookService);
+    constructor Create(AMainView: IMainView; AMainService: IBookService);
   end;
 
 implementation
@@ -30,7 +30,7 @@ uses
 
 { TMainPresenter }
 
-constructor TMainPresenter.Create(AMainView: IMainFrm;
+constructor TMainPresenter.Create(AMainView: IMainView;
   AMainService: IBookService);
 begin
   FMainView := AMainView;
@@ -72,41 +72,26 @@ end;
 procedure TMainPresenter.ShowBookDetails;
 var
   BookstoreDM: TBookstoreDataModule;
-  SelectedBookId: Integer;
   SelectedBook: TBook;
 
   CustomerReviewServiceProxy: ICustomerReviewService;
   BookDetailsPresenter: IBookDetailsPresenter;
-  BookDetailsForm: TForm;
+  BookDetailsView: TForm;
 begin
   BookstoreDM := BookstoreDataModule;
-  SelectedBookId := (BookstoreDM.fdmemBookId.Value);
 
-  try
-    SelectedBook := FMainService.GetBookById(SelectedBookId);
-  except
-    on E: TStatusCodeException do
-      begin
-        case E.StatusCode of
-          NotFound:
-            begin
-              ShowMessage('Book no longer exists');
-              LoadBooks;
-            end;
-        else
-          ShowMessage(E.ToString);
-        end;
-        Exit;
-      end;
-  end;
+  SelectedBook := TBook.Create(
+    BookstoreDM.fdmemBookId.Value,
+    BookstoreDM.fdMemBookTitle.Value,
+    BookstoreDM.fdmemBookSynopsis.Value);
 
-  BookDetailsForm := TBookDetailsForm.Create(nil);
+  BookDetailsView := TBookDetailsView.Create(nil);
   CustomerReviewServiceProxy := TCustomerReviewServiceProxy.Create;
   BookDetailsPresenter := TBookDetailsPresenter
-    .Create(BookDetailsForm as TBookDetailsForm, CustomerReviewServiceProxy,
+    .Create(BookDetailsView as TBookDetailsView, CustomerReviewServiceProxy,
     SelectedBook);
 
-  BookDetailsForm.Show;
+  BookDetailsView.Show;
 end;
 
 end.

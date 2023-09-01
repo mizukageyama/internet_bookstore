@@ -6,22 +6,18 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
   Vcl.StdCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls,
-  MainPresenterIntf, MainFrmIntf;
+  MainPresenterIntf, MainFrmIntf, BookstoreDM;
 
 type
-  TMainForm = class(TForm, IMainFrm)
+  TMainView = class(TForm, IMainView)
     lblTitle: TLabel;
     dbgBooks: TDBGrid;
     pnlWelcomeText: TPanel;
     lblWelcome: TLabel;
     procedure FormShow(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure dbgBooksDblClick(Sender: TObject);
-  protected
-    FPresenter: IMainPresenter;
-    procedure HideForm;
-    procedure ShowForm;
-    function Self: TForm;
+  private
+    FMainPresenter: IMainPresenter;
   public
     procedure SetPresenter(APresenter: IMainPresenter);
   end;
@@ -32,39 +28,19 @@ implementation
 
 { TMainForm }
 
-procedure TMainForm.SetPresenter(APresenter: IMainPresenter);
+procedure TMainView.FormShow(Sender: TObject);
 begin
-  FPresenter := APresenter;
+  FMainPresenter.LoadBooks;
 end;
 
-procedure TMainForm.ShowForm;
+procedure TMainView.SetPresenter(APresenter: IMainPresenter);
 begin
-  Self.Show;
+  FMainPresenter := APresenter;
 end;
 
-procedure TMainForm.dbgBooksDblClick(Sender: TObject);
+procedure TMainView.dbgBooksDblClick(Sender: TObject);
 begin
-  FPresenter.ShowBookDetails;
-end;
-
-procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  FPresenter := nil;
-end;
-
-procedure TMainForm.FormShow(Sender: TObject);
-begin
-  FPresenter.LoadBooks;
-end;
-
-procedure TMainForm.HideForm;
-begin
-  Self.Hide;
-end;
-
-function TMainForm.Self: TForm;
-begin
-  Result := Self;
+  FMainPresenter.ShowBookDetails;
 end;
 
 end.

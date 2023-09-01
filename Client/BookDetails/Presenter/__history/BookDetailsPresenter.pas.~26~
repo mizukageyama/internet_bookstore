@@ -1,0 +1,87 @@
+unit BookDetailsPresenter;
+
+interface
+
+uses
+  MainPresenterIntf, BookServiceIntf, MainFrmIntf, System.SysUtils,
+  Vcl.Dialogs, MVCFramework.DataSet.Utils, MVCFramework.Serializer.Commons,
+  BookstoreDM, Book, BookDetailsFrm, System.Variants, BookDetailsFrmIntf,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, CustomerReview,
+  CustomerReviewServiceIntf, BookDetailsPresenterIntf,
+  System.Generics.Collections;
+
+type
+  TBookDetailsPresenter = class(TInterfacedObject, IBookDetailsPresenter)
+  private
+    FBookDetailsView: IBookDetailsView;
+    FCustomerReviewServiceProxy: ICustomerReviewService;
+    FBook: TBook;
+  public
+    constructor Create(ABookDetailsView: IBookDetailsView;
+      ABookDetailsService: ICustomerReviewService; ABook: TBook);
+
+    procedure DisplayBookDetails;
+    procedure WriteReview;
+    procedure ShowWriteReviewForm;
+    procedure ShowLoginForm;
+  end;
+
+implementation
+
+{ TBookDetailsPresenter }
+
+uses
+  WriteReviewFrm, CustomerReviewServiceProxy, WriteReviewPresenter, LoginFrm,
+  LoginPresenter, CustomerSession;
+
+procedure TBookDetailsPresenter.DisplayBookDetails;
+begin
+  FBookDetailsView.SetBookDetails(FBook);
+end;
+
+constructor TBookDetailsPresenter.Create(ABookDetailsView: IBookDetailsView;
+  ABookDetailsService: ICustomerReviewService; ABook: TBook);
+begin
+  FBookDetailsView := ABookDetailsView;
+  FCustomerReviewServiceProxy := ABookDetailsService;
+  FBookDetailsView.SetPresenter(Self);
+  FBook := ABook;
+end;
+
+procedure TBookDetailsPresenter.WriteReview;
+begin
+  var CustomerSession := TCustomerSession.Instance;
+  if CustomerSession.IsLoggedIn then
+    ShowWriteReviewForm
+  else
+  begin
+    ShowLoginForm;
+  end;
+end;
+
+procedure TBookDetailsPresenter.ShowWriteReviewForm;
+begin
+  var CustomerReviewView := TWriteReviewView.Create(nil);
+  var CustomerReviewServiceProxy := TCustomerReviewServiceProxy.Create;
+  var WriteReviewPresenter := TWriteReviewPresenter
+    .Create(CustomerReviewView as TWriteReviewView,
+    CustomerReviewServiceProxy, FBook);
+
+  CustomerReviewView.Show;
+end;
+
+procedure TBookDetailsPresenter.ShowLoginForm;
+begin
+  var LoginForm := TLoginForm.Create(FBookDetailsView.Self);
+  var LoginPresenter := TLoginPresenter.Create(LoginForm as TLoginForm);
+
+  LoginPresenter.OnLoginSuccess := procedure
+  begin
+    ShowWriteReviewForm;
+  end;
+
+  LoginForm.Show;
+end;
+
+end.
+

@@ -105,25 +105,25 @@
         <DCCReference Include="BookDetails\Presenter\BookDetailsPresenter.pas"/>
         <DCCReference Include="BookDetails\Presenter\BookDetailsPresenterIntf.pas"/>
         <DCCReference Include="BookDetails\View\BookDetailsFrm.pas">
-            <Form>BookDetailsForm</Form>
+            <Form>BookDetailsView</Form>
         </DCCReference>
         <DCCReference Include="BookDetails\View\BookDetailsFrmIntf.pas"/>
         <DCCReference Include="Login\Presenter\LoginPresenter.pas"/>
         <DCCReference Include="Login\Presenter\LoginPresenterIntf.pas"/>
         <DCCReference Include="Login\View\LoginFrm.pas">
-            <Form>LoginForm</Form>
+            <Form>LoginView</Form>
         </DCCReference>
         <DCCReference Include="Login\View\LoginFrmIntf.pas"/>
         <DCCReference Include="Main\Presenter\MainPresenter.pas"/>
         <DCCReference Include="Main\Presenter\MainPresenterIntf.pas"/>
         <DCCReference Include="Main\View\MainFrm.pas">
-            <Form>MainForm</Form>
+            <Form>MainView</Form>
         </DCCReference>
         <DCCReference Include="Main\View\MainFrmIntf.pas"/>
         <DCCReference Include="WriteReview\Presenter\WriteReviewPresenter.pas"/>
         <DCCReference Include="WriteReview\Presenter\WriteReviewPresenterIntf.pas"/>
         <DCCReference Include="WriteReview\View\WriteReviewFrm.pas">
-            <Form>WriteReviewForm</Form>
+            <Form>WriteReviewView</Form>
         </DCCReference>
         <DCCReference Include="WriteReview\View\WriteReviewFrmIntf.pas"/>
         <DCCReference Include="CustomerSession.pas"/>

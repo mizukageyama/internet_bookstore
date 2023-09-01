@@ -9,7 +9,7 @@ uses
   MVCFramework.RESTClient, LoginFrmIntf, LoginPresenterIntf;
 
 type
-  TLoginForm = class(TForm, ILoginForm)
+  TLoginView = class(TForm, ILoginView)
     pnlEmail: TPanel;
     lblEmail: TLabel;
     edtEmail: TEdit;
@@ -20,15 +20,12 @@ type
     procedure btnLoginClick(Sender: TObject);
   private
     FPresenter: ILoginPresenter;
-  protected
-    function GetUsername: string;
-    function Getpassword: string;
-    procedure HideForm;
-    procedure ShowForm;
-    procedure CloseForm;
-    function Self: TForm;
   public
     procedure SetPresenter(APresenter: ILoginPresenter);
+    function GetUsername: string;
+    function Getpassword: string;
+    procedure ShowForm;
+    procedure CloseForm;
   end;
 
 implementation
@@ -37,42 +34,32 @@ implementation
 
 uses WriteReviewFrm;
 
-procedure TLoginForm.btnLoginClick(Sender: TObject);
+procedure TLoginView.btnLoginClick(Sender: TObject);
 begin
   FPresenter.Login;
 end;
 
-procedure TLoginForm.CloseForm;
+procedure TLoginView.CloseForm;
 begin
   Self.Close;
 end;
 
-function TLoginForm.Getpassword: string;
+function TLoginView.Getpassword: string;
 begin
   Result := edtPassword.Text;
 end;
 
-function TLoginForm.GetUsername: string;
+function TLoginView.GetUsername: string;
 begin
   Result := edtEmail.Text;
 end;
 
-procedure TLoginForm.HideForm;
-begin
-  Self.Hide;
-end;
-
-function TLoginForm.Self: TForm;
-begin
-  Result := Self;
-end;
-
-procedure TLoginForm.SetPresenter(APresenter: ILoginPresenter);
+procedure TLoginView.SetPresenter(APresenter: ILoginPresenter);
 begin
   FPresenter := APresenter;
 end;
 
-procedure TLoginForm.ShowForm;
+procedure TLoginView.ShowForm;
 begin
   Self.Show;
 end;

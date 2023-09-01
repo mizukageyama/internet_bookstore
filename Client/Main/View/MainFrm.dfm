@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object MainView: TMainView
   Left = 0
   Top = 0
   Caption = 'Internet Bookstore'
@@ -11,7 +11,6 @@ object MainForm: TMainForm
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poDesktopCenter
-  OnClose = FormClose
   OnShow = FormShow
   TextHeight = 15
   object lblTitle: TLabel
@@ -61,7 +60,7 @@ object MainForm: TMainForm
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitWidth = 605
+    ExplicitWidth = 603
     object lblWelcome: TLabel
       Left = 0
       Top = 0

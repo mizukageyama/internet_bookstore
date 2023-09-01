@@ -6,13 +6,10 @@ uses
   BookDetailsPresenterIntf, Vcl.Forms, Book;
 
 type
-  IBookDetailsForm = interface
+  IBookDetailsView = interface
     ['{17668FD4-DB3A-46D6-B72A-68D0E7792EC9}']
     procedure SetPresenter(APresenter: IBookDetailsPresenter);
-    procedure LoadCustomerReviews;
     procedure SetBookDetails(const Book: TBook);
-    function Self: TForm;
-    function GetParentForm: TForm;
   end;
 
 implementation

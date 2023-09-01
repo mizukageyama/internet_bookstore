@@ -3,7 +3,6 @@ program InternetBookstore;
 uses
   Vcl.Forms,
   BookServiceIntf,
-  BookstoreDM in 'BookstoreDM.pas' {BookstoreDataModule: TDataModule},
   BookDetailsPresenter in 'BookDetails\Presenter\BookDetailsPresenter.pas',
   BookDetailsPresenterIntf in 'BookDetails\Presenter\BookDetailsPresenterIntf.pas',
   BookDetailsFrm in 'BookDetails\View\BookDetailsFrm.pas' {BookDetailsView},
@@ -37,7 +36,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
 
-  Application.CreateForm(TBookstoreDataModule, BookstoreDataModule);
   Application.CreateForm(TMainView, MainView);
   BookServiceProxy := TBookServiceProxy.Create;
   MainPresenter := TMainPresenter.Create(MainView as TMainView,

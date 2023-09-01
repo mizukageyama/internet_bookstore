@@ -37,6 +37,11 @@
     <Transaction>2023/08/28 22:45:02.000.467,C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore\UnitTest\BookServiceStub.pas=</Transaction>
     <Transaction>2023/08/28 22:47:55.000.703,C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore\UnitTest\CustomerReviewServiceStub.pas=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore\UnitTest\CustomerReviewActiveRecordServiceStub.pas</Transaction>
     <Transaction>2023/08/28 23:05:55.000.215,C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore\UnitTest\CustomerReviewActiveRecordServiceStub.pas=C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore\UnitTest\CustomerReviewARDaoStub.pas</Transaction>
+    <Transaction>2023/09/01 12:17:48.000.191,=C:\Users\User\Documents\GitHub\internet_bookstore\UnitTest\Unit1.pas</Transaction>
+    <Transaction>2023/09/01 12:17:59.000.379,C:\Users\User\Documents\GitHub\internet_bookstore\UnitTest\Unit1.pas=C:\Users\User\Documents\GitHub\internet_bookstore\UnitTest\MainPresenterTest.pas</Transaction>
+    <Transaction>2023/09/01 12:19:50.000.833,C:\Users\User\Documents\GitHub\internet_bookstore\UnitTest\MainPresenterTest.pas=</Transaction>
+    <Transaction>2023/09/01 12:20:33.000.584,=C:\Users\User\Documents\GitHub\internet_bookstore\UnitTest\Unit1.pas</Transaction>
+    <Transaction>2023/09/01 12:20:46.000.728,C:\Users\User\Documents\GitHub\internet_bookstore\UnitTest\Unit1.pas=C:\Users\User\Documents\GitHub\internet_bookstore\UnitTest\WriteReviewPresenterTest.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="BookActiveRecordDaoStub.pas"/>
@@ -46,5 +51,6 @@
     <File Path="CustomerReviewServiceTest.pas"/>
     <File Path="MockBookTableDatabase.pas"/>
     <File Path="MockCustomerReviewTableDatabase.pas"/>
+    <File Path="WriteReviewPresenterTest.pas"/>
   </ProjectSortOrder>
 </BorlandProject>

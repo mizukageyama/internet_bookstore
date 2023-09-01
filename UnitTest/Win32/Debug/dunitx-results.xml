@@ -1,45 +1,56 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<test-results name="C:\Users\Emmy-chwaan\Documents\GitHub\internet_bookstore\UnitTest\Win32\Debug\InternetBookstoreTest.exe" total="17" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2023-08-28" time="4.958">
+<test-results name="C:\Users\User\Documents\GitHub\internet_bookstore\UnitTest\Win32\Debug\InternetBookstoreTest.exe" total="20" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2023-09-01" time="0.341">
   <culture-info current-culture="en" current-uiculture="en" />
-  <test-suite type="Assembly" name="InternetBookstoreTest.exe" executed="true" result="Success" success="True" time="4.958" asserts="0">
+  <test-suite type="Assembly" name="InternetBookstoreTest.exe" executed="true" result="Success" success="True" time="0.341" asserts="0">
     <results>
-        <test-suite type="Namespace" name="BookServiceTest" executed="true" result="Success" success="True" time="4.958" asserts="0" >
+        <test-suite type="Namespace" name="WriteReviewPresenterTest" executed="true" result="Success" success="True" time="0.341" asserts="0" >
           <results>
-              <test-suite type="Fixture" name="TBookServiceTest" executed="True" result="Success" success="True" time="4.958" >
+              <test-suite type="Fixture" name="TWriteReviewPresenterTest" executed="True" result="Success" success="True" time="0.341" >
                 <results>
-                  <test-case name="TestAddBook" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="TestGetAllBooks" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="Test1" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="Test2.TestA" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="Test2.TestB" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                </results>
+              </test-suite>
+          </results>
+        </test-suite>
+        <test-suite type="Namespace" name="CustomerReviewServiceTest" executed="true" result="Success" success="True" time="0.279" asserts="0" >
+          <results>
+              <test-suite type="Fixture" name="TCustomerReviewServiceTest" executed="True" result="Success" success="True" time="0.279" >
+                <results>
+                  <test-case name="Test_CreateCustomerReview_NewCustomerReview_Inserted" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="Test_CreateCustomerReview_RatingInRange_PassValidation.Test_Rating_In_Range" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="Test_CreateCustomerReview_RatingNotInRange_FailValidation.Test_Zero_Rating" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="Test_CreateCustomerReview_RatingNotInRange_FailValidation.Test_Negative_Rating" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="Test_CreateCustomerReview_IsTooShort_FailValidation.Test_Empty_Review" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="Test_CreateCustomerReview_IsTooShort_FailValidation.Test_Review_4_Characters_Only" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                </results>
+              </test-suite>
+          </results>
+        </test-suite>
+        <test-suite type="Namespace" name="BookActiveRecordDaoTest" executed="true" result="Success" success="True" time="0.153" asserts="0" >
+          <results>
+              <test-suite type="Fixture" name="TBookDAOUnitTests" executed="True" result="Success" success="True" time="0.153" >
+                <results>
+                  <test-case name="Test_Insert_NewBook_Success" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="Test_Select_Books_NotNull" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="Test_SelectWhereId_BookWithId_NotNull" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="Test_Update_NewBookDetails_EqualToNewDetails" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="Test_Delete_BookId_NotInDatabase" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                </results>
+              </test-suite>
+          </results>
+        </test-suite>
+        <test-suite type="Namespace" name="BookServiceTest" executed="true" result="Success" success="True" time="0.092" asserts="0" >
+          <results>
+              <test-suite type="Fixture" name="TBookServiceTest" executed="True" result="Success" success="True" time="0.092" >
+                <results>
+                  <test-case name="Test_CreateBook_NewBook_Inserted" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="Test_GetBooks_BookList_NotNull" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                   <test-case name="TestGetBookById" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="TestUpdateBook" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="TestDeleteBook" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="CreateBook_InputValidation_IsSuccess.TestFieldsNotEmpty" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                </results>
-              </test-suite>
-          </results>
-        </test-suite>
-        <test-suite type="Namespace" name="BookActiveRecordDaoTest" executed="true" result="Success" success="True" time="4.882" asserts="0" >
-          <results>
-              <test-suite type="Fixture" name="TBookDAOUnitTests" executed="True" result="Success" success="True" time="4.882" >
-                <results>
-                  <test-case name="TestInsertSuccess" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="TestSelectSuccess" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="TestSelectWhereIdSuccess" executed="True" result="Success" success="True" time="0.001" asserts="0" />
-                  <test-case name="TestUpdateSuccess" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="TestDeleteSuccess" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                </results>
-              </test-suite>
-          </results>
-        </test-suite>
-        <test-suite type="Namespace" name="CustomerReviewServiceTest" executed="true" result="Success" success="True" time="4.815" asserts="0" >
-          <results>
-              <test-suite type="Fixture" name="TCustomerReviewServiceTest" executed="True" result="Success" success="True" time="4.815" >
-                <results>
-                  <test-case name="TestInsert" executed="True" result="Success" success="True" time="4.761" asserts="0" />
-                  <test-case name="CreateCustomerReview_RatingInRange_PassValidation.RatingInRange" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="CreateCustomerReview_RatingNotInRange_FailValidation.ZeroRating" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="CreateCustomerReview_RatingNotInRange_FailValidation.NegativeRating" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="CreateCustomerReview_IsTooShort_FailValidation.EmptyReview" executed="True" result="Success" success="True" time="0.000" asserts="0" />
-                  <test-case name="CreateCustomerReview_IsTooShort_FailValidation.Review4CharactersOnly" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="Test_UpdateBook_NewBookDetails_EqualToNewDetails" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="Test_DeleteBook_BookId_NotInDatabase" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestInputValidation.Test_Fields_Not_Empty" executed="True" result="Success" success="True" time="0.000" asserts="0" />
                 </results>
               </test-suite>
           </results>

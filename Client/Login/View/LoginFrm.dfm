@@ -3,8 +3,8 @@ object LoginView: TLoginView
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Login'
-  ClientHeight = 110
-  ClientWidth = 280
+  ClientHeight = 101
+  ClientWidth = 274
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,14 +16,13 @@ object LoginView: TLoginView
   object pnlEmail: TPanel
     Left = 0
     Top = 0
-    Width = 280
+    Width = 274
     Height = 41
     Align = alTop
     BevelOuter = bvNone
     Padding.Top = 7
     Padding.Bottom = 7
     TabOrder = 0
-    ExplicitWidth = 274
     object lblEmail: TLabel
       Left = 0
       Top = 7
@@ -56,14 +55,13 @@ object LoginView: TLoginView
   object pnlPassword: TPanel
     Left = 0
     Top = 41
-    Width = 280
+    Width = 274
     Height = 40
     Align = alTop
     BevelOuter = bvNone
     Padding.Top = 7
     Padding.Bottom = 7
     TabOrder = 1
-    ExplicitWidth = 274
     object lblPassword: TLabel
       Left = 0
       Top = 7
@@ -94,10 +92,10 @@ object LoginView: TLoginView
     end
   end
   object btnLogin: TButton
-    Left = 141
+    Left = 135
     Top = 81
     Width = 139
-    Height = 29
+    Height = 20
     Align = alRight
     Caption = 'Login'
     Font.Charset = DEFAULT_CHARSET
@@ -108,7 +106,5 @@ object LoginView: TLoginView
     ParentFont = False
     TabOrder = 2
     OnClick = btnLoginClick
-    ExplicitLeft = 135
-    ExplicitHeight = 20
   end
 end

@@ -6,9 +6,9 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
   Vcl.StdCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls,
-  MainPresenterIntf, MainFrmIntf, BookstoreDM, Data.Bind.EngExt,
-  Vcl.Bind.DBEngExt, Vcl.Bind.Grid, System.Rtti, System.Bindings.Outputs,
-  Vcl.Bind.Editors, Data.Bind.Components, Data.Bind.Grid, Data.Bind.ObjectScope,
+  MainPresenterIntf, MainFrmIntf, Data.Bind.EngExt, Vcl.Bind.DBEngExt,
+  Vcl.Bind.Grid, System.Rtti, System.Bindings.Outputs, Vcl.Bind.Editors,
+  Data.Bind.Components, Data.Bind.Grid, Data.Bind.ObjectScope,
   Data.Bind.GenData, Book;
 
 type
@@ -25,7 +25,6 @@ type
   private
     FMainPresenter: IMainPresenter;
   public
-    function Self: TForm;
     procedure SetPresenter(APresenter: IMainPresenter);
     procedure SetBindSourceAdapter(const BindSourceAdapter: TBindSourceAdapter);
     procedure ShowMessageDialog(const Msg: string);
@@ -52,12 +51,8 @@ begin
   Result := SelectedRow;
 end;
 
-function TMainView.Self: TForm;
-begin
-  Result := Self;
-end;
-
-procedure TMainView.SetBindSourceAdapter(const BindSourceAdapter: TBindSourceAdapter);
+procedure TMainView.SetBindSourceAdapter(
+  const BindSourceAdapter: TBindSourceAdapter);
 begin
   AdapterBindSource1.Adapter := BindSourceAdapter;
   AdapterBindSource1.Active := True;

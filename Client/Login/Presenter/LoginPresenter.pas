@@ -3,9 +3,8 @@ unit LoginPresenter;
 interface
 
 uses
-  LoginPresenterIntf, LoginFrmIntf, System.SysUtils, Vcl.Dialogs,
-  MVCFramework.RESTClient.Intf, MVCFramework.RESTClient,
-  MVCFramework.DataSet.Utils;
+  LoginPresenterIntf, LoginFrmIntf, System.SysUtils,
+  MVCFramework.RESTClient.Intf, MVCFramework.RESTClient;
 
 type
   TLoginPresenter = class(TInterfacedObject, ILoginPResenter)
@@ -28,7 +27,8 @@ type
 implementation
 
 uses
-  JSON, CustomerSession, MVCFramework.JWT, SYSCONST, StatusCodeException;
+  JSON, CustomerSession, MVCFramework.JWT, SYSCONST, StatusCodeException,
+  ResponseStatusMapper;
 
 { TLoginPresenter }
 
@@ -54,8 +54,10 @@ begin
       FRESTClient.SetBasicAuthorization(Username, Password);
       Response := FRESTClient.POST(ENDPOINT + '/login');
 
-      if Response.StatusCode <> 200 then
-        raise Exception.Create('Please check your credentials');
+      var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
+      if ResponseStatus <> OK then
+        raise TStatusCodeException.Create(ResponseStatus,
+          'Please check your credentials');
 
       UpdateCustomerSession(Response.Content);
       FLoginView.CloseForm;
@@ -71,7 +73,7 @@ begin
               FLoginView.ShowMessageDialog('Invalid password');
             end
         else
-          ShowMessage(E.ToString);
+          FLoginView.ShowMessageDialog(E.ToString);
         end;
        end;
     end;

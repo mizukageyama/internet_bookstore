@@ -3,7 +3,7 @@ unit BookDetailsFrmIntf;
 interface
 
 uses
-  BookDetailsPresenterIntf, Vcl.Forms, Book;
+  BookDetailsPresenterIntf, Book;
 
 type
   IBookDetailsView = interface

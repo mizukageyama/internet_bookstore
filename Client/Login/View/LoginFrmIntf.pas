@@ -3,7 +3,7 @@ unit LoginFrmIntf;
 interface
 
 uses
-  Vcl.Forms, LoginPresenterIntf;
+  LoginPresenterIntf;
 
 type
   ILoginView = interface

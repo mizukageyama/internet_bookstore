@@ -5,8 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.ExtCtrls, Vcl.StdCtrls, System.JSON, MVCFramework.RESTClient.Intf,
-  MVCFramework.RESTClient, LoginFrmIntf, LoginPresenterIntf;
+  Vcl.ExtCtrls, Vcl.StdCtrls, LoginFrmIntf, LoginPresenterIntf;
 
 type
   TLoginView = class(TForm, ILoginView)
@@ -20,7 +19,6 @@ type
     procedure btnLoginClick(Sender: TObject);
   private
     FPresenter: ILoginPresenter;
-    procedure ShowForm;
   public
     procedure SetPresenter(APresenter: ILoginPresenter);
     function GetUsername: string;
@@ -58,11 +56,6 @@ end;
 procedure TLoginView.SetPresenter(APresenter: ILoginPresenter);
 begin
   FPresenter := APresenter;
-end;
-
-procedure TLoginView.ShowForm;
-begin
-  Self.Show;
 end;
 
 procedure TLoginView.ShowMessageDialog(const Msg: string);

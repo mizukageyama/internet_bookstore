@@ -10,16 +10,16 @@ type
   private
     FStatusCode: TStatusCode;
   public
-    constructor Create(AStatusCode: TStatusCode; const Msg: string);
+    constructor Create(AStatusCode: TStatusCode; const AMsg: string);
     property StatusCode: TStatusCode read FStatusCode;
   end;
 
 implementation
 
 constructor TStatusCodeException.Create(AStatusCode: TStatusCode;
-  const Msg: string);
+  const AMsg: string);
 begin
-  inherited Create(Msg);
+  inherited Create(AMsg);
   FStatusCode := AStatusCode;
 end;
 

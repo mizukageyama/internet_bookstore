@@ -55,6 +55,7 @@ end;
 
 procedure TBookDetailsPresenter.ShowWriteReviewView;
 begin
+  //Factory Method for form creations (for testing)
   var WriteReviewView := TWriteReviewView.Create(
     FBookDetailsView as TBookDetailsView);
   var CustomerReviewServiceProxy := TCustomerReviewServiceProxy.Create;

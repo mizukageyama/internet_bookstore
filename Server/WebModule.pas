@@ -67,7 +67,7 @@ begin
         IntToStr(TMVCConstants.DEFAULT_MAX_REQUEST_SIZE);
     end);
 
-
+    //BaseController - Data
     FMVC.AddMiddleware(TMVCActiveRecordMiddleware
       .Create('Internet_Bookstore_Connection','FDConnectionDefs.ini'));
 

@@ -44,9 +44,6 @@ type
 
 implementation
 
-uses
-  PaginationHandler, BookActiveRecord;
-
 { TBookController }
 
 constructor TBookController.Create(const AService: IBookService);

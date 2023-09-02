@@ -5,7 +5,7 @@ interface
 uses
   MVCFramework.ActiveRecord, MVCFramework, MVCFramework.Serializer.Commons,
   MVCFramework.SQLGenerators.MySQL, CustomerReviewContextIntf,
-  ActiveRecordEntity, CustomerReview, MVCFramework.Nullables;
+  CustomerReview, MVCFramework.Nullables;
 
 type
   [MVCNameCase(ncCamelCase)]

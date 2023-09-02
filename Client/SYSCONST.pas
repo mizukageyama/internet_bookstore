@@ -1,4 +1,4 @@
-unit SYSCONST;
+unit SYSCONST; //change to pascal case
 
 interface
 
@@ -11,8 +11,6 @@ type
     Unauthorized,
     BadRequest
   );
-
-  var StatusCode: TStatusCode;
 
 implementation
 

@@ -13,7 +13,7 @@ object MainView: TMainView
   Position = poScreenCenter
   OnShow = FormShow
   TextHeight = 15
-  object lblTitle: TLabel
+  object TitleLabel: TLabel
     Left = 0
     Top = 0
     Width = 609
@@ -29,7 +29,7 @@ object MainView: TMainView
     Layout = tlCenter
     ExplicitWidth = 258
   end
-  object pnlWelcomeText: TPanel
+  object WelcomeTextPanel: TPanel
     Left = 0
     Top = 30
     Width = 609
@@ -54,7 +54,7 @@ object MainView: TMainView
       ExplicitWidth = 412
     end
   end
-  object StringGrid1: TStringGrid
+  object BookListGrid: TStringGrid
     Tag = 1
     Left = 0
     Top = 89
@@ -66,7 +66,7 @@ object MainView: TMainView
     RowCount = 2
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goFixedRowDefAlign]
     TabOrder = 1
-    OnDblClick = StringGrid1DblClick
+    OnDblClick = BookListGridDblClick
     ExplicitWidth = 603
     ExplicitHeight = 311
     ColWidths = (
@@ -74,7 +74,7 @@ object MainView: TMainView
     ColAligments = (
       0)
   end
-  object AdapterBindSource1: TAdapterBindSource
+  object BookAdapterBindSource: TAdapterBindSource
     AutoActivate = False
     ScopeMappings = <
       item
@@ -84,15 +84,15 @@ object MainView: TMainView
     Left = 536
     Top = 30
   end
-  object BindingsList1: TBindingsList
+  object BookBindingsList: TBindingsList
     Methods = <>
     OutputConverters = <>
     Left = 428
     Top = 29
     object LinkGridToDataSourceAdapterBindSource1: TLinkGridToDataSource
       Category = 'Quick Bindings'
-      DataSource = AdapterBindSource1
-      GridControl = StringGrid1
+      DataSource = BookAdapterBindSource
+      GridControl = BookListGrid
       Columns = <
         item
           MemberName = 'Title'

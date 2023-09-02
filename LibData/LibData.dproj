@@ -90,6 +90,7 @@
         <DCCReference Include="SwagDoc.dcp"/>
         <DCCReference Include="loggerproRT.dcp"/>
         <DCCReference Include="dmvcframeworkRT.dcp"/>
+        <DCCReference Include="LibDomain.dcp"/>
         <DCCReference Include="Book\BookActiveRecordDAO.pas"/>
         <DCCReference Include="Customer\CustomerActiveRecordDAO.pas"/>
         <DCCReference Include="Customer\CustomerActiveRecord.pas"/>

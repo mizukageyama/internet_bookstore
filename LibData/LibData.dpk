@@ -39,7 +39,8 @@ requires
   FireDACCommon,
   SwagDoc,
   loggerproRT,
-  dmvcframeworkRT;
+  dmvcframeworkRT,
+  LibDomain;
 
 contains
   BookActiveRecordDAO in 'Book\BookActiveRecordDAO.pas',
@@ -50,4 +51,5 @@ contains
   BookActiveRecord in 'Book\BookActiveRecord.pas';
 
 end.
+
 

@@ -3,7 +3,7 @@ unit MainFrmIntf;
 interface
 
 uses
-  MainPresenterIntf, Book, Data.Bind.ObjectScope;
+  MainPresenterIntf, Data.Bind.ObjectScope;
 
 type
   IMainView = interface
@@ -11,7 +11,7 @@ type
     procedure SetPresenter(APresenter: IMainPresenter);
     procedure ShowMessageDialog(const Msg: string);
     procedure SetBindSourceAdapter(const BindSourceAdapter: TBindSourceAdapter);
-    function GetSelectedBook: TBook;
+    function GetSelectedBook: TObject;
   end;
 implementation
 

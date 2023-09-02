@@ -4,7 +4,7 @@ interface
 
 uses
   MVCFramework.ActiveRecord, MVCFramework, MVCFramework.Serializer.Commons,
-  MVCFramework.SQLGenerators.MySQL, BookContextIntf, ActiveRecordEntity, Book,
+  MVCFramework.SQLGenerators.MySQL, BookContextIntf, Book,
   MVCFramework.Nullables;
 
 type

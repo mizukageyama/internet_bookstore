@@ -9,26 +9,26 @@ uses
   MainPresenterIntf, MainFrmIntf, Data.Bind.EngExt, Vcl.Bind.DBEngExt,
   Vcl.Bind.Grid, System.Rtti, System.Bindings.Outputs, Vcl.Bind.Editors,
   Data.Bind.Components, Data.Bind.Grid, Data.Bind.ObjectScope,
-  Data.Bind.GenData, Book;
+  Data.Bind.GenData;
 
 type
   TMainView = class(TForm, IMainView)
-    lblTitle: TLabel;
-    pnlWelcomeText: TPanel;
+    TitleLabel: TLabel;
+    WelcomeTextPanel: TPanel;
     lblWelcome: TLabel;
-    StringGrid1: TStringGrid;
-    AdapterBindSource1: TAdapterBindSource;
-    BindingsList1: TBindingsList;
+    BookListGrid: TStringGrid;
+    BookAdapterBindSource: TAdapterBindSource;
+    BookBindingsList: TBindingsList;
     LinkGridToDataSourceAdapterBindSource1: TLinkGridToDataSource;
     procedure FormShow(Sender: TObject);
-    procedure StringGrid1DblClick(Sender: TObject);
+    procedure BookListGridDblClick(Sender: TObject);
   private
     FMainPresenter: IMainPresenter;
   public
     procedure SetPresenter(APresenter: IMainPresenter);
     procedure SetBindSourceAdapter(const BindSourceAdapter: TBindSourceAdapter);
     procedure ShowMessageDialog(const Msg: string);
-    function GetSelectedBook: TBook;
+    function GetSelectedBook: TObject;
   end;
 
 implementation
@@ -45,9 +45,9 @@ begin
   FMainPresenter.LoadBooks;
 end;
 
-function TMainView.GetSelectedBook: TBook;
+function TMainView.GetSelectedBook: TObject;
 begin
-  var SelectedRow := AdapterBindSource1.Adapter.Current as TBook;
+  var SelectedRow := AdapterBindSource1.Adapter.Current;
   Result := SelectedRow;
 end;
 
@@ -68,7 +68,7 @@ begin
   ShowMessage(Msg);
 end;
 
-procedure TMainView.StringGrid1DblClick(Sender: TObject);
+procedure TMainView.BookListGridDblClick(Sender: TObject);
 begin
   if StringGrid1.RowCount = 0 then
     Exit;

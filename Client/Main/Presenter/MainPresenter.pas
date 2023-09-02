@@ -58,12 +58,11 @@ end;
 procedure TMainPresenter.ShowBookDetails;
 var
   SelectedBook: TBook;
-
-  CustomerReviewServiceProxy: ICustomerReviewService;
   BookDetailsPresenter: IBookDetailsPresenter;
   BookDetailsView: TBookDetailsView;
 begin
-  SelectedBook := FMainView.GetSelectedBook;
+  //factory method
+  SelectedBook := FMainView.GetSelectedBook as TBook;
   BookDetailsView := TBookDetailsView.Create(FMainView as TMainView);
   BookDetailsPresenter := TBookDetailsPresenter
     .Create(BookDetailsView as TBookDetailsView, SelectedBook);

@@ -20,6 +20,9 @@ type
     procedure SubmitReview;
     procedure ValidateInput(out CustomerReview: TCustomerReview;
       out IsSuccess: Boolean);
+
+    //private self-called methods
+    //protected from inheritance
   end;
 
 implementation
@@ -68,19 +71,22 @@ begin
     FWriteReviewView.ShowMessageDialog('Review is sent to admin for approval');
     FWriteReviewView.CloseForm;
   except
-   on E: TStatusCodeException do
-   begin
-    case E.StatusCode of
-      UnAuthorized:
-        begin
-          CustomerSession.SetDefaultValue;
-          FWriteReviewView.ShowMessageDialog('Session expired. Please login');
-          FWriteReviewView.CloseForm;
-        end;
-      NotFound: FWriteReviewView.ShowMessageDialog('Book no longer exists');
-    else
-      FWriteReviewView.ShowMessageDialog(E.ToString);
-    end;
+    on E: TStatusCodeException do
+    //on E: EUnAuthorizedException do
+    //on E: ENotFoundException do
+    //else
+    begin
+      case E.StatusCode of
+        UnAuthorized:
+          begin
+            CustomerSession.SetDefaultValue;
+            FWriteReviewView.ShowMessageDialog('Session expired. Please login');
+            FWriteReviewView.CloseForm;
+          end;
+        NotFound: FWriteReviewView.ShowMessageDialog('Book no longer exists');
+      else
+        FWriteReviewView.ShowMessageDialog(E.ToString);
+      end;
    end;
   end;
 end;

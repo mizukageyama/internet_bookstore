@@ -35,8 +35,6 @@ uses
 
 procedure TBookDetailsPresenterTest.Setup;
 begin
-//  FMockBookDetailsView: IBookDetailsView;
-//  FMockCustomerReviewService: ICustomerReviewService;
   var Book := TBook.Create(1, 'Harry Potter', 'Once upon a time, there was..');
   FBookDetailsPresenter := TBookDetailsPresenter.Create(FMockBookDetailsView,
     FMockCustomerReviewService, Book);

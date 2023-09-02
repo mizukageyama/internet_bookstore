@@ -3,7 +3,7 @@ unit BookDetailsPresenter;
 interface
 
 uses
-  MainPresenterIntf, BookServiceIntf, MainFrmIntf, Book, BookDetailsFrm,
+  MainPresenterIntf, BookServiceIntf, MainFrmIntf, Book,
   CustomerReviewServiceIntf, BookDetailsFrmIntf, CustomerReview,
   BookDetailsPresenterIntf;
 
@@ -11,11 +11,9 @@ type
   TBookDetailsPresenter = class(TInterfacedObject, IBookDetailsPresenter)
   private
     FBookDetailsView: IBookDetailsView;
-    FCustomerReviewServiceProxy: ICustomerReviewService;
     FBook: TBook;
   public
-    constructor Create(ABookDetailsView: IBookDetailsView;
-      ABookDetailsService: ICustomerReviewService; ABook: TBook);
+    constructor Create(ABookDetailsView: IBookDetailsView; ABook: TBook);
 
     procedure DisplayBookDetails;
     procedure WriteReview;
@@ -29,7 +27,7 @@ implementation
 
 uses
   WriteReviewFrm, CustomerReviewServiceProxy, WriteReviewPresenter, LoginFrm,
-  LoginPresenter, CustomerSession;
+  LoginPresenter, CustomerSession, BookDetailsFrm;
 
 procedure TBookDetailsPresenter.DisplayBookDetails;
 begin
@@ -37,10 +35,9 @@ begin
 end;
 
 constructor TBookDetailsPresenter.Create(ABookDetailsView: IBookDetailsView;
-  ABookDetailsService: ICustomerReviewService; ABook: TBook);
+  ABook: TBook);
 begin
   FBookDetailsView := ABookDetailsView;
-  FCustomerReviewServiceProxy := ABookDetailsService;
   FBookDetailsView.SetPresenter(Self);
   FBook := ABook;
 end;

@@ -30,13 +30,16 @@ type
 
 implementation
 
+uses
+  BookDetailsPresenter, CustomerReviewServiceProxy;
+
 procedure TBookDetailsPresenterTest.Setup;
 begin
 //  FMockBookDetailsView: IBookDetailsView;
-//  FMockCustomerReviewService: ICustomerReviewService;
+  FMockCustomerReviewService := TCustomerReviewServiceProxy.Create;
   var Book := TBook.Create(1, 'Harry Potter', 'Once upon a time, there was..');
-//  FBookDetailsPresenter := TBookDetailsPresenter.Create(FMockBookDetailsView,
-//    FMockCustomerReviewService, Book);
+  FBookDetailsPresenter := TBookDetailsPresenter.Create(FMockBookDetailsView,
+    FMockCustomerReviewService, Book);
 end;
 
 procedure TBookDetailsPresenterTest.TearDown;

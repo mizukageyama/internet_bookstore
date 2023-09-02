@@ -91,22 +91,23 @@ function TBookServiceProxy.GetBooks: TObjectList<TBook>;
 var
   Response: IMVCRESTResponse;
 begin
+  var BookList := TObjectList<TBook>.Create;
+
   Response := FRESTClient.GET(ENDPOINT);
   FRESTClient.ClearQueryParams;
 
   var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
-  if ResponseStatus <> OK then
-    raise TStatusCodeException.Create(ResponseStatus, 'Something went wrong');
-
-  var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
-  var BookArray := JSONValue.GetValue<TJSONArray>('data');
-  var BookList := TObjectList<TBook>.Create;
-
-  for var I := 0 to BookArray.Count - 1 do
+  if ResponseStatus = OK then
   begin
-    var BookJSON := BookArray.Items[I].ToString;
-    var Book := TJSON.JsonToObject<TBook>(BookJSON);
-    BookList.Add(Book);
+    var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
+    var BookArray := JSONValue.GetValue<TJSONArray>('data');
+
+    for var I := 0 to BookArray.Count - 1 do
+    begin
+      var BookJSON := BookArray.Items[I].ToString;
+      var Book := TJSON.JsonToObject<TBook>(BookJSON);
+      BookList.Add(Book);
+    end;
   end;
 
   Result := BookList;

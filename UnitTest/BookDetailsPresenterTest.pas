@@ -31,15 +31,13 @@ type
 implementation
 
 uses
-  BookDetailsPresenter, CustomerReviewServiceProxy;
+  MockBookDetailsPresenter, Vcl.Forms;
 
 procedure TBookDetailsPresenterTest.Setup;
 begin
-//  FMockBookDetailsView: IBookDetailsView;
-  FMockCustomerReviewService := TCustomerReviewServiceProxy.Create;
   var Book := TBook.Create(1, 'Harry Potter', 'Once upon a time, there was..');
-  FBookDetailsPresenter := TBookDetailsPresenter.Create(FMockBookDetailsView,
-    FMockCustomerReviewService, Book);
+  FBookDetailsPresenter := TMockBookDetailsPresenter.Create(
+    FMockBookDetailsView, Book);
 end;
 
 procedure TBookDetailsPresenterTest.TearDown;
@@ -61,8 +59,8 @@ end;
 
 procedure TBookDetailsPresenterTest.TestShowWriteReviewView;
 begin
-//  var WriteReviewView := TWriteReviewView.Create(nil);
-//  FBookDetailsPresenter.ShowWriteReviewView;
+  var WriteReviewView: IWriteReviewView;
+  FBookDetailsPresenter.ShowWriteReviewView;
 
 //  Assert.IsNotNull(WriteReviewView, 'WriteReviewView should not be nil.');
 end;

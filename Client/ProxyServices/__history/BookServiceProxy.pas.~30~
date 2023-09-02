@@ -26,7 +26,8 @@ type
 implementation
 
 uses
-  REST.JSON, JSON, CustomerSession;
+  REST.JSON, JSON, CustomerSession, ResponseStatusMapper, SYSCONST,
+  StatusCodeException;
 
 { TBookServiceProxy }
 
@@ -46,12 +47,13 @@ var
   CustomerSession: TCustomerSession;
 begin
   CustomerSession := TCustomerSession.Instance;
-  FRESTClient.SetBearerAuthorization(CustomerSession.GetToken);
+  FRESTClient.SetBearerAuthorization(CustomerSession.GetJWTToken);
   FRESTClient.AddBody(Book.ToJSONBody, 'application/json');
   Response := FRESTClient.POST(ENDPOINT);
 
-  if Response.StatusCode <> 201 then
-    raise Exception.Create('Unable to create book');
+  var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
+  if ResponseStatus <> OK then
+    raise TStatusCodeException.Create(ResponseStatus, 'Unable to create book');
 end;
 
 procedure TBookServiceProxy.DeleteBook(const BookId: Integer);
@@ -60,11 +62,12 @@ var
   CustomerSession: TCustomerSession;
 begin
   CustomerSession := TCustomerSession.Instance;
-  FRESTClient.SetBearerAuthorization(CustomerSession.GetToken);
+  FRESTClient.SetBearerAuthorization(CustomerSession.GetJWTToken);
   Response := FRESTClient.DELETE(ENDPOINT + '/'+ BookId.toString);
 
-  if Response.StatusCode <> 204 then
-    raise Exception.Create('Unable to delete book');
+  var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
+  if ResponseStatus <> OK then
+    raise TStatusCodeException.Create(ResponseStatus, 'Unable to delete book');
 end;
 
 function TBookServiceProxy.GetBookById(const BookId: Integer): TBook;
@@ -73,17 +76,13 @@ var
 begin
   Response := FRESTClient.GET(ENDPOINT + '/'+ BookId.toString);
 
-  if Response.StatusCode <> 200 then
-    raise Exception.Create('Something went wrong');
+  var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
+  if ResponseStatus <> OK then
+    raise TStatusCodeException.Create(ResponseStatus, 'Something went wrong');
 
-  try
-    var JSONValue: TJSONValue := TJSONObject.ParseJSONValue(Response.Content);
-    var Data := JSONValue.GetValue<string>('data');
-    var Book := TJSON.JsonToObject<TBook>(Data);
-  except
-    on E:Exception do
-      ShowMessage(E.ToString);
-  end;
+  var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
+  var Data := JSONValue.GetValue<TJSONObject>('data');
+  var Book := TJSON.JsonToObject<TBook>(Data);
 
   Result := Book;
 end;
@@ -92,15 +91,19 @@ function TBookServiceProxy.GetBooks: TObjectList<TBook>;
 var
   Response: IMVCRESTResponse;
 begin
+  var BookList := TObjectList<TBook>.Create;
   Response := FRESTClient.GET(ENDPOINT);
   FRESTClient.ClearQueryParams;
 
-  if Response.StatusCode <> 200 then
-    raise Exception.Create('Something went wrong');
+  var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
+  if ResponseStatus <> OK then
+  begin
+    Result := BookList;
+    Exit;
+  end;
 
   var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
   var BookArray := JSONValue.GetValue<TJSONArray>('data');
-  var BookList := TObjectList<TBook>.Create;
 
   for var I := 0 to BookArray.Count - 1 do
   begin
@@ -118,12 +121,13 @@ var
   CustomerSession: TCustomerSession;
 begin
   CustomerSession := TCustomerSession.Instance;
-  FRESTClient.SetBearerAuthorization(CustomerSession.GetToken);
+  FRESTClient.SetBearerAuthorization(CustomerSession.GetJWTToken);
   FRESTClient.AddBody(Book.ToJSONBody, 'application/json');
   Response := FRESTClient.PUT(ENDPOINT);
 
-  if Response.StatusCode <> 200 then
-    raise Exception.Create('Unable to update book');
+  var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
+  if ResponseStatus <> OK then
+    raise TStatusCodeException.Create(ResponseStatus, 'Unable to update book');
 end;
 
 end.

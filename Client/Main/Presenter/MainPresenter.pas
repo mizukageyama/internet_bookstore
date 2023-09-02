@@ -4,7 +4,7 @@ interface
 
 uses
   MainPresenterIntf, BookServiceIntf, MainFrmIntf, System.SysUtils,
-  Book, BookDetailsFrm, System.Generics.Collections, Data.Bind.ObjectScope;
+  Book, System.Generics.Collections, Data.Bind.ObjectScope;
 
 type
   TMainPresenter = class(TInterfacedObject, IMainPresenter)
@@ -21,8 +21,9 @@ type
 implementation
 
 uses
-  BookDetailsPresenterIntf, BookDetailsPresenter, SYSCONST, StatusCodeException,
-  CustomerReviewServiceIntf, CustomerReviewServiceProxy, MainFrm;
+  BookDetailsPresenterIntf, BookDetailsPresenter, SYSCONST,
+  StatusCodeException, CustomerReviewServiceIntf, CustomerReviewServiceProxy,
+  MainFrm, BookDetailsFrm;
 
 { TMainPresenter }
 
@@ -64,10 +65,8 @@ var
 begin
   SelectedBook := FMainView.GetSelectedBook;
   BookDetailsView := TBookDetailsView.Create(FMainView as TMainView);
-  CustomerReviewServiceProxy := TCustomerReviewServiceProxy.Create;
   BookDetailsPresenter := TBookDetailsPresenter
-    .Create(BookDetailsView as TBookDetailsView, CustomerReviewServiceProxy,
-    SelectedBook);
+    .Create(BookDetailsView as TBookDetailsView, SelectedBook);
 
   BookDetailsView.Show;
 end;

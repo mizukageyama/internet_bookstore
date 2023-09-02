@@ -48,6 +48,11 @@
     <Transaction>2023/09/02 13:39:04.000.795,C:\Users\User\Documents\GitHub\internet_bookstore\UnitTest\BookDetailsPresenterTest.pas=</Transaction>
     <Transaction>2023/09/02 13:39:26.000.030,=C:\Users\User\Documents\GitHub\internet_bookstore\UnitTest\BookDetailsPresenterTest.pas</Transaction>
     <Transaction>2023/09/02 14:00:03.730,C:\Users\User\Documents\GitHub\internet_bookstore\UnitTest\BookDetailsPresenterTest.pas=</Transaction>
+    <Transaction>2023/09/02 14:21:57.941,=C:\Users\User\Documents\GitHub\internet_bookstore\UnitTest\BookDetailsPresenterTest.pas</Transaction>
+    <Transaction>2023/09/02 14:25:13.345,=C:\Users\User\Documents\GitHub\internet_bookstore\UnitTest\Unit1.pas</Transaction>
+    <Transaction>2023/09/02 14:25:24.378,C:\Users\User\Documents\GitHub\internet_bookstore\UnitTest\MockBookDetailsPresenter.pas=C:\Users\User\Documents\GitHub\internet_bookstore\UnitTest\Unit1.pas</Transaction>
+    <Transaction>2023/09/02 14:27:29.191,C:\Users\User\Documents\GitHub\internet_bookstore\UnitTest\MockBookDetailsPresenter.pas=</Transaction>
+    <Transaction>2023/09/02 14:28:22.213,=C:\Users\User\Documents\GitHub\internet_bookstore\UnitTest\MockBookDetailsPresenter.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="BookActiveRecordDaoStub.pas"/>
@@ -57,5 +62,7 @@
     <File Path="CustomerReviewServiceTest.pas"/>
     <File Path="MockBookTableDatabase.pas"/>
     <File Path="MockCustomerReviewTableDatabase.pas"/>
+    <File Path="BookDetailsPresenterTest.pas"/>
+    <File Path="MockBookDetailsPresenter.pas"/>
   </ProjectSortOrder>
 </BorlandProject>

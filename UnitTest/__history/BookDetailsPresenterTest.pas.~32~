@@ -4,7 +4,7 @@ interface
 
 uses
   DUnitX.TestFramework, BookDetailsPresenterIntf, BookDetailsFrmIntf,
-  CustomerReviewServiceIntf, BookDetailsPresenter, Book, WriteReviewFrmIntf, System.SysUtils;
+  CustomerReviewServiceIntf, Book, WriteReviewFrmIntf;
 
 type
   [TestFixture]
@@ -30,12 +30,14 @@ type
 
 implementation
 
+uses
+  MockBookDetailsPresenter, Vcl.Forms, WriteReviewFrm;
+
 procedure TBookDetailsPresenterTest.Setup;
 begin
-//  FMockBookDetailsView: IBookDetailsView;
-//  FMockCustomerReviewService: ICustomerReviewService;
   var Book := TBook.Create(1, 'Harry Potter', 'Once upon a time, there was..');
-  FBookDetailsPresenter := TBookDetailsPresenter.Create(FMockBookDetailsView,
+  FBookDetailsPresenter := TMockBookDetailsPresenter.Create(
+    FMockBookDetailsView,
     FMockCustomerReviewService, Book);
 end;
 
@@ -58,10 +60,10 @@ end;
 
 procedure TBookDetailsPresenterTest.TestShowWriteReviewView;
 begin
-//  var WriteReviewView := TWriteReviewView.Create(nil);
-//  FBookDetailsPresenter.ShowWriteReviewView;
+  var WriteReviewView := TWriteReviewView.Create(nil);
+  FBookDetailsPresenter.ShowWriteReviewView;
 
-//  Assert.IsNotNull(WriteReviewView, 'WriteReviewView should not be nil.');
+  Assert.IsNotNull(WriteReviewView, 'WriteReviewView should not be nil.');
 end;
 
 procedure TBookDetailsPresenterTest.TestWriteReview;

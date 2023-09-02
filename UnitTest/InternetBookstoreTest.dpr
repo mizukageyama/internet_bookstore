@@ -19,7 +19,9 @@ uses
   BookActiveRecordDaoStub in 'BookActiveRecordDaoStub.pas',
   MockBookTableDatabase in 'MockBookTableDatabase.pas',
   MockCustomerReviewTableDatabase in 'MockCustomerReviewTableDatabase.pas',
-  CustomerReviewARDaoStub in 'CustomerReviewARDaoStub.pas';
+  CustomerReviewARDaoStub in 'CustomerReviewARDaoStub.pas',
+  BookDetailsPresenterTest in 'BookDetailsPresenterTest.pas',
+  MockBookDetailsPresenter in 'MockBookDetailsPresenter.pas';
 
 {$IFNDEF TESTINSIGHT}
 var

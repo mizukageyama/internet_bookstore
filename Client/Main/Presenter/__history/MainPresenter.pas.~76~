@@ -4,10 +4,7 @@ interface
 
 uses
   MainPresenterIntf, BookServiceIntf, MainFrmIntf, System.SysUtils,
-  MVCFramework.DataSet.Utils, MVCFramework.Serializer.Commons,
-  BookstoreDM, Book, BookDetailsFrm, System.Variants,
-  System.Generics.Collections, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Data.Bind.ObjectScope;
+  Book, System.Generics.Collections, Data.Bind.ObjectScope;
 
 type
   TMainPresenter = class(TInterfacedObject, IMainPresenter)
@@ -24,8 +21,9 @@ type
 implementation
 
 uses
-  BookDetailsPresenterIntf, BookDetailsPresenter, SYSCONST, StatusCodeException,
-  CustomerReviewServiceIntf, CustomerReviewServiceProxy;
+  BookDetailsPresenterIntf, BookDetailsPresenter, SYSCONST,
+  StatusCodeException, CustomerReviewServiceIntf, CustomerReviewServiceProxy,
+  MainFrm, BookDetailsFrm;
 
 { TMainPresenter }
 
@@ -39,35 +37,27 @@ end;
 
 procedure TMainPresenter.LoadBooks;
 begin
-  try
-    var Books := FBookServiceProxy.GetBooks;
-    BindAdapterToDataList(Books);
-  except
-    on E: Exception do
-    begin
-      FMainView.ShowMessageDialog(E.ToString);
-    end;
-  end;
+  var Books := FBookServiceProxy.GetBooks;
+  BindAdapterToDataList(Books);
 end;
 
 procedure TMainPresenter.BindAdapterToDataList(const Books: TObjectList<TBook>);
 begin
   var BindSourceAdapter := TListBindSourceAdapter<TBook>
-    .Create(FMainView.Self, Books, True);
+    .Create(FMainView as TMainView, Books, True);
   FMainView.SetBindSourceAdapter(BindSourceAdapter);
 end;
 
 procedure TMainPresenter.ShowBookDetails;
 var
-  BookstoreDM: TBookstoreDataModule;
   SelectedBook: TBook;
 
   CustomerReviewServiceProxy: ICustomerReviewService;
   BookDetailsPresenter: IBookDetailsPresenter;
-  BookDetailsView: TForm;
+  BookDetailsView: TBookDetailsView;
 begin
   SelectedBook := FMainView.GetSelectedBook;
-  BookDetailsView := TBookDetailsView.Create(FMainView.Self);
+  BookDetailsView := TBookDetailsView.Create(FMainView as TMainView);
   CustomerReviewServiceProxy := TCustomerReviewServiceProxy.Create;
   BookDetailsPresenter := TBookDetailsPresenter
     .Create(BookDetailsView as TBookDetailsView, CustomerReviewServiceProxy,

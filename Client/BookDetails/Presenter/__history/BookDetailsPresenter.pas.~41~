@@ -3,12 +3,9 @@ unit BookDetailsPresenter;
 interface
 
 uses
-  MainPresenterIntf, BookServiceIntf, MainFrmIntf, System.SysUtils,
-  Vcl.Dialogs, MVCFramework.DataSet.Utils, MVCFramework.Serializer.Commons,
-  BookstoreDM, Book, BookDetailsFrm, System.Variants, BookDetailsFrmIntf,
-  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, CustomerReview,
-  CustomerReviewServiceIntf, BookDetailsPresenterIntf,
-  System.Generics.Collections;
+  MainPresenterIntf, BookServiceIntf, MainFrmIntf, Book, BookDetailsFrm,
+  CustomerReviewServiceIntf, BookDetailsFrmIntf, CustomerReview,
+  BookDetailsPresenterIntf;
 
 type
   TBookDetailsPresenter = class(TInterfacedObject, IBookDetailsPresenter)
@@ -61,7 +58,8 @@ end;
 
 procedure TBookDetailsPresenter.ShowWriteReviewView;
 begin
-  var WriteReviewView := TWriteReviewView.Create(nil);
+  var WriteReviewView := TWriteReviewView.Create(
+    FBookDetailsView as TBookDetailsView);
   var CustomerReviewServiceProxy := TCustomerReviewServiceProxy.Create;
   var WriteReviewPresenter := TWriteReviewPresenter
     .Create(WriteReviewView as TWriteReviewView,
@@ -72,7 +70,7 @@ end;
 
 procedure TBookDetailsPresenter.ShowLoginView;
 begin
-  var LoginView := TLoginView.Create(nil);
+  var LoginView := TLoginView.Create(FBookDetailsView as TBookDetailsView);
   var LoginPresenter := TLoginPresenter.Create(LoginView as TLoginView);
 
   LoginPresenter.OnLoginSuccess := procedure

@@ -122,12 +122,14 @@
             <Form>WriteReviewView</Form>
         </DCCReference>
         <DCCReference Include="WriteReview\View\WriteReviewFrmIntf.pas"/>
-        <DCCReference Include="CustomerSession.pas"/>
         <DCCReference Include="ProxyServices\BookServiceProxy.pas"/>
         <DCCReference Include="ProxyServices\CustomerReviewServiceProxy.pas"/>
-        <DCCReference Include="ResponseStatusMapper.pas"/>
-        <DCCReference Include="StatusCodeException.pas"/>
-        <DCCReference Include="SYSCONST.pas"/>
+        <DCCReference Include="Commons\CustomerSession.pas"/>
+        <DCCReference Include="Commons\ResponseHandler.pas"/>
+        <DCCReference Include="Commons\ResponseStatusMapper.pas"/>
+        <DCCReference Include="Commons\StatusCodeException.pas"/>
+        <DCCReference Include="Commons\SysConst.pas"/>
+        <DCCReference Include="Commons\ViewFactory.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

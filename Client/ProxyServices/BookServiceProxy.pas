@@ -14,7 +14,7 @@ type
       ENDPOINT = '/api/books';
   public
     constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
 
     procedure CreateBook(const Book: TBook);
     function GetBooks: TObjectList<TBook>;
@@ -33,12 +33,14 @@ uses
 
 constructor TBookServiceProxy.Create;
 begin
+  inherited;
   FRESTClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
 end;
 
 destructor TBookServiceProxy.Destroy;
 begin
   FRESTClient := nil;
+  inherited;
 end;
 
 procedure TBookServiceProxy.CreateBook(const Book: TBook);

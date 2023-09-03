@@ -47,15 +47,15 @@ end;
 
 function TMainView.GetSelectedBook: TObject;
 begin
-  var SelectedRow := AdapterBindSource1.Adapter.Current;
+  var SelectedRow := BookAdapterBindSource.Adapter.Current;
   Result := SelectedRow;
 end;
 
 procedure TMainView.SetBindSourceAdapter(
   const BindSourceAdapter: TBindSourceAdapter);
 begin
-  AdapterBindSource1.Adapter := BindSourceAdapter;
-  AdapterBindSource1.Active := True;
+  BookAdapterBindSource.Adapter := BindSourceAdapter;
+  BookAdapterBindSource.Active := True;
 end;
 
 procedure TMainView.SetPresenter(APresenter: IMainPresenter);
@@ -70,7 +70,7 @@ end;
 
 procedure TMainView.BookListGridDblClick(Sender: TObject);
 begin
-  if StringGrid1.RowCount = 0 then
+  if BookListGrid.RowCount = 0 then
     Exit;
   FMainPresenter.ShowBookDetails;
 end;

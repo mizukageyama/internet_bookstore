@@ -1,0 +1,26 @@
+unit ViewFactory;
+
+interface
+
+uses  BookDetailsFrm, WriteReviewFrm, System.SysUtils, System.Classes;
+
+type
+  TViewFactory = class
+  public
+    class function CreateBookDetailsView: TBookDetailsView;
+    class function CreateWriteReviewView: TWriteReviewView;
+  end;
+
+implementation
+
+class function TViewFactory.CreateBookDetailsView: TBookDetailsView;
+begin
+  Result := TBookDetailsView.Create(nil);
+end;
+
+class function TViewFactory.CreateWriteReviewView: TWriteReviewView;
+begin
+  Result := TWriteReviewView.Create(nil);
+end;
+
+end.

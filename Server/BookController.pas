@@ -5,10 +5,10 @@ interface
 uses
   MVCFramework, MVCFramework.Commons, MVCFramework.Serializer.Commons,
   MVCFramework.ActiveRecord, System.Generics.Collections, System.Math,
-  Book, System.SysUtils, System.Classes, BookServiceIntf;
+  Book, System.SysUtils, System.Classes, BookServiceIntf, BaseController;
 
 type
-  TBookController = class(TMVCController)
+  TBookController = class(TBaseController)
   private
     FBookService: IBookService;
   public
@@ -38,8 +38,8 @@ type
     [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
     [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
     procedure UpdateBook(const BookId: Integer);
-    
-    constructor Create(const AService: IBookService); overload;
+
+    constructor Create(const AService: IBookService); reintroduce;
   end;
 
 implementation

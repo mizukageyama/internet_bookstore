@@ -4,11 +4,11 @@ interface
 
 uses
   MVCFramework, MVCFramework.Commons, MVCFramework.Serializer.Commons,
-  MVCFramework.ActiveRecord, System.Generics.Collections,
+  MVCFramework.ActiveRecord, System.Generics.Collections, BaseController,
   CustomerReview, System.SysUtils, System.Classes, CustomerReviewServiceIntf;
 
 type
-  TCustomerReviewController = class(TMVCController)
+  TCustomerReviewController = class(TBaseController)
   private
     FCustomerReviewService: ICustomerReviewService;
   public
@@ -39,7 +39,7 @@ type
     [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
     procedure UpdateCustomerReview(const CustomerReviewId: Integer);
 
-    constructor Create(const AService: ICustomerReviewService); overload;
+    constructor Create(const AService: ICustomerReviewService); reintroduce;
   end;
 
 implementation

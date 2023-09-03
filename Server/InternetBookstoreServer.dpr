@@ -17,7 +17,8 @@ uses
   BookController in 'BookController.pas',
   AuthCriteria in 'JWTAuth\AuthCriteria.pas',
   CustomerController in 'CustomerController.pas',
-  CustomerReviewController in 'CustomerReviewController.pas';
+  CustomerReviewController in 'CustomerReviewController.pas',
+  BaseController in 'BaseController.pas';
 
 {$R *.res}
 
@@ -55,9 +56,6 @@ end;
 begin
   ReportMemoryLeaksOnShutdown := True;
   IsMultiThread := True;
-  // DMVCFramework Specific Configuration
-  // When MVCSerializeNulls = True empty nullables and nil are serialized as json null.
-  // When MVCSerializeNulls = False empty nullables and nil are not serialized at all.
   MVCSerializeNulls := True;
   try
     if WebRequestHandler <> nil then

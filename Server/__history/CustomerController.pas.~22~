@@ -1,0 +1,103 @@
+unit CustomerController;
+
+interface
+
+uses
+  MVCFramework, MVCFramework.Commons, MVCFramework.Serializer.Commons,
+  MVCFramework.ActiveRecord, System.Generics.Collections,
+  Customer, System.SysUtils, System.Classes, CustomerServiceIntf;
+
+type
+  TCustomerController = class(TMVCController)
+  private
+    FCustomerService: ICustomerService;
+  public
+    [MVCPath()]
+    [MVCHTTPMethod([httpGET])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    procedure GetCustomers;
+
+    [MVCPath('/($CustomerId)')]
+    [MVCHTTPMethod([httpGET])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    procedure GetCustomerById(const CustomerId: Integer);
+
+    [MVCPath()]
+    [MVCHTTPMethod([httpPOST])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure CreateCustomer;
+
+    [MVCPath('/($CustomerId)')]
+    [MVCHTTPMethod([httpDELETE])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    procedure DeleteCustomer(const CustomerId: Integer);
+
+    [MVCPath('/($CustomerId)')]
+    [MVCHTTPMethod([httpPUT])]
+    [MVCProduces(TMVCMediaType.APPLICATION_JSON)]
+    [MVCConsumes(TMVCMediaType.APPLICATION_JSON)]
+    procedure UpdateCustomer(const CustomerId: Integer);
+
+    constructor Create(const AService: ICustomerService); overload;
+  end;
+
+implementation
+
+{ TCustomerController }
+
+constructor TCustomerController.Create(const AService: ICustomerService);
+begin
+ if not Assigned(AService) then
+    raise EArgumentNilException.Create('AService');
+
+  inherited Create;
+  FCustomerService := AService;
+end;
+
+procedure TCustomerController.CreateCustomer;
+begin
+  var Customer := Context.Request.BodyAs<TCustomer>;
+
+  if not Customer.IsValid then
+  begin
+    raise EMVCException.Create(400, 'Invalid Request');
+  end;
+
+  FCustomerService.CreateCustomer(Customer);
+  Render201Created('/api/customers/' + Customer.ID.ToString);
+end;
+
+procedure TCustomerController.DeleteCustomer(const CustomerId: Integer);
+begin
+  FCustomerService.DeleteCustomer(CustomerId);
+  Render(204, '');
+end;
+
+procedure TCustomerController.GetCustomerById(const CustomerId: Integer);
+begin
+  var Customer := FCustomerService.GetCustomerById(CustomerId);
+  Render(ObjectDict().Add('data', Customer));
+end;
+
+procedure TCustomerController.GetCustomers;
+begin
+  var Customer := FCustomerService.GetCustomers;
+  Render(ObjectDict().Add('data', Customer));
+end;
+
+procedure TCustomerController.UpdateCustomer(const CustomerId: Integer);
+begin
+  var Customer := Context.Request.BodyAs<TCustomer>;
+  Customer.Id := CustomerId;
+
+  if not Customer.IsValid then
+  begin
+    raise EMVCException.Create(HTTP_STATUS.BadRequest, 'Invalid Request');
+  end;
+
+  FCustomerService.UpdateCustomer(Customer);
+  Render(HTTP_STATUS.OK, '');
+end;
+
+end.

@@ -41,6 +41,10 @@ procedure TAuthCriteria.OnAuthentication(const AContext: TWebContext;
 begin
   inherited;
 
+  var LConn := TFDConnection.Create(nil);
+  LConn.ConnectionDefName := 'Internet_Bookstore_Connection';
+  ActiveRecordConnectionsRegistry.AddDefaultConnection(LConn, True);
+
   var CustomerAR := TCustomerActiveRecord.Create;
   var CustomerList := CustomerAR.Where(TCustomerActiveRecord,
     ' WHERE EMAIL = ?', [AUserName]);
@@ -71,6 +75,7 @@ begin
   finally
     CustomerAR.Free;
     CustomerList.Free;
+    LConn.Free;
   end;
 end;
 

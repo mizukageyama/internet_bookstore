@@ -67,10 +67,6 @@ begin
         IntToStr(TMVCConstants.DEFAULT_MAX_REQUEST_SIZE);
     end);
 
-    //BaseController - Data
-    FMVC.AddMiddleware(TMVCActiveRecordMiddleware
-      .Create('Internet_Bookstore_Connection','FDConnectionDefs.ini'));
-
     var lConfigClaims: TJWTClaimsSetup := procedure (const JWT: TJWT)
     begin
       JWT.Claims.Issuer := 'Internet Bookstore';
@@ -90,7 +86,6 @@ begin
     )
   );
 
-  //MVCCryptInit; //Initialize OpenSSL
   FMVC.AddMiddleware(TMVCCORSMiddleware.Create);
 
   FMVC.AddController(

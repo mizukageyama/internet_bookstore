@@ -25,7 +25,7 @@ type
     procedure DeleteCustomerReview(const CustomerReviewId: Integer);
   public
     constructor Create;
-    destructor Destroy;
+    destructor Destroy; override;
   end;
 
 implementation
@@ -38,6 +38,7 @@ uses
 
 constructor TCustomerReviewServiceProxy.Create;
 begin
+  inherited;
   FRESTClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
 end;
 
@@ -138,6 +139,7 @@ end;
 destructor TCustomerReviewServiceProxy.Destroy;
 begin
   FRESTClient := nil;
+  inherited;
 end;
 
 end.

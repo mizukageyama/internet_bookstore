@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Transactions>
-    <Transaction>2023/09/04 04:33:42.955,=C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactory.pas</Transaction>
-    <Transaction>2023/09/04 06:08:59.020,C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactoryMaker.pas=C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactory.pas</Transaction>
-    <Transaction>2023/09/04 06:11:19.618,C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactoryMaker.pas=</Transaction>
-    <Transaction>2023/09/04 06:11:33.735,=C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactory.pas</Transaction>
+	<Transactions>
+    <Transaction>2023/09/04 04:33:42.000.955,=C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactory.pas</Transaction>
+    <Transaction>2023/09/04 06:08:59.000.020,C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactory.pas=C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactoryMaker.pas</Transaction>
+    <Transaction>2023/09/04 06:11:19.000.618,C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactoryMaker.pas=</Transaction>
+    <Transaction>2023/09/04 06:11:33.000.735,=C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactory.pas</Transaction>
   </Transactions>
 </BorlandProject>

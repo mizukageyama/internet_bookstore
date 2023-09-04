@@ -4,26 +4,28 @@ interface
 
 uses
   MainPresenterIntf, BookServiceIntf, MainFrmIntf, System.SysUtils,
-  Book, System.Generics.Collections, Data.Bind.ObjectScope;
+  Book, System.Generics.Collections;
 
 type
   TMainPresenter = class(TInterfacedObject, IMainPresenter)
   private
     FMainView: IMainView;
     FBookServiceProxy: IBookService;
+    FBookList: TList<TObject>;
   public
     constructor Create(AMainView: IMainView; AMainService: IBookService);
     procedure LoadBooks;
     procedure ShowBookDetails;
-    procedure BindAdapterToDataList(const Books: TObjectList<TBook>);
+    function GetBookList: TList<TObject>;
+    function GetBookClass: TClass;
   end;
 
 implementation
 
 uses
-  BookDetailsPresenterIntf, BookDetailsPresenter, SYSCONST,
+  BookDetailsPresenterIntf, BookDetailsPresenter, SysConst,
   StatusCodeException, CustomerReviewServiceIntf, CustomerReviewServiceProxy,
-  MainFrm, BookDetailsFrm, ViewFactory;
+  BookDetailsFrm, ViewFactory;
 
 { TMainPresenter }
 
@@ -33,26 +35,30 @@ begin
   FMainView := AMainView;
   FBookServiceProxy := AMainService;
   FMainView.SetPresenter(Self);
+  FBookList := TList<TObject>.Create;
+end;
+
+function TMainPresenter.GetBookClass: TClass;
+begin
+  Result := TBook;
+end;
+
+function TMainPresenter.GetBookList: TList<TObject>;
+begin
+  Result := FBookList;
 end;
 
 procedure TMainPresenter.LoadBooks;
 begin
   try
-    var Books := FBookServiceProxy.GetBooks;
-    BindAdapterToDataList(Books);
+    for var Book in FBookServiceProxy.GetBooks do
+      FBookList.Add(Book);
   except
     on E: Exception do
     begin
       FMainView.ShowMessageDialog(E.ToString);
     end;
   end;
-end;
-
-procedure TMainPresenter.BindAdapterToDataList(const Books: TObjectList<TBook>);
-begin
-  var BindSourceAdapter := TListBindSourceAdapter<TBook>
-    .Create(FMainView as TMainView, Books, True);
-  FMainView.SetBindSourceAdapter(BindSourceAdapter);
 end;
 
 procedure TMainPresenter.ShowBookDetails;

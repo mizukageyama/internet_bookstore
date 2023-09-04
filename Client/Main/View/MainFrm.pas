@@ -24,9 +24,9 @@ type
     procedure BookListGridDblClick(Sender: TObject);
   private
     FMainPresenter: IMainPresenter;
+    procedure SetupBindSourceAdapter;
   public
     procedure SetPresenter(APresenter: IMainPresenter);
-    procedure SetBindSourceAdapter(const BindSourceAdapter: TBindSourceAdapter);
     procedure ShowMessageDialog(const Msg: string);
     function GetSelectedBook: TObject;
   end;
@@ -43,6 +43,7 @@ uses
 procedure TMainView.FormShow(Sender: TObject);
 begin
   FMainPresenter.LoadBooks;
+  SetupBindSourceAdapter;
 end;
 
 function TMainView.GetSelectedBook: TObject;
@@ -51,16 +52,18 @@ begin
   Result := SelectedRow;
 end;
 
-procedure TMainView.SetBindSourceAdapter(
-  const BindSourceAdapter: TBindSourceAdapter);
-begin
-  BookAdapterBindSource.Adapter := BindSourceAdapter;
-  BookAdapterBindSource.Active := True;
-end;
-
 procedure TMainView.SetPresenter(APresenter: IMainPresenter);
 begin
   FMainPresenter := APresenter;
+end;
+
+procedure TMainView.SetupBindSourceAdapter;
+begin
+  var BindSourceAdapter := TListBindSourceAdapter
+    .Create(Self, FMainPresenter.GetBookList,
+      FMainPresenter.GetBookClass, True);
+  BookAdapterBindSource.Adapter := BindSourceAdapter;
+  BookAdapterBindSource.Active := True;
 end;
 
 procedure TMainView.ShowMessageDialog(const Msg: string);

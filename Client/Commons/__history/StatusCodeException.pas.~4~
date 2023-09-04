@@ -1,0 +1,24 @@
+unit StatusCodeException;
+
+interface
+
+uses
+  System.SysUtils;
+
+type
+  ENotFoundStatusCodeException = class(Exception)
+  public
+    constructor Create(const AMsg: string); override;
+  end;
+
+implementation
+
+{ ENotFoundStatusCodeException }
+
+constructor ENotFoundStatusCodeException.Create(const AMsg: string);
+begin
+  var MessageFormat := Format('The %s does not exist anymore', [AMsg]);
+  inherited Create(MessageFormat);
+end;
+
+end.

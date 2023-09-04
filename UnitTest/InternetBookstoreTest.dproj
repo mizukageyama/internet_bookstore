@@ -96,6 +96,9 @@
         <DCCReference Include="CustomerReviewARDaoStub.pas"/>
         <DCCReference Include="BookDetailsPresenterTest.pas"/>
         <DCCReference Include="MockBookDetailsPresenter.pas"/>
+        <DCCReference Include="MainPresenterTest.pas"/>
+        <DCCReference Include="MockWriteReviewPresenter.pas"/>
+        <DCCReference Include="MockMainPresenter.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

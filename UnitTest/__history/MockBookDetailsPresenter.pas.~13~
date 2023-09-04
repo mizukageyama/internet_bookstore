@@ -1,0 +1,73 @@
+unit MockBookDetailsPresenter;
+
+interface
+
+uses
+  MainPresenterIntf, BookServiceIntf, MainFrmIntf, Book,
+  CustomerReviewServiceIntf, BookDetailsFrmIntf, CustomerReview,
+  BookDetailsPresenterIntf, System.SysUtils, CustomerSession, Forms;
+
+type
+  TMockBookDetailsPresenter = class(TInterfacedObject, IBookDetailsPresenter)
+  private
+    FBookDetailsView: IBookDetailsView;
+    FBook: TBook;
+  public
+    constructor Create(ABookDetailsView: IBookDetailsView; ABook: TBook);
+
+    procedure DisplayBookDetails;
+    procedure WriteReview;
+    procedure ShowWriteReviewview;
+    procedure ShowLoginView;
+  end;
+
+implementation
+
+uses
+  CustomerReviewServiceProxy, WriteReviewPresenterIntf;
+
+{ TMockBookDetailsPresenter }
+
+constructor TMockBookDetailsPresenter.Create(ABookDetailsView: IBookDetailsView;
+  ABook: TBook);
+begin
+  FBookDetailsView := ABookDetailsView;
+  FBook := ABook;
+end;
+
+procedure TMockBookDetailsPresenter.DisplayBookDetails;
+begin
+  if FBook = nil then
+    raise Exception.Create('Empty book');
+end;
+
+procedure TMockBookDetailsPresenter.ShowLoginView;
+begin
+  var LoginView := TForm.Create(nil);
+  if LoginView = nil then
+    raise Exception.Create('LoginView not created successfully');
+end;
+
+procedure TMockBookDetailsPresenter.ShowWriteReviewview;
+begin
+ var WriteReviewView := TForm.Create(nil);
+  var CustomerReviewServiceProxy := TCustomerReviewServiceProxy.Create;
+  var WriteReviewPresenter: IWriteReviewPresenter;
+  WriteReviewPresenter := TWriteReviewPresenter
+    .Create(WriteReviewView, CustomerReviewServiceProxy, FBook);
+
+  WriteReviewView.Show;
+end;
+
+procedure TMockBookDetailsPresenter.WriteReview;
+begin
+  var CustomerSession := TCustomerSession.Instance;
+  if CustomerSession.IsLoggedIn then
+    ShowWriteReviewView
+  else
+  begin
+    ShowLoginView;
+  end;
+end;
+
+end.

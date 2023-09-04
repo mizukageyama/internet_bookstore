@@ -10,12 +10,12 @@ uses
 
 type
   TBookDetailsView = class(TForm, IBookDetailsView)
-    lblTitle: TLabel;
-    lblBookTitle: TLabel;
-    lblSynopsis: TLabel;
-    btnWriteReview: TButton;
-    pnlBottom: TPanel;
-    procedure btnWriteReviewClick(Sender: TObject);
+    TitleLabel: TLabel;
+    BookTitleLabel: TLabel;
+    SynopsisLabel: TLabel;
+    WriteReviewButton: TButton;
+    HeaderPanel: TPanel;
+    procedure WriteReviewButtonClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
     FBookDetailsPresenter: IBookDetailsPresenter;
@@ -31,7 +31,7 @@ implementation
 uses
   LoginFrm, WriteReviewFrm;
 
-procedure TBookDetailsView.btnWriteReviewClick(Sender: TObject);
+procedure TBookDetailsView.WriteReviewButtonClick(Sender: TObject);
 begin
   FBookDetailsPresenter.WriteReview;
 end;
@@ -43,8 +43,8 @@ end;
 
 procedure TBookDetailsView.SetBookDetails(const Book: TBook);
 begin
-  lblBookTitle.Caption := Book.Title;
-  lblSynopsis.Caption := Book.Synopsis;
+  BookTitleLabel.Caption := Book.Title;
+  SynopsisLabel.Caption := Book.Synopsis;
 end;
 
 procedure TBookDetailsView.SetPresenter(APresenter: IBookDetailsPresenter);

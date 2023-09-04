@@ -21,7 +21,10 @@ uses
   MockCustomerReviewTableDatabase in 'MockCustomerReviewTableDatabase.pas',
   CustomerReviewARDaoStub in 'CustomerReviewARDaoStub.pas',
   BookDetailsPresenterTest in 'BookDetailsPresenterTest.pas',
-  MockBookDetailsPresenter in 'MockBookDetailsPresenter.pas';
+  MockBookDetailsPresenter in 'MockBookDetailsPresenter.pas',
+  MainPresenterTest in 'MainPresenterTest.pas',
+  MockWriteReviewPresenter in 'MockWriteReviewPresenter.pas',
+  MockMainPresenter in 'MockMainPresenter.pas';
 
 {$IFNDEF TESTINSIGHT}
 var

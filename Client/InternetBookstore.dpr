@@ -26,7 +26,8 @@ uses
   ResponseStatusMapper in 'Commons\ResponseStatusMapper.pas',
   StatusCodeException in 'Commons\StatusCodeException.pas',
   SysConst in 'Commons\SysConst.pas',
-  ViewFactory in 'Commons\ViewFactory.pas';
+  ViewFactory in 'FactoryMethod\ViewFactory.pas',
+  ViewFactoryIntf in 'FactoryMethod\ViewFactoryIntf.pas';
 
 {$R *.res}
 

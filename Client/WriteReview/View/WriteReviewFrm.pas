@@ -10,24 +10,24 @@ uses
 
 type
   TWriteReviewView = class(TForm, IWriteReviewView)
-    lblBookTitle: TLabel;
-    pnlBottom: TPanel;
-    btnSubmitReview: TButton;
-    pnlGreeting: TPanel;
-    lblGreeting: TLabel;
-    pnlRating: TPanel;
-    lblRating: TLabel;
-    edtRating: TEdit;
-    pnlReview: TPanel;
-    blbReview: TLabel;
-    memReview: TMemo;
-    pnlReviewInput: TPanel;
-    pnlRatingInput: TPanel;
-    lblRatingValidationMessage: TLabel;
-    lblReviewValidationMessage: TLabel;
-    pnlValidation: TPanel;
+    BookTitleLabel: TLabel;
+    BottomPanel: TPanel;
+    SubmitReviewButton: TButton;
+    GreetingPanel: TPanel;
+    GreetingLabel: TLabel;
+    RatingPanel: TPanel;
+    RatingLabel: TLabel;
+    RatingEditText: TEdit;
+    ReviewPanel: TPanel;
+    ReviewLabel: TLabel;
+    ReviewMemo: TMemo;
+    ReviewInputPanel: TPanel;
+    RatingInputPanel: TPanel;
+    RatingValidationMessageLabel: TLabel;
+    ReviewValidationMessageLabel: TLabel;
+    ValidationPanel: TPanel;
     procedure FormShow(Sender: TObject);
-    procedure btnSubmitReviewClick(Sender: TObject);
+    procedure SubmitReviewButtonClick(Sender: TObject);
   private
     FWriteReviewPresenter: IWriteReviewPresenter;
   public
@@ -54,7 +54,7 @@ begin
   FWriteReviewPresenter.InitializeView;
 end;
 
-procedure TWriteReviewView.btnSubmitReviewClick(Sender: TObject);
+procedure TWriteReviewView.SubmitReviewButtonClick(Sender: TObject);
 begin
   FWriteReviewPresenter.SubmitReview;
 end;
@@ -71,23 +71,23 @@ end;
 
 procedure TWriteReviewView.DisplayBookTitle(const Book: TBook);
 begin
-  lblBookTitle.Caption := Book.Title;
+  BookTitleLabel.Caption := Book.Title;
 end;
 
 procedure TWriteReviewView.DisplayCustomerGreeting(const Customer: TCustomer);
 begin
-  lblGreeting.Caption := 'Hello ' + Customer.FirstName +
+  GreetingLabel.Caption := 'Hello ' + Customer.FirstName +
     ', please enter your review for this book.';
 end;
 
 function TWriteReviewView.GetReviewRating: string;
 begin
-  Result := edtRating.Text;
+  Result := RatingEditText.Text;
 end;
 
 function TWriteReviewView.GetReviewText: string;
 begin
-  Result := memReview.Text;
+  Result := ReviewMemo.Text;
 end;
 
 procedure TWriteReviewView.ShowMessageDialog(const Msg: string);
@@ -98,21 +98,21 @@ end;
 procedure TWriteReviewView.ShowRatingValidationMessage(
   const ValidationMessage: string);
 begin
-  lblRatingValidationMessage.Caption := ValidationMessage;
-  lblRatingValidationMessage.Show;
+  RatingValidationMessageLabel.Caption := ValidationMessage;
+  RatingValidationMessageLabel.Show;
 end;
 
 procedure TWriteReviewView.ShowReviewValidationMessage(
   const ValidationMessage: string);
 begin
-  lblReviewValidationMessage.Caption := ValidationMessage;
-  lblReviewValidationMessage.Show;
+  ReviewValidationMessageLabel.Caption := ValidationMessage;
+  ReviewValidationMessageLabel.Show;
 end;
 
 procedure TWriteReviewView.HideValidationMessage;
 begin
-  lblRatingValidationMessage.Hide;
-  lblReviewValidationMessage.Hide;
+  RatingValidationMessageLabel.Hide;
+  ReviewValidationMessageLabel.Hide;
 end;
 
 end.

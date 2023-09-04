@@ -1,0 +1,18 @@
+unit ViewFactoryIntf;
+
+interface
+
+uses
+  BookDetailsFrmIntf, WriteReviewFrmIntf, LoginFrmIntf;
+
+type
+  IViewFactory = class
+  public
+    function CreateBookDetailsView: IBookDetailsView;
+    function CreateWriteReviewView: IWriteReviewView;
+    function CreateLoginView: ILoginView;
+  end;
+
+implementation
+
+end.

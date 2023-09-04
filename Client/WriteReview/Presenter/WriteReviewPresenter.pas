@@ -12,24 +12,21 @@ type
     FWriteReviewView: IWriteReviewView;
     FCustomerReviewServiceProxy: ICustomerReviewService;
     FBook: TBook;
+
+    procedure ValidateInput(out CustomerReview: TCustomerReview;
+      out IsSuccess: Boolean);
   public
     constructor Create(AWriteReviewView: IWriteReviewView;
       ACustomerReviewService: ICustomerReviewService; ABook: TBook);
-
     procedure InitializeView;
     procedure SubmitReview;
-    procedure ValidateInput(out CustomerReview: TCustomerReview;
-      out IsSuccess: Boolean);
-
-    //private self-called methods
-    //protected from inheritance
   end;
 
 implementation
 
 uses
   CustomerSession, BookDetailsFrmIntf, BookDetailsFrm, BookServiceProxy,
-  StatusCodeException, SYSCONST;
+  StatusCodeException, SysConst;
 
 { TWriteReviewPresenter }
 
@@ -71,23 +68,16 @@ begin
     FWriteReviewView.ShowMessageDialog('Review is sent to admin for approval');
     FWriteReviewView.CloseForm;
   except
-    on E: TStatusCodeException do
-    //on E: EUnAuthorizedException do
-    //on E: ENotFoundException do
-    //else
+    on E: EUnAuthorizedStatusCodeException do
     begin
-      case E.StatusCode of
-        UnAuthorized:
-          begin
-            CustomerSession.SetDefaultValue;
-            FWriteReviewView.ShowMessageDialog('Session expired. Please login');
-            FWriteReviewView.CloseForm;
-          end;
-        NotFound: FWriteReviewView.ShowMessageDialog('Book no longer exists');
-      else
-        FWriteReviewView.ShowMessageDialog(E.ToString);
-      end;
-   end;
+      CustomerSession.SetDefaultValue;
+      FWriteReviewView.ShowMessageDialog('Session expired. Please login');
+      FWriteReviewView.CloseForm;
+    end;
+    on E: ENotFoundStatusCodeException do
+      FWriteReviewView.ShowMessageDialog(E.ToString);
+    on E: ENotFoundStatusCodeException do
+      FWriteReviewView.ShowMessageDialog(E.ToString);
   end;
 end;
 

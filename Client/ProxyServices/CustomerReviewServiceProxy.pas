@@ -55,8 +55,8 @@ begin
 
   var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
   if ResponseStatus <> OK then
-    raise TStatusCodeException.Create(ResponseStatus,
-      'Unable to create review');
+    raise EServerErrorStatusCodeException.Create('Unable to create review');
+
 end;
 
 procedure TCustomerReviewServiceProxy.DeleteCustomerReview(
@@ -72,8 +72,7 @@ begin
 
   var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
   if ResponseStatus <> OK then
-    raise TStatusCodeException.Create(ResponseStatus,
-      'Unable to delete review');
+    raise EServerErrorStatusCodeException.Create('Unable to delete review');
 end;
 
 function TCustomerReviewServiceProxy.GetCustomerReviewById(
@@ -85,7 +84,7 @@ begin
 
   var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
   if ResponseStatus <> OK then
-    raise TStatusCodeException.Create(ResponseStatus, 'Something went wrong');
+    raise EServerErrorStatusCodeException.Create('Something went wrong');
 
   var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
   var Data := JSONValue.GetValue<TJSONObject>('data');
@@ -103,7 +102,7 @@ begin
 
   var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
   if ResponseStatus <> OK then
-    raise TStatusCodeException.Create(ResponseStatus, 'Something went wrong');
+    raise EServerErrorStatusCodeException.Create('Something went wrong');
 
   var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
   var CustomerArray := JSONValue.GetValue<TJSONArray>('data');
@@ -132,8 +131,7 @@ begin
 
   var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
   if ResponseStatus <> OK then
-    raise TStatusCodeException.Create(ResponseStatus,
-      'Unable to update review');
+    raise EServerErrorStatusCodeException.Create('Unable to update review');
 end;
 
 destructor TCustomerReviewServiceProxy.Destroy;

@@ -67,6 +67,9 @@ begin
         IntToStr(TMVCConstants.DEFAULT_MAX_REQUEST_SIZE);
     end);
 
+    FMVC.AddMiddleware(TMVCActiveRecordMiddleware
+      .Create('Internet_Bookstore_Connection','FDConnectionDefs.ini'));
+
     var lConfigClaims: TJWTClaimsSetup := procedure (const JWT: TJWT)
     begin
       JWT.Claims.Issuer := 'Internet Bookstore';

@@ -14,11 +14,12 @@ type
     FRESTClient: IMVCRESTClient;
     const
       ENDPOINT = '/api/auth';
-  protected
-    procedure Login;
+
     procedure ValidateInput(out Username, Password: string;
       out IsSuccess: Boolean);
     procedure UpdateCustomerSession(const ResponseContent: string);
+  protected
+    procedure Login;
   public
     constructor Create(ALoginView: ILoginView);
     property OnLoginSuccess: TProc read FOnLoginSuccess write FOnLoginSuccess;
@@ -56,8 +57,8 @@ begin
 
       var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
       if ResponseStatus <> OK then
-        raise TStatusCodeException.Create(ResponseStatus,
-          'Please check your credentials');
+        raise EUnauthorizedStatusCodeException.Create(
+          'Invalid password');
 
       UpdateCustomerSession(Response.Content);
       FLoginView.CloseForm;
@@ -65,18 +66,11 @@ begin
       if Assigned(FOnLoginSuccess) then
         FOnLoginSuccess;
     except
-       on E: TStatusCodeException do
-       begin
-        case E.StatusCode of
-          UnAuthorized:
-            begin
-              FLoginView.ShowMessageDialog('Invalid password');
-            end
-        else
-          FLoginView.ShowMessageDialog(E.ToString);
-        end;
-       end;
-    end;
+      on E: EUnauthorizedStatusCodeException do
+        FLoginView.ShowMessageDialog(E.ToString);
+      else
+        FLoginView.ShowMessageDialog('Something went wrong');
+     end;
   end
   else
     FLoginView.ShowMessageDialog('Please enter email and password');

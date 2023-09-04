@@ -1,0 +1,66 @@
+unit LoginFrm;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.ExtCtrls, Vcl.StdCtrls, LoginFrmIntf, LoginPresenterIntf;
+
+type
+  TLoginView = class(TForm, ILoginView)
+    EmailPanel: TPanel;
+    EmailLabel: TLabel;
+    EmailEditText: TEdit;
+    PasswordPanel: TPanel;
+    PasswordLabel: TLabel;
+    PasswordEditText: TEdit;
+    LoginButton: TButton;
+    procedure LoginButtonClick(Sender: TObject);
+  private
+    FPresenter: ILoginPresenter;
+  public
+    procedure SetPresenter(APresenter: ILoginPresenter);
+    function GetUsername: string;
+    function Getpassword: string;
+    procedure CloseForm;
+    procedure ShowMessageDialog(const Msg: string);
+  end;
+
+implementation
+
+{$R *.dfm}
+
+uses WriteReviewFrm;
+
+procedure TLoginView.LoginButtonClick(Sender: TObject);
+begin
+  FPresenter.Login;
+end;
+
+procedure TLoginView.CloseForm;
+begin
+  Self.Close;
+end;
+
+function TLoginView.Getpassword: string;
+begin
+  Result := edtPassword.Text;
+end;
+
+function TLoginView.GetUsername: string;
+begin
+  Result := edtEmail.Text;
+end;
+
+procedure TLoginView.SetPresenter(APresenter: ILoginPresenter);
+begin
+  FPresenter := APresenter;
+end;
+
+procedure TLoginView.ShowMessageDialog(const Msg: string);
+begin
+  ShowMessage(Msg);
+end;
+
+end.

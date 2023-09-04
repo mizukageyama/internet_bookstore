@@ -12,13 +12,13 @@ type
   private
     FBookDetailsView: IBookDetailsView;
     FBook: TBook;
-  public
-    constructor Create(ABookDetailsView: IBookDetailsView; ABook: TBook);
 
-    procedure DisplayBookDetails;
-    procedure WriteReview;
     procedure ShowWriteReviewview;
     procedure ShowLoginView;
+  public
+    constructor Create(ABookDetailsView: IBookDetailsView; ABook: TBook);
+    procedure DisplayBookDetails;
+    procedure WriteReview;
   end;
 
 implementation

@@ -10,13 +10,13 @@ type
   private
     FBookDao: IBookDao;
   public
-    constructor Create(const ABookDao: IBookDao);
-
     procedure CreateBook(const Book: TBook);
     function GetBooks: TObjectList<TBook>;
     function GetBookById(const BookId: Integer): TBook;
     procedure UpdateBook(const Book: TBook);
     procedure DeleteBook(const BookId: Integer);
+
+    constructor Create(const ABookDao: IBookDao);
   end;
 
 implementation

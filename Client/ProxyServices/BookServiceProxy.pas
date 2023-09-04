@@ -55,7 +55,7 @@ begin
 
   var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
   if ResponseStatus <> OK then
-    raise TStatusCodeException.Create(ResponseStatus, 'Unable to create book');
+    raise EServerErrorStatusCodeException.Create('Unable to create book');
 end;
 
 procedure TBookServiceProxy.DeleteBook(const BookId: Integer);
@@ -69,7 +69,7 @@ begin
 
   var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
   if ResponseStatus <> OK then
-    raise TStatusCodeException.Create(ResponseStatus, 'Unable to delete book');
+    raise EServerErrorStatusCodeException.Create('Unable to delete book');
 end;
 
 function TBookServiceProxy.GetBookById(const BookId: Integer): TBook;
@@ -80,7 +80,7 @@ begin
 
   var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
   if ResponseStatus <> OK then
-    raise TStatusCodeException.Create(ResponseStatus, 'Something went wrong');
+    raise EServerErrorStatusCodeException.Create('Something went wrong');
 
   var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
   var Data := JSONValue.GetValue<TJSONObject>('data');
@@ -127,7 +127,7 @@ begin
 
   var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
   if ResponseStatus <> OK then
-    raise TStatusCodeException.Create(ResponseStatus, 'Unable to update book');
+    raise EServerErrorStatusCodeException.Create('Unable to update book');
 end;
 
 end.

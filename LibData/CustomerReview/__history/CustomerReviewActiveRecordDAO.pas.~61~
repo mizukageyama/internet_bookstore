@@ -1,0 +1,118 @@
+unit CustomerReviewActiveRecordDAO;
+
+interface
+
+uses
+  CustomerReview, CustomerReviewDAOIntf, MVCFramework, MVCFramework.Commons,
+  MVCFramework.ActiveRecord, System.Generics.Collections, System.SysUtils;
+
+type
+  TCustomerReviewActiveRecordDAO = class(TInterfacedObject, ICustomerReviewDAO)
+  public
+    constructor Create;
+    desctructor Destroy;
+
+    procedure Insert(const CustomerReview: TCustomerReview);
+    function SelectWhereBookId(const CustomerReviewBookId: Integer):
+      TObjectList<TCustomerReview>;
+    function SelectWhereId(const CustomerReviewId: Integer): TCustomerReview;
+    procedure Update(const CustomerReview: TCustomerReview);
+    procedure Delete(const CustomerReviewId: Integer);
+  end;
+
+implementation
+
+uses
+  CustomerReviewActiveRecord, CustomerReviewContextIntf, BookActiveRecord;
+
+{ TCustomerReviewActiveRecordDAO }
+
+constructor TCustomerReviewActiveRecordDAO.Create;
+begin
+  var LConn := TFDConnection.Create(nil);
+  LConn.ConnectionDefName := 'Internet_Bookstore_Connection';
+  ActiveRecordConnectionsRegistry.AddDefaultConnection(LConn, True);
+end;
+
+destructor TCustomerReviewActiveRecordDAO.Destroy;
+begin
+  ActiveRecordConnectionsRegistry.RemoveDefaultConnection;
+end;
+
+procedure TCustomerReviewActiveRecordDAO.Delete(const CustomerReviewId: Integer);
+begin
+  var CustomerReviewAR := TCustomerReviewActiveRecord.Create;
+  try
+    CustomerReviewAR.Id := CustomerReviewId;
+    CustomerReviewAR.Delete(True);
+  finally
+    CustomerReviewAR.Free;
+  end;
+end;
+
+procedure TCustomerReviewActiveRecordDAO.Insert(const CustomerReview: TCustomerReview);
+begin
+  var BookAR := TBookActiveRecord.Create;
+  try
+    if not BookAR.LoadByPK(CustomerReview.BookId) then
+      raise EMVCActiveRecordNotFound.Create(Classname + ': Book with ' +
+        'ID ' + CustomerReview.BookId.ToString + ' not found');
+  finally
+    BookAR.Free;
+  end;
+
+  var CustomerReviewAR := TCustomerReviewActiveRecord.Create(CustomerReview);
+  try
+    CustomerReviewAR.Insert;
+  finally
+    CustomerReviewAR.Free;
+  end;
+end;
+
+function TCustomerReviewActiveRecordDAO.SelectWhereBookId(
+  const CustomerReviewBookId: Integer): TObjectList<TCustomerReview>;
+begin
+  var CustomerReviewAR := TCustomerReviewActiveRecord.Create;
+
+  var ARList := CustomerReviewAR.Where(TCustomerReviewActiveRecord,
+    ' WHERE BOOK_ID = ? AND IS_PENDING = ?', [CustomerReviewBookId, 0]);
+
+  var CustomerReviewList := TObjectList<TCustomerReview>.Create;
+
+  for var ARItem in ARList do
+  begin
+    var CustomerReviewContext := ARItem As TCustomerReviewActiveRecord;
+    var CustomerReview := TCustomerReview.Create(CustomerReviewContext);
+    CustomerReviewList.Add(CustomerReview);
+  end;
+
+  Result := CustomerReviewList;
+end;
+
+function TCustomerReviewActiveRecordDAO.SelectWhereId(
+  const CustomerReviewId: Integer): TCustomerReview;
+begin
+  var CustomerReviewAR := TCustomerReviewActiveRecord.Create;
+  try
+    if not CustomerReviewAR.LoadByPK(CustomerReviewId) then
+      raise EMVCActiveRecordNotFound.Create(Classname + ': Customer Review ' +
+        'with ID ' + CustomerReviewId.ToString + ' not found');
+
+    var CustomerReview := TCustomerReview.Create(CustomerReviewAR);
+    Result := CustomerReview;
+  finally
+    CustomerReviewAR.Free;
+  end;
+end;
+
+procedure TCustomerReviewActiveRecordDAO.Update(const CustomerReview: TCustomerReview);
+begin
+  var CustomerReviewAR := TCustomerReviewActiveRecord.Create(CustomerReview);
+  try
+    CustomerReviewAR.Update(True);
+  finally
+    CustomerReviewAR.Free;
+  end;
+end;
+
+end.

@@ -3,43 +3,58 @@ unit MainPresenterTest;
 interface
 
 uses
-  DUnitX.TestFramework;
+  DUnitX.TestFramework, MainPresenterIntf, Forms, MockBookTableDatabase;
 
 type
   [TestFixture]
   TMainPresenterTest = class
+  private
+    FMainPresenter: IMainPresenter;
   public
     [Setup]
     procedure Setup;
     [TearDown]
     procedure TearDown;
-    // Sample Methods
-    // Simple single Test
+
     [Test]
-    procedure Test1;
-    // Test with TestCase Attribute to supply parameters.
+    procedure Test_LoadBooks_BookList_NotEmpty;
     [Test]
-    [TestCase('TestA','1,2')]
-    [TestCase('TestB','3,4')]
-    procedure Test2(const AValue1 : Integer;const AValue2 : Integer);
+    procedure Test_ShowBookDetails_BookDetailsView_NotNil;
   end;
 
 implementation
 
-procedure TMainPresenterTest.Setup;
+uses
+  MockMainPresenter, MainFrmIntf, BookServiceIntf,
+  BookActiveRecordDaoStub, BookService;
+
+procedure TMainPresenterTest.SetUp;
 begin
+  inherited;
+  var MockMainView := TForm.Create(nil);
+  var MockDatabase := TMockBookTableDatabase.Create;
+  var MockBookDao := TBookActiveRecordDaoStub.Create(MockDatabase);
+  var MockBookService := TBookService.Create(MockBookDao);
+  FMainPresenter := TMockMainPresenter.Create(MockMainView, MockBookService);
 end;
 
 procedure TMainPresenterTest.TearDown;
 begin
+  FMainPresenter := nil;
+  inherited;
 end;
 
-procedure TMainPresenterTest.Test1;
+procedure TMainPresenterTest.Test_LoadBooks_BookList_NotEmpty;
 begin
+//  FMainPresenter.LoadBooks;
+//  var BookList := FMainPresenter.GetBookList;
+//
+//  Assert.IsTrue(BookList.Count > 0);
 end;
 
-procedure TMainPresenterTest.Test2(const AValue1 : Integer;const AValue2 : Integer);
+procedure TMainPresenterTest.Test_ShowBookDetails_BookDetailsView_NotNil;
 begin
+
 end;
 
 initialization

@@ -18,6 +18,7 @@ type
     procedure ShowReviewValidationMessage(const ValidationMessage: string);
     procedure ShowRatingValidationMessage(const ValidationMessage: string);
     procedure HideValidationMessage;
+    procedure Show;
   end;
 
 implementation

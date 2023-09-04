@@ -1,0 +1,74 @@
+unit StatusCodeException;
+
+interface
+
+uses
+  System.SysUtils;
+
+type
+  ENotFoundStatusCodeException = class(Exception)
+  public
+    constructor Create(const AMsg: string); override;
+  end;
+
+  EForbiddenStatusCodeException = class(Exception)
+  public
+    constructor Create(const AMsg: string); override;
+  end;
+
+  EUnauthorizedStatusCodeException = class(Exception)
+  public
+    constructor Create(const AMsg: string); override;
+  end;
+
+  EBadRequestStatusCodeException = class(Exception)
+  public
+    constructor Create(const AMsg: string); override;
+  end;
+
+  EServerErrorStatusCodeException = class(Exception)
+  public
+    constructor Create(const AMsg: string); override;
+  end;
+
+implementation
+
+{ ENotFoundStatusCodeException }
+
+constructor ENotFoundStatusCodeException.Create(const AMsg: string);
+begin
+  var MessageFormat := Format('The %s does not exist anymore', [AMsg]);
+  inherited Create(MessageFormat);
+end;
+
+{ EForbiddenStatusCodeException }
+
+constructor EForbiddenStatusCodeException.Create(const AMsg: string);
+begin
+  inherited Create('You are not allowed to perform this action.');
+end;
+
+{ EUnauthorizedStatusCodeException }
+
+constructor EUnauthorizedStatusCodeException.Create(const AMsg: string);
+begin
+  inherited Create(AMsg);
+end;
+
+{ EBadRequestStatusCodeException }
+
+constructor EBadRequestStatusCodeException.Create(const AMsg: string);
+begin
+  inherited;
+
+end;
+
+{ EServerErrorStatusCodeException }
+
+constructor EServerErrorStatusCodeException.Create(const AMsg: string);
+begin
+  inherited;
+
+end;
+
+end.

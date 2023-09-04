@@ -129,7 +129,8 @@
         <DCCReference Include="Commons\ResponseStatusMapper.pas"/>
         <DCCReference Include="Commons\StatusCodeException.pas"/>
         <DCCReference Include="Commons\SysConst.pas"/>
-        <DCCReference Include="Commons\ViewFactory.pas"/>
+        <DCCReference Include="FactoryMethod\ViewFactory.pas"/>
+        <DCCReference Include="FactoryMethod\ViewFactoryIntf.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

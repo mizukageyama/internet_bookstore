@@ -1,0 +1,15 @@
+unit ViewFactoryIntf;
+
+interface
+
+type
+  IViewFactory = class
+  public
+    function CreateBookDetailsView: TBookDetailsView;
+    function CreateWriteReviewView: TWriteReviewView;
+    function CreateLoginView: TLoginView;
+  end;
+
+implementation
+
+end.

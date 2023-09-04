@@ -1,0 +1,72 @@
+unit StatusCodeException;
+
+interface
+
+uses
+  System.SysUtils;
+
+type
+  ENotFoundStatusCodeException = class(Exception)
+  public
+    constructor Create(const AMsg: string);
+  end;
+
+  EForbiddenStatusCodeException = class(Exception)
+  public
+    constructor Create(const AMsg: string);
+  end;
+
+  EUnauthorizedStatusCodeException = class(Exception)
+  public
+    constructor Create(const AMsg: string);
+  end;
+
+  EBadRequestStatusCodeException = class(Exception)
+  public
+    constructor Create(const AMsg: string);
+  end;
+
+  EServerErrorStatusCodeException = class(Exception)
+  public
+    constructor Create(const AMsg: string);
+  end;
+
+implementation
+
+{ ENotFoundStatusCodeException }
+
+constructor ENotFoundStatusCodeException.Create(const AMsg: string);
+begin
+  var MessageFormat := Format('Sorry, the %s no longer exist.', [AMsg]);
+  inherited Create(MessageFormat);
+end;
+
+{ EForbiddenStatusCodeException }
+
+constructor EForbiddenStatusCodeException.Create(const AMsg: string);
+begin
+  inherited Create('You are not allowed to perform this action.');
+end;
+
+{ EUnauthorizedStatusCodeException }
+
+constructor EUnauthorizedStatusCodeException.Create(const AMsg: string);
+begin
+  inherited Create(AMsg);
+end;
+
+{ EBadRequestStatusCodeException }
+
+constructor EBadRequestStatusCodeException.Create(const AMsg: string);
+begin
+  inherited Create('The entered information is invalid.');
+end;
+
+{ EServerErrorStatusCodeException }
+
+constructor EServerErrorStatusCodeException.Create(const AMsg: string);
+begin
+  inherited Create('Internal server error. Please contact your administrator.');
+end;
+
+end.

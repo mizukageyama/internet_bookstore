@@ -1,0 +1,118 @@
+unit WriteReviewFrm;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.StdCtrls, Vcl.ExtCtrls, Book, WriteReviewFrmIntf,
+  WriteReviewPresenterIntf, Customer;
+
+type
+  TWriteReviewView = class(TForm, IWriteReviewView)
+    lblBookTitle: TLabel;
+    pnlBottom: TPanel;
+    btnSubmitReview: TButton;
+    pnlGreeting: TPanel;
+    lblGreeting: TLabel;
+    pnlRating: TPanel;
+    lblRating: TLabel;
+    edtRating: TEdit;
+    pnlReview: TPanel;
+    blbReview: TLabel;
+    memReview: TMemo;
+    pnlReviewInput: TPanel;
+    pnlRatingInput: TPanel;
+    lblRatingValidationMessage: TLabel;
+    lblReviewValidationMessage: TLabel;
+    pnlValidation: TPanel;
+    procedure FormShow(Sender: TObject);
+    procedure btnSubmitReviewClick(Sender: TObject);
+  private
+    FWriteReviewPresenter: IWriteReviewPresenter;
+  public
+    procedure SetPresenter(Presenter: IWriteReviewPresenter);
+    procedure DisplayCustomerGreeting(const Customer: TCustomer);
+    procedure DisplayBookTitle(const Book: TBook);
+    function GetReviewText: string;
+    function GetReviewRating: string;
+    procedure CloseForm;
+    procedure ShowMessageDialog(const Msg: string);
+    procedure ShowReviewValidationMessage(const ValidationMessage: string);
+    procedure ShowRatingValidationMessage(const ValidationMessage: string);
+    procedure HideValidationMessage;
+  end;
+
+implementation
+
+{$R *.dfm}
+
+{ TWriteReviewForm }
+
+procedure TWriteReviewView.FormShow(Sender: TObject);
+begin
+  FWriteReviewPresenter.InitializeView;
+end;
+
+procedure TWriteReviewView.btnSubmitReviewClick(Sender: TObject);
+begin
+  FWriteReviewPresenter.SubmitReview;
+end;
+
+procedure TWriteReviewView.CloseForm;
+begin
+  Self.Close;
+end;
+
+procedure TWriteReviewView.SetPresenter(Presenter: IWriteReviewPresenter);
+begin
+  FWriteReviewPresenter := Presenter;
+end;
+
+procedure TWriteReviewView.DisplayBookTitle(const Book: TBook);
+begin
+  lblBookTitle.Caption := Book.Title;
+end;
+
+procedure TWriteReviewView.DisplayCustomerGreeting(const Customer: TCustomer);
+begin
+  lblGreeting.Caption := 'Hello ' + Customer.FirstName +
+    ', please enter your review for this book.';
+end;
+
+function TWriteReviewView.GetReviewRating: string;
+begin
+  Result := edtRating.Text;
+end;
+
+function TWriteReviewView.GetReviewText: string;
+begin
+  Result := memReview.Text;
+end;
+
+procedure TWriteReviewView.ShowMessageDialog(const Msg: string);
+begin
+  ShowMessage(Msg);
+end;
+
+procedure TWriteReviewView.ShowRatingValidationMessage(
+  const ValidationMessage: string);
+begin
+  lblRatingValidationMessage.Caption := ValidationMessage;
+  lblRatingValidationMessage.Show;
+end;
+
+procedure TWriteReviewView.ShowReviewValidationMessage(
+  const ValidationMessage: string);
+begin
+  lblReviewValidationMessage.Caption := ValidationMessage;
+  lblReviewValidationMessage.Show;
+end;
+
+procedure TWriteReviewView.HideValidationMessage;
+begin
+  lblRatingValidationMessage.Hide;
+  lblReviewValidationMessage.Hide;
+end;
+
+end.

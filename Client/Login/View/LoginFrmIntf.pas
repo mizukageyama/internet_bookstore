@@ -12,6 +12,7 @@ type
     procedure CloseForm;
     procedure SetPresenter(APresenter: ILoginPresenter);
     procedure ShowMessageDialog(const Msg: string);
+    procedure Show;
   end;
 
 implementation

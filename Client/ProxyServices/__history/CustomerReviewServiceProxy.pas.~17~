@@ -1,0 +1,144 @@
+unit CustomerReviewServiceProxy;
+
+interface
+
+uses
+  CustomerReviewServiceIntf, MVCFramework.DataSet.Utils,
+  CustomerReview, System.Generics.Collections, System.SysUtils,
+  MVCFramework.RESTClient.Intf, MVCFramework.RESTClient;
+
+type
+  TCustomerReviewServiceProxy = class(TInterfacedObject,
+    ICustomerReviewService)
+  private
+    FRESTClient: IMVCRESTClient;
+    const
+      ENDPOINT = '/api/reviews';
+  protected
+    procedure CreateCustomerReview(const CustomerReview:
+      TCustomerReview);
+    function GetCustomerReviewsByBookId(const BookId: Integer):
+      TObjectList<TCustomerReview>;
+    function GetCustomerReviewById(const CustomerReviewId: Integer):
+      TCustomerReview;
+    procedure UpdateCustomerReview(const CustomerReview: TCustomerReview);
+    procedure DeleteCustomerReview(const CustomerReviewId: Integer);
+  public
+    constructor Create;
+    destructor Destroy; override;
+  end;
+
+implementation
+
+uses
+  REST.JSON, JSON, CustomerSession, StatusCodeException, SYSCONST,
+  ResponseStatusMapper;
+
+{ TCustomerReviewServiceProxy }
+
+constructor TCustomerReviewServiceProxy.Create;
+begin
+  inherited;
+  FRESTClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
+end;
+
+procedure TCustomerReviewServiceProxy.CreateCustomerReview(
+  const CustomerReview: TCustomerReview);
+var
+  Response: IMVCRESTResponse;
+  CustomerSession: TCustomerSession;
+begin
+  CustomerSession := TCustomerSession.Instance;
+  FRESTClient.SetBearerAuthorization(CustomerSession.GetJWTToken);
+  FRESTClient.AddBody(CustomerReview.ToJSONBody, 'application/json');
+  Response := FRESTClient.POST(ENDPOINT);
+
+  var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
+  if ResponseStatus <> OK then
+    raise EServerErrorStatusCodeException.Create('Unable to create review');
+
+end;
+
+procedure TCustomerReviewServiceProxy.DeleteCustomerReview(
+  const CustomerReviewId: Integer);
+var
+  Response: IMVCRESTResponse;
+  CustomerSession: TCustomerSession;
+begin
+  CustomerSession := TCustomerSession.Instance;
+  FRESTClient.SetBearerAuthorization(CustomerSession.GetJWTToken);
+  FRESTClient.SetBearerAuthorization('token');
+  Response := FRESTClient.DELETE(ENDPOINT + '/'+ CustomerReviewId.toString);
+
+  var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
+  if ResponseStatus <> OK then
+    raise EServerErrorStatusCodeException.Create('Unable to delete review');
+end;
+
+function TCustomerReviewServiceProxy.GetCustomerReviewById(
+  const CustomerReviewId: Integer): TCustomerReview;
+var
+  Response: IMVCRESTResponse;
+begin
+  Response := FRESTClient.GET(ENDPOINT + '/'+ CustomerReviewId.toString);
+
+  var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
+  if ResponseStatus <> OK then
+    raise EServerErrorStatusCodeException.Create('Something went wrong');
+
+  var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
+  var Data := JSONValue.GetValue<TJSONObject>('data');
+  var CustomerReview := TJSON.JsonToObject<TCustomerReview>(Data);
+
+  Result := CustomerReview;
+end;
+
+function TCustomerReviewServiceProxy.GetCustomerReviewsByBookId(
+  const BookId: Integer): TObjectList<TCustomerReview>;
+var
+  Response: IMVCRESTResponse;
+begin
+  Response := FRESTClient.GET(ENDPOINT + '/'+ BookId.toString);
+
+  var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
+  if ResponseStatus <> OK then
+    raise EServerErrorStatusCodeException.Create('Something went wrong');
+
+  var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
+  var CustomerArray := JSONValue.GetValue<TJSONArray>('data');
+  var CustomerList := TObjectList<TCustomerReview>.Create;
+
+  for var I := 0 to CustomerArray.Count - 1 do
+  begin
+    var CustomerJSON := CustomerArray.Items[I].ToString;
+    var CustomerReview := TJSON.JsonToObject<TCustomerReview>(CustomerJSON);
+    CustomerList.Add(CustomerReview);
+  end;
+
+  Result := CustomerList;
+end;
+
+procedure TCustomerReviewServiceProxy.UpdateCustomerReview(
+  const CustomerReview: TCustomerReview);
+var
+  Response: IMVCRESTResponse;
+  CustomerSession: TCustomerSession;
+begin
+  CustomerSession := TCustomerSession.Instance;
+  FRESTClient.SetBearerAuthorization(CustomerSession.GetJWTToken);
+  FRESTClient.AddBody(CustomerReview.ToJSONBody, 'application/json');
+  Response := FRESTClient.PUT(ENDPOINT);
+
+  var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
+  if ResponseStatus <> OK then
+    raise TStatusCodeException.Create(ResponseStatus,
+      'Unable to update review');
+end;
+
+destructor TCustomerReviewServiceProxy.Destroy;
+begin
+  FRESTClient := nil;
+  inherited;
+end;
+
+end.

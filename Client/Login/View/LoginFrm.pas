@@ -9,14 +9,14 @@ uses
 
 type
   TLoginView = class(TForm, ILoginView)
-    pnlEmail: TPanel;
-    lblEmail: TLabel;
-    edtEmail: TEdit;
-    pnlPassword: TPanel;
-    lblPassword: TLabel;
-    edtPassword: TEdit;
-    btnLogin: TButton;
-    procedure btnLoginClick(Sender: TObject);
+    EmailPanel: TPanel;
+    EmailLabel: TLabel;
+    EmailEditText: TEdit;
+    PasswordPanel: TPanel;
+    PasswordLabel: TLabel;
+    PasswordEditText: TEdit;
+    LoginButton: TButton;
+    procedure LoginButtonClick(Sender: TObject);
   private
     FPresenter: ILoginPresenter;
   public
@@ -33,7 +33,7 @@ implementation
 
 uses WriteReviewFrm;
 
-procedure TLoginView.btnLoginClick(Sender: TObject);
+procedure TLoginView.LoginButtonClick(Sender: TObject);
 begin
   FPresenter.Login;
 end;
@@ -45,12 +45,12 @@ end;
 
 function TLoginView.Getpassword: string;
 begin
-  Result := edtPassword.Text;
+  Result := PasswordEditText.Text;
 end;
 
 function TLoginView.GetUsername: string;
 begin
-  Result := edtEmail.Text;
+  Result := EmailEditText.Text;
 end;
 
 procedure TLoginView.SetPresenter(APresenter: ILoginPresenter);

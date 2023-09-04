@@ -2,8 +2,55 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2023/09/04 04:33:42.000.955,=C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactory.pas</Transaction>
-    <Transaction>2023/09/04 06:08:59.000.020,C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactory.pas=C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactoryMaker.pas</Transaction>
+    <Transaction>2023/09/04 06:08:59.000.020,C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactoryMaker.pas=C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactory.pas</Transaction>
     <Transaction>2023/09/04 06:11:19.000.618,C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactoryMaker.pas=</Transaction>
     <Transaction>2023/09/04 06:11:33.000.735,=C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactory.pas</Transaction>
-  </Transactions>
+    <Transaction>2023/09/04 10:17:09.543,C:\Users\User\Documents\GitHub\internet_bookstore\Client\FactoryMethod\ViewFactory.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Commons\ViewFactory.pas</Transaction>
+    <Transaction>2023/09/04 10:19:29.366,=C:\Users\User\Documents\GitHub\internet_bookstore\Client\FactoryMethod\ViewFactoryIntf.pas</Transaction>
+  </Transactions>  <ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="BookDetails"/>
+    <File Path="BookDetails\Presenter"/>
+    <File Path="BookDetails\Presenter\BookDetailsPresenter.pas"/>
+    <File Path="BookDetails\Presenter\BookDetailsPresenterIntf.pas"/>
+    <File Path="BookDetails\View"/>
+    <File Path="BookDetails\View\BookDetailsFrm.pas"/>
+    <File Path="BookDetails\View\BookDetailsFrm.dfm"/>
+    <File Path="BookDetails\View\BookDetailsFrmIntf.pas"/>
+    <File Path="Commons"/>
+    <File Path="Commons\CustomerSession.pas"/>
+    <File Path="Commons\ResponseHandler.pas"/>
+    <File Path="Commons\ResponseStatusMapper.pas"/>
+    <File Path="Commons\StatusCodeException.pas"/>
+    <File Path="Commons\SysConst.pas"/>
+    <File Path="FactoryMethod"/>
+    <File Path="FactoryMethod\ViewFactory.pas"/>
+    <File Path="FactoryMethod\ViewFactoryIntf.pas"/>
+    <File Path="Login"/>
+    <File Path="Login\Presenter"/>
+    <File Path="Login\Presenter\LoginPresenter.pas"/>
+    <File Path="Login\Presenter\LoginPresenterIntf.pas"/>
+    <File Path="Login\View"/>
+    <File Path="Login\View\LoginFrm.pas"/>
+    <File Path="Login\View\LoginFrm.dfm"/>
+    <File Path="Login\View\LoginFrmIntf.pas"/>
+    <File Path="Main"/>
+    <File Path="Main\Presenter"/>
+    <File Path="Main\Presenter\MainPresenter.pas"/>
+    <File Path="Main\Presenter\MainPresenterIntf.pas"/>
+    <File Path="Main\View"/>
+    <File Path="Main\View\MainFrm.pas"/>
+    <File Path="Main\View\MainFrm.dfm"/>
+    <File Path="Main\View\MainFrmIntf.pas"/>
+    <File Path="ProxyServices"/>
+    <File Path="ProxyServices\BookServiceProxy.pas"/>
+    <File Path="ProxyServices\CustomerReviewServiceProxy.pas"/>
+    <File Path="WriteReview"/>
+    <File Path="WriteReview\Presenter"/>
+    <File Path="WriteReview\Presenter\WriteReviewPresenter.pas"/>
+    <File Path="WriteReview\Presenter\WriteReviewPresenterIntf.pas"/>
+    <File Path="WriteReview\View"/>
+    <File Path="WriteReview\View\WriteReviewFrm.pas"/>
+    <File Path="WriteReview\View\WriteReviewFrm.dfm"/>
+    <File Path="WriteReview\View\WriteReviewFrmIntf.pas"/>
+  </ProjectSortOrder>
 </BorlandProject>

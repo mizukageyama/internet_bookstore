@@ -19,8 +19,8 @@ implementation
 procedure TBaseController.OnAfterAction(Context: TWebContext;
   const AActionName: string);
 begin
-  ActiveRecordConnectionsRegistry.RemoveDefaultConnection;
-  inherited;
+//  ActiveRecordConnectionsRegistry.RemoveDefaultConnection;
+//  inherited;
 end;
 
 procedure TBaseController.OnBeforeAction(Context: TWebContext;
@@ -28,10 +28,10 @@ procedure TBaseController.OnBeforeAction(Context: TWebContext;
 var
   LConn: TFDConnection;
 begin
-  inherited;
-  LConn := TFDConnection.Create(nil);
-  LConn.ConnectionDefName := 'Internet_Bookstore_Connection';
-  ActiveRecordConnectionsRegistry.AddDefaultConnection(LConn, True);
+//  inherited;
+//  LConn := TFDConnection.Create(nil);
+//  LConn.ConnectionDefName := 'Internet_Bookstore_Connection';
+//  ActiveRecordConnectionsRegistry.AddDefaultConnection(LConn, True);
 end;
 
 end.

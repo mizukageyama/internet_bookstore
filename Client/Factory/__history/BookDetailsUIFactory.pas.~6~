@@ -1,0 +1,16 @@
+unit BookDetailsUIFactory;
+
+interface
+
+uses
+  BookDetailsUIFactoryIntf;
+
+type
+  TBookDetailsUIFactory = class(TInterfacedObject, IBookDetailsUIFactory)
+  public
+
+  end;
+
+implementation
+
+end.

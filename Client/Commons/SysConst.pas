@@ -1,4 +1,4 @@
-unit SYSCONST; //change to pascal case
+unit SysConst;
 
 interface
 

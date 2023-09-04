@@ -3,7 +3,7 @@ unit ResponseHandler;
 interface
 
 uses
-  SYSCONST;
+  SysConst;
 
 type
   TResponseHandler = class

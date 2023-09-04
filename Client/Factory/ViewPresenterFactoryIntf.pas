@@ -4,12 +4,17 @@ interface
 
 uses
   LoginFrmIntf, LoginPresenterIntf, BookDetailsFrmIntf, WriteReviewFrmIntf,
-  BookDetailsPresenterIntf, CustomerReviewServiceIntf, Book,
-  WriteReviewPresenterIntf;
+  BookDetailsPresenterIntf, CustomerReviewServiceIntf, Book, MainFrmIntf,
+  WriteReviewPresenterIntf, MainPresenterIntf, BookServiceIntf;
 
 type
   IViewPresenterFactory = interface
     ['{552171CD-2326-4DFF-9641-4C64CAC28393}']
+    function CreateMainView: IMainView;
+    function CreateMainPresenter(AMainView: IMainView;
+      ABookServiceProxy: IBookService;
+      AViewPresenterFactory: IViewPresenterFactory): IMainPresenter;
+
     function CreateLoginView: ILoginView;
     function CreateLoginPresenter(ALoginViewView: ILoginView): ILoginPresenter;
 

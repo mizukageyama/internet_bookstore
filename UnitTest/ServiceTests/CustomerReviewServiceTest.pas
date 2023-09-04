@@ -1,0 +1,114 @@
+unit CustomerReviewServiceTest;
+
+interface
+
+uses
+  DUnitX.TestFramework, CustomerReviewService, CustomerReviewDaoIntf,
+  CustomerReviewServiceIntf, CustomerReview, MockCustomerReviewTableDatabase,
+  CustomerReviewARDaoStub;
+
+type
+  [TestFixture]
+  TCustomerReviewServiceTest = class
+  private
+    FCustomerReviewService: ICustomerReviewService;
+    FMockCustomerReviewDAO: ICustomerReviewDAO;
+    FMockDatabase: TMockCustomerReviewTableDatabase;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+
+    [Test]
+    procedure Test_CreateCustomerReview_NewCustomerReview_Inserted;
+    [Test]
+    [TestCase('Test_Rating_In_Range','1,2,3,Hello world. This is my review,4')]
+    procedure Test_CreateCustomerReview_RatingInRange_PassValidation(const AId,
+      ABookId, ACustomerId : Integer; const AReview : string;
+      const ARating: Integer);
+    [Test]
+    [TestCase('Test_Zero_Rating','1,2,3,Hello world. This is my review,0')]
+    [TestCase('Test_Negative_Rating','1,2,3,Hello world. ' +
+      'This is my review,-100')]
+    procedure Test_CreateCustomerReview_RatingNotInRange_FailValidation(
+      const AId, ABookId, ACustomerId : Integer; const AReview : string;
+      const ARating: Integer);
+    [Test]
+    [TestCase('Test_Empty_Review','1,2,3,,4')]
+    [TestCase('Test_Review_4_Characters_Only','1,2,3,Hello,4')]
+    procedure Test_CreateCustomerReview_IsTooShort_FailValidation(const AId,
+      ABookId, ACustomerId : Integer; const AReview : string;
+      const ARating: Integer);
+  end;
+
+implementation
+
+{ TCustomerReviewServiceTest }
+
+procedure TCustomerReviewServiceTest
+  .Test_CreateCustomerReview_NewCustomerReview_Inserted;
+begin
+  var Review := TCustomerReview.Create;
+  Review.BookId := 1;
+  Review.Review := 'The book is amazing!';
+  Review.Rating := 4;
+
+  var ListBeforeInsert := FCustomerReviewService
+    .GetCustomerReviewsByBookId(Review.BookId);
+  FCustomerReviewService.CreateCustomerReview(Review);
+
+  var ListAfterInsert := FCustomerReviewService
+    .GetCustomerReviewsByBookId(Review.BookId);
+
+  Assert.AreEqual<Integer>(ListAfterInsert.Count, ListBeforeInsert.Count + 1);
+end;
+
+procedure TCustomerReviewServiceTest
+  .Test_CreateCustomerReview_IsTooShort_FailValidation(
+  const AId, ABookId, ACustomerId: Integer; const AReview: string;
+  const ARating: Integer);
+begin
+  var CustomerReview := TCustomerReview.Create(AId, ACustomerId, ABookId,
+    ARating, AReview, False);
+  Assert.IsTrue(CustomerReview.IsTooShort);
+end;
+
+procedure TCustomerReviewServiceTest
+  .Test_CreateCustomerReview_RatingInRange_PassValidation(
+  const AId, ABookId, ACustomerId: Integer; const AReview: string;
+  const ARating: Integer);
+begin
+  var CustomerReview := TCustomerReview.Create(AId, ACustomerId, ABookId,
+    ARating, AReview, False);
+  Assert.IsTrue(CustomerReview.IsRatingInRange);
+end;
+
+procedure TCustomerReviewServiceTest
+  .Test_CreateCustomerReview_RatingNotInRange_FailValidation(
+  const AId, ABookId, ACustomerId: Integer; const AReview: string;
+  const ARating: Integer);
+begin
+  var CustomerReview := TCustomerReview.Create(AId, ACustomerId, ABookId,
+    ARating, AReview, False);
+  Assert.IsFalse(CustomerReview.IsRatingInRange);
+end;
+
+procedure TCustomerReviewServiceTest.Setup;
+begin
+  FMockDatabase := TMockCustomerReviewTableDatabase.Create;
+  FMockCustomerReviewDAO := TCustomerReviewARDaoStub.Create(FMockDatabase);
+  FCustomerReviewService := TCustomerReviewService
+    .Create(FMockCustomerReviewDAO);
+end;
+
+procedure TCustomerReviewServiceTest.TearDown;
+begin
+  FCustomerReviewService := nil;
+  FMockCustomerReviewDAO := nil;
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TCustomerReviewServiceTest);
+
+end.

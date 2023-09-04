@@ -1,0 +1,80 @@
+unit BookDetailsPresenterTest;
+
+interface
+
+uses
+  DUnitX.TestFramework, BookDetailsPresenterIntf, BookDetailsFrmIntf,
+  Book, WriteReviewFrmIntf, MockBookDetailsPresenter, Forms,
+  ViewPresenterFactoryIntf;
+
+type
+  [TestFixture]
+  TBookDetailsPresenterTest = class
+  private
+    FBookDetailsPresenter: IBookDetailsPresenter;
+    FViewPresenterFactory: IViewPresenterFactory;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+    [Test]
+    procedure TestDisplayBookDetails;
+    [Test]
+    procedure TestWriteReview;
+    [Test]
+    procedure TestShowWriteReviewView;
+    [Test]
+    procedure TestShowLoginView;
+  end;
+
+implementation
+
+uses
+  BookDetailsViewStub, BookDetailsPresenter, ViewPresenterFactoryStub;
+
+procedure TBookDetailsPresenterTest.Setup;
+begin
+  FViewPresenterFactory := TViewPresenterFactoryStub.Create;
+  var DetailsViewStub := FViewPresenterFactory.CreateBookDetailsView;
+  var SelectedBook := TBook.Create(1,
+    'Harry Potter', 'Once upon a time, there was..');
+  FBookDetailsPresenter := FViewPresenterFactory.CreateBookDetailsPresenter(
+    DetailsViewStub, SelectedBook, FViewPresenterFactory);
+end;
+
+procedure TBookDetailsPresenterTest.TearDown;
+begin
+  FBookDetailsPresenter := nil;
+  FViewPresenterFactory := nil;
+end;
+
+procedure TBookDetailsPresenterTest.TestDisplayBookDetails;
+begin
+  FBookDetailsPresenter.DisplayBookDetails;
+end;
+
+procedure TBookDetailsPresenterTest.TestShowLoginView;
+begin
+
+end;
+
+procedure TBookDetailsPresenterTest.TestShowWriteReviewView;
+begin
+  Assert.WillNotRaise(
+    procedure
+    begin
+      FBookDetailsPresenter.ShowWriteReviewView;
+    end
+    );
+end;
+
+procedure TBookDetailsPresenterTest.TestWriteReview;
+begin
+
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TBookDetailsPresenterTest);
+
+end.

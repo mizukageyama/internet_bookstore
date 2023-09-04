@@ -87,18 +87,20 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="BookServiceTest.pas"/>
-        <DCCReference Include="CustomerReviewServiceTest.pas"/>
-        <DCCReference Include="BookActiveRecordDaoTest.pas"/>
-        <DCCReference Include="BookActiveRecordDaoStub.pas"/>
-        <DCCReference Include="MockBookTableDatabase.pas"/>
-        <DCCReference Include="MockCustomerReviewTableDatabase.pas"/>
-        <DCCReference Include="CustomerReviewARDaoStub.pas"/>
-        <DCCReference Include="BookDetailsPresenterTest.pas"/>
-        <DCCReference Include="MainPresenterTest.pas"/>
+        <DCCReference Include="ServiceTests\BookServiceTest.pas"/>
+        <DCCReference Include="ServiceTests\CustomerReviewServiceTest.pas"/>
+        <DCCReference Include="DaoStubs\BookActiveRecordDaoStub.pas"/>
+        <DCCReference Include="MockDatabase\MockBookTableDatabase.pas"/>
+        <DCCReference Include="MockDatabase\MockCustomerReviewTableDatabase.pas"/>
+        <DCCReference Include="DaoStubs\CustomerReviewARDaoStub.pas"/>
+        <DCCReference Include="PresenterTests\BookDetailsPresenterTest.pas"/>
+        <DCCReference Include="PresenterTests\MainPresenterTest.pas"/>
         <DCCReference Include="ViewStubs\BookDetailsViewStub.pas"/>
         <DCCReference Include="ViewStubs\LoginViewStub.pas"/>
         <DCCReference Include="ViewStubs\WriteReviewViewStub.pas"/>
+        <DCCReference Include="Commons\ViewPresenterFactoryStub.pas"/>
+        <DCCReference Include="PresenterTests\WriteReviewPresenterTest.pas"/>
+        <DCCReference Include="ViewStubs\MainViewStub.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

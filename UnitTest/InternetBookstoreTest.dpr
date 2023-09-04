@@ -13,18 +13,20 @@ uses
   DUnitX.Loggers.Xml.NUnit,
   {$ENDIF }
   DUnitX.TestFramework,
-  BookServiceTest in 'BookServiceTest.pas',
-  CustomerReviewServiceTest in 'CustomerReviewServiceTest.pas',
-  BookActiveRecordDaoTest in 'BookActiveRecordDaoTest.pas',
-  BookActiveRecordDaoStub in 'BookActiveRecordDaoStub.pas',
-  MockBookTableDatabase in 'MockBookTableDatabase.pas',
-  MockCustomerReviewTableDatabase in 'MockCustomerReviewTableDatabase.pas',
-  CustomerReviewARDaoStub in 'CustomerReviewARDaoStub.pas',
-  BookDetailsPresenterTest in 'BookDetailsPresenterTest.pas',
-  MainPresenterTest in 'MainPresenterTest.pas',
+  BookServiceTest in 'ServiceTests\BookServiceTest.pas',
+  CustomerReviewServiceTest in 'ServiceTests\CustomerReviewServiceTest.pas',
+  BookActiveRecordDaoStub in 'DaoStubs\BookActiveRecordDaoStub.pas',
+  MockBookTableDatabase in 'MockDatabase\MockBookTableDatabase.pas',
+  MockCustomerReviewTableDatabase in 'MockDatabase\MockCustomerReviewTableDatabase.pas',
+  CustomerReviewARDaoStub in 'DaoStubs\CustomerReviewARDaoStub.pas',
+  BookDetailsPresenterTest in 'PresenterTests\BookDetailsPresenterTest.pas',
+  MainPresenterTest in 'PresenterTests\MainPresenterTest.pas',
   BookDetailsViewStub in 'ViewStubs\BookDetailsViewStub.pas',
   LoginViewStub in 'ViewStubs\LoginViewStub.pas',
-  WriteReviewViewStub in 'ViewStubs\WriteReviewViewStub.pas';
+  WriteReviewViewStub in 'ViewStubs\WriteReviewViewStub.pas',
+  ViewPresenterFactoryStub in 'Commons\ViewPresenterFactoryStub.pas',
+  WriteReviewPresenterTest in 'PresenterTests\WriteReviewPresenterTest.pas',
+  MainViewStub in 'ViewStubs\MainViewStub.pas';
 
 {$IFNDEF TESTINSIGHT}
 var

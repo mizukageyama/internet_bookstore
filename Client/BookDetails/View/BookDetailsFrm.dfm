@@ -60,7 +60,7 @@ object BookDetailsView: TBookDetailsView
       Left = 0
       Top = 10
       Width = 120
-      Height = 31
+      Height = 30
       Align = alLeft
       Caption = 'Book Details'
       Font.Charset = DEFAULT_CHARSET
@@ -70,7 +70,6 @@ object BookDetailsView: TBookDetailsView
       Font.Style = []
       ParentFont = False
       Layout = tlCenter
-      ExplicitHeight = 30
     end
     object WriteReviewButton: TButton
       Left = 370

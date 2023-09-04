@@ -1,0 +1,96 @@
+unit WriteReviewPresenterTest;
+
+interface
+
+uses
+  DUnitX.TestFramework, WriteReviewPresenterIntf, ViewPresenterFactoryIntf,
+  WriteReviewFrmIntf, Book, CustomerReviewServiceIntf;
+
+type
+  [TestFixture]
+  TWriteReviewPresenterTest = class
+  private
+    FWriteReviewPresenter: IWriteReviewPresenter;
+    FViewPresenterFactoryStub: IViewPresenterFactory;
+    FWriteReviewViewStub: IWriteReviewView;
+    FReviewServiceProxy: ICustomerReviewService;
+    FSelectedBook: TBook;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+    [Test]
+    procedure Test_InitializeView_WriteReviewDisplayed_Equal;
+    [Test]
+    procedure Test_SubmitReview_ValidationAndLogic_WillNotRaise;
+  end;
+
+implementation
+
+uses
+  ViewPresenterFactoryStub, MockCustomerReviewTableDatabase, System.DateUtils,
+  CustomerReviewARDaoStub, CustomerReviewService, CustomerSession,
+  WriteReviewViewStub;
+
+procedure TWriteReviewPresenterTest.Setup;
+begin
+  var MockDatabase := TMockCustomerReviewTableDatabase.Create;
+  var MockCustomerReviewDAO := TCustomerReviewARDaoStub.Create(MockDatabase);
+  var CustomerReviewService := TCustomerReviewService
+    .Create(MockCustomerReviewDAO);
+
+  FViewPresenterFactoryStub := TViewPresenterFactoryStub.Create;
+  FWriteReviewViewStub := FViewPresenterFactoryStub.CreateWriteReviewView;
+  FSelectedBook := TBook.Create(1, 'Harry Potter',
+    'Once upon a time, there was..');
+  FWriteReviewPresenter := FViewPresenterFactoryStub
+    .CreateWriteReviewPresenter(FWriteReviewViewStub, CustomerReviewService,
+      FSelectedBook);
+end;
+
+procedure TWriteReviewPresenterTest.TearDown;
+begin
+  FWriteReviewPresenter := nil;
+  FViewPresenterFactoryStub := nil;
+  FWriteReviewViewStub := nil;
+  FSelectedBook.Free;
+end;
+
+procedure TWriteReviewPresenterTest
+  .Test_InitializeView_WriteReviewDisplayed_Equal;
+begin
+  var CustomerSession := TCustomerSession.Instance;
+  CustomerSession.SetLoggedIn(1, 'Jenny', 'sample_token', TDateTime.Now);
+  FWriteReviewPresenter.InitializeView;
+
+  var WriteReviewView := (FWriteReviewViewStub as TWriteReviewViewStub);
+  var Customer := CustomerSession.GetLoggedInCustomer;
+
+  Assert.IsTrue(
+    (WriteReviewView.CustomerGreeting = 'Hello ' + Customer.FirstName +
+    ', please enter your review for this book.') and
+    (WriteReviewView.BookTitle = 'Harry Potter')
+    );
+end;
+
+procedure TWriteReviewPresenterTest
+  .Test_SubmitReview_ValidationAndLogic_WillNotRaise;
+begin
+  (FWriteReviewViewStub as TWriteReviewViewStub)
+    .MockUserInput('This is my sample review', '4');
+    var CustomerSession := TCustomerSession.Instance;
+  CustomerSession.SetLoggedIn(1, 'Jenny', 'sample_token', TDateTime.Now);
+
+  Assert.WillNotRaise(
+    procedure
+    begin
+      FWriteReviewPresenter.SubmitReview;
+    end
+    );
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TWriteReviewPresenterTest);
+
+end.

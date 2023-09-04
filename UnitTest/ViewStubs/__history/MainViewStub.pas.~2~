@@ -1,0 +1,51 @@
+unit MainViewStub;
+
+unit LoginViewStub;
+
+interface
+
+uses
+  MainFrmIntf, MainPresenterIntf;
+
+type
+  TMainViewStub = class(TInterfacedObject, IMainView)
+  private
+    FPresenter: IMainPresenter;
+    FFormShown: Boolean;
+    FSelectedBook: TObject;
+    FMessageDialogText: string;
+    FMessageDialogShown: Boolean;
+  public
+    procedure Show;
+    procedure SetPresenter(APresenter: IMainPresenter);
+    procedure ShowMessageDialog(const Msg: string);
+    function GetSelectedBook: TObject;
+  end;
+
+implementation
+
+
+{ TMainViewStub }
+
+function TMainViewStub.GetSelectedBook: TObject;
+begin
+
+end;
+
+procedure TMainViewStub.SetPresenter(APresenter: IMainPresenter);
+begin
+
+end;
+
+procedure TMainViewStub.Show;
+begin
+  FFormShown := True;
+end;
+
+procedure TMainViewStub.ShowMessageDialog(const Msg: string);
+begin
+  FMessageDialogShown := True;
+
+end;
+
+end.

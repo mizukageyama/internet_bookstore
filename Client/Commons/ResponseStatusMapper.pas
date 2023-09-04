@@ -3,7 +3,7 @@ unit ResponseStatusMapper;
 interface
 
 uses
-  SYSCONST;
+  SysConst;
 
 type
   TResponseStatusMapper = class

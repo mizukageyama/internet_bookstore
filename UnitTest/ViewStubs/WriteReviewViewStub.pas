@@ -33,6 +33,7 @@ type
     procedure ShowReviewValidationMessage(const ValidationMessage: string);
     procedure ShowRatingValidationMessage(const ValidationMessage: string);
     procedure HideValidationMessage;
+    procedure MockUserInput(const ReviewText, Rating: string);
     procedure Show;
 
     property Presenter: IWriteReviewPresenter read FPresenter;
@@ -90,6 +91,12 @@ end;
 procedure TWriteReviewViewStub.HideValidationMessage;
 begin
   FHiddenValidationMessage := True;
+end;
+
+procedure TWriteReviewViewStub.MockUserInput(const ReviewText, Rating: string);
+begin
+  FReviewText := ReviewText;
+  FReviewRating := Rating;
 end;
 
 procedure TWriteReviewViewStub.SetPresenter(APresenter: IWriteReviewPresenter);

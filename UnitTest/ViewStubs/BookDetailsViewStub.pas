@@ -9,14 +9,14 @@ type
   TBookDetailsViewStub = class(TInterfacedObject, IBookDetailsView)
   private
     FPresenter: IBookDetailsPresenter;
-    FBook: TBook;
+    FBookDisplayed: TBook;
     FShown: Boolean;
   public
     procedure SetPresenter(APresenter: IBookDetailsPresenter);
     procedure SetBookDetails(const Book: TBook);
     procedure Show;
 
-    property Book: TBook read FBook;
+    property Book: TBook read FBookDisplayed;
     property Presenter: IBookDetailsPresenter read FPresenter;
     property IsShown: Boolean read FShown;
   end;
@@ -26,7 +26,7 @@ implementation
 
 procedure TBookDetailsViewStub.SetBookDetails(const Book: TBook);
 begin
-  FBook := Book;
+  FBookDisplayed := Book;
 end;
 
 procedure TBookDetailsViewStub.SetPresenter(APresenter: IBookDetailsPresenter);

@@ -5,8 +5,7 @@ interface
 uses
   MainPresenterIntf, BookServiceIntf, MainFrmIntf, Book,
   CustomerReviewServiceIntf, BookDetailsFrmIntf, CustomerReview,
-  BookDetailsPresenterIntf, LoginVPFactoryIntf, WriteReviewVPFactoryIntf,
-  ViewPresenterFactoryIntf;
+  BookDetailsPresenterIntf, LoginVPFactoryIntf, ViewPresenterFactoryIntf;
 
 type
   TBookDetailsPresenter = class(TInterfacedObject, IBookDetailsPresenter)

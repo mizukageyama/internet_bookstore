@@ -1,0 +1,71 @@
+unit StatusCodeException;
+
+interface
+
+uses
+  System.SysUtils;
+
+type
+  EHTTPNotFoundException = class(Exception)
+  public
+    constructor Create(const AMsg: string);
+  end;
+
+  EHTTPForbiddenException = class(Exception)
+  public
+    constructor Create(const AMsg: string);
+  end;
+
+  EHTTPUnauthorizedException = class(Exception)
+  public
+    constructor Create(const AMsg: string);
+  end;
+
+  EHTTPBadRequestException = class(Exception)
+  public
+    constructor Create(const AMsg: string);
+  end;
+
+  EHTTPServerErrorException = class(Exception)
+  public
+    constructor Create(const AMsg: string);
+  end;
+
+implementation
+
+{ EHTTPNotFoundException }
+
+constructor ENotFoundStatusCodeException.Create(const AMsg: string);
+begin
+  inherited Create(AMsg);
+end;
+
+{ EHTTPForbiddenException }
+
+constructor EForbiddenStatusCodeException.Create(const AMsg: string);
+begin
+  inherited Create(AMsg);
+end;
+
+{ EHTTPUnauthorizedException }
+
+constructor EUnauthorizedStatusCodeException.Create(const AMsg: string);
+begin
+  inherited Create(AMsg);
+end;
+
+{ EHTTPBadRequestException }
+
+constructor EBadRequestStatusCodeException.Create(const AMsg: string);
+begin
+  inherited Create(AMsg);
+end;
+
+{ EHTTPServerErrorException }
+
+constructor EServerErrorStatusCodeException.Create(const AMsg: string);
+begin
+  inherited Create(AMsg);
+end;
+
+end.

@@ -26,7 +26,7 @@ type
 implementation
 
 uses
-  REST.JSON, JSON, CustomerSession, ResponseStatusMapper, SYSCONST,
+  REST.JSON, JSON, CustomerSession, ResponseStatusMapper, SysConst,
   StatusCodeException;
 
 { TBookServiceProxy }

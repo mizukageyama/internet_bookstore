@@ -6,64 +6,64 @@ uses
   System.SysUtils;
 
 type
-  ENotFoundStatusCodeException = class(Exception)
+  EHTTPNotFoundException = class(Exception)
   public
     constructor Create(const AMsg: string);
   end;
 
-  EForbiddenStatusCodeException = class(Exception)
+  EHTTPForbiddenException = class(Exception)
   public
     constructor Create(const AMsg: string);
   end;
 
-  EUnauthorizedStatusCodeException = class(Exception)
+  EHTTPUnauthorizedException = class(Exception)
   public
     constructor Create(const AMsg: string);
   end;
 
-  EBadRequestStatusCodeException = class(Exception)
+  EHTTPBadRequestException = class(Exception)
   public
     constructor Create(const AMsg: string);
   end;
 
-  EServerErrorStatusCodeException = class(Exception)
+  EHTTPServerErrorException = class(Exception)
   public
     constructor Create(const AMsg: string);
   end;
 
 implementation
 
-{ ENotFoundStatusCodeException }
+{ EHTTPNotFoundException }
 
-constructor ENotFoundStatusCodeException.Create(const AMsg: string);
+constructor EHTTPNotFoundException.Create(const AMsg: string);
 begin
   inherited Create(AMsg);
 end;
 
-{ EForbiddenStatusCodeException }
+{ EHTTPForbiddenException }
 
-constructor EForbiddenStatusCodeException.Create(const AMsg: string);
+constructor EHTTPForbiddenException.Create(const AMsg: string);
 begin
   inherited Create(AMsg);
 end;
 
-{ EUnauthorizedStatusCodeException }
+{ EHTTPUnauthorizedException }
 
-constructor EUnauthorizedStatusCodeException.Create(const AMsg: string);
+constructor EHTTPUnauthorizedException.Create(const AMsg: string);
 begin
   inherited Create(AMsg);
 end;
 
-{ EBadRequestStatusCodeException }
+{ EHTTPBadRequestException }
 
-constructor EBadRequestStatusCodeException.Create(const AMsg: string);
+constructor EHTTPBadRequestException.Create(const AMsg: string);
 begin
   inherited Create(AMsg);
 end;
 
-{ EServerErrorStatusCodeException }
+{ EHTTPServerErrorException }
 
-constructor EServerErrorStatusCodeException.Create(const AMsg: string);
+constructor EHTTPServerErrorException.Create(const AMsg: string);
 begin
   inherited Create(AMsg);
 end;

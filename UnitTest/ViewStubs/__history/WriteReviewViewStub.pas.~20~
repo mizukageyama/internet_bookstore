@@ -1,0 +1,123 @@
+unit WriteReviewViewStub;
+
+interface
+
+uses
+  WriteReviewFrmIntf, WriteReviewPresenterIntf, Customer, Book;
+
+type
+  TWriteReviewViewStub = class(TInterfacedObject, IWriteReviewView)
+  private
+    FPresenter: IWriteReviewPresenter;
+    FCustomerGreeting: string;
+    FBookTitle: string;
+    FReviewText: string;
+    FReviewRating: string;
+    FFormClosed: Boolean;
+    FMessageDialogShown: Boolean;
+    FMessageDialogText: string;
+    FReviewValidationMessageShown: Boolean;
+    FReviewValidationMessageText: string;
+    FRatingValidationMessageShown: Boolean;
+    FRatingValidationMessageText: string;
+    FHiddenValidationMessage: Boolean;
+    FFormShown: Boolean;
+  public
+    procedure SetPresenter(APresenter: IWriteReviewPresenter);
+    procedure DisplayCustomerGreeting(const Customer: TCustomer);
+    procedure DisplayBookTitle(const Book: TBook);
+    function GetReviewText: string;
+    function GetReviewRating: string;
+    procedure CloseForm;
+    procedure ShowMessageDialog(const Msg: string);
+    procedure ShowReviewValidationMessage(const ValidationMessage: string);
+    procedure ShowRatingValidationMessage(const ValidationMessage: string);
+    procedure HideValidationMessage;
+    procedure Show;
+
+    property Presenter: IWriteReviewPresenter read FPresenter;
+    property CustomerGreeting: string read FCustomerGreeting;
+    property BookTitle: string read FBookTitle;
+    property ReviewText: string read FReviewText;
+    property ReviewRating: string read FReviewRating;
+    property IsFormClosed: Boolean read FFormClosed;
+    property IsMessageDialogShown: Boolean read FMessageDialogShown;
+    property MessageDialogText: string read FMessageDialogText;
+    property ReviewValidationMessageShown: Boolean
+      read FReviewValidationMessageShown;
+    property ReviewValidationMessageText: string
+      read FReviewValidationMessageText;
+    property RatingValidationMessageShown: Boolean
+      read FRatingValidationMessageShown;
+    property RatingValidationMessageText: string
+      read FRatingValidationMessageText;
+    property IsValidationMessageHidden: Boolean
+      read FHiddenValidationMessage;
+    property IsFormShown: Boolean read FFormShown;
+  end;
+
+implementation
+
+{ TWriteReviewViewStub }
+
+procedure TWriteReviewViewStub.CloseForm;
+begin
+  FFormClosed := True;
+end;
+
+procedure TWriteReviewViewStub.DisplayBookTitle(const Book: TBook);
+begin
+  FBookTitle := Book.Title;
+end;
+
+procedure TWriteReviewViewStub.DisplayCustomerGreeting(
+  const Customer: TCustomer);
+begin
+  FCustomerGreeting := 'Hello ' + Customer.FirstName +
+    ', please enter your review for this book.';
+end;
+
+function TWriteReviewViewStub.GetReviewRating: string;
+begin
+  Result := FReviewRating;
+end;
+
+function TWriteReviewViewStub.GetReviewText: string;
+begin
+  Result := FReviewText;
+end;
+
+procedure TWriteReviewViewStub.HideValidationMessage;
+begin
+
+end;
+
+procedure TWriteReviewViewStub.SetPresenter(APresenter: IWriteReviewPresenter);
+begin
+  FPresenter := APresenter;
+end;
+
+procedure TWriteReviewViewStub.Show;
+begin
+  FFormShown := True;
+end;
+
+procedure TWriteReviewViewStub.ShowMessageDialog(const Msg: string);
+begin
+  FMessageDialogShown := True;
+  FMessageDialogText := Msg;
+end;
+
+procedure TWriteReviewViewStub.ShowRatingValidationMessage(
+  const ValidationMessage: string);
+begin
+
+end;
+
+procedure TWriteReviewViewStub.ShowReviewValidationMessage(
+  const ValidationMessage: string);
+begin
+
+end;
+
+end.

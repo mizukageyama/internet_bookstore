@@ -1,0 +1,17 @@
+unit LoginVPFactoryIntf;
+
+interface
+
+uses
+  LoginFrmIntf, LoginPresenterIntf;
+
+type
+  ILoginVPFactory = interface
+    ['{552171CD-2326-4DFF-9641-4C64CAC28393}']
+    function CreateLoginView: ILoginView;
+    function CreateLoginPresenter(ILoginViewView: ILoginView): ILoginPresenter;
+  end;
+
+implementation
+
+end.

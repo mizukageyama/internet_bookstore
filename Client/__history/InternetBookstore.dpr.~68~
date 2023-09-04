@@ -1,0 +1,58 @@
+program InternetBookstore;
+
+uses
+  Vcl.Forms,
+  BookServiceIntf,
+  BookDetailsPresenter in 'BookDetails\Presenter\BookDetailsPresenter.pas',
+  BookDetailsPresenterIntf in 'BookDetails\Presenter\BookDetailsPresenterIntf.pas',
+  BookDetailsFrm in 'BookDetails\View\BookDetailsFrm.pas' {BookDetailsView},
+  BookDetailsFrmIntf in 'BookDetails\View\BookDetailsFrmIntf.pas',
+  LoginPresenter in 'Login\Presenter\LoginPresenter.pas',
+  LoginPresenterIntf in 'Login\Presenter\LoginPresenterIntf.pas',
+  LoginFrm in 'Login\View\LoginFrm.pas' {LoginView},
+  LoginFrmIntf in 'Login\View\LoginFrmIntf.pas',
+  MainPresenter in 'Main\Presenter\MainPresenter.pas',
+  MainPresenterIntf in 'Main\Presenter\MainPresenterIntf.pas',
+  MainFrm in 'Main\View\MainFrm.pas' {MainView},
+  MainFrmIntf in 'Main\View\MainFrmIntf.pas',
+  WriteReviewPresenter in 'WriteReview\Presenter\WriteReviewPresenter.pas',
+  WriteReviewPresenterIntf in 'WriteReview\Presenter\WriteReviewPresenterIntf.pas',
+  WriteReviewFrm in 'WriteReview\View\WriteReviewFrm.pas' {WriteReviewView},
+  WriteReviewFrmIntf in 'WriteReview\View\WriteReviewFrmIntf.pas',
+  BookServiceProxy in 'ProxyServices\BookServiceProxy.pas',
+  CustomerReviewServiceProxy in 'ProxyServices\CustomerReviewServiceProxy.pas',
+  CustomerSession in 'Commons\CustomerSession.pas',
+  ResponseHandler in 'Commons\ResponseHandler.pas',
+  ResponseStatusMapper in 'Commons\ResponseStatusMapper.pas',
+  StatusCodeException in 'Commons\StatusCodeException.pas',
+  SysConst in 'Commons\SysConst.pas',
+  BookDetailsVPFactory in 'Factory\BookDetailsVPFactory.pas',
+  BookDetailsVPFactoryIntf in 'Factory\BookDetailsVPFactoryIntf.pas',
+  LoginVPFactoryIntf in 'Factory\LoginVPFactoryIntf.pas',
+  WriteReviewVPFactoryIntf in 'Factory\WriteReviewVPFactoryIntf.pas',
+  WriteReviewVPFactory in 'Factory\WriteReviewVPFactory.pas',
+  LoginVPFactory in 'Factory\LoginVPFactory.pas';
+
+{$R *.res}
+
+var
+  BookServiceProxy: IBookService;
+  MainPresenter: IMainPresenter;
+  BookDetailsVPFactory: IBookDetailsVPFactory;
+  LoginVPFactory: ILoginVPFactory;
+  WriteReviewVPFactory: IWriteReviewVPFactory;
+  MainView: IMainView;
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+
+  Application.CreateForm(TMainView, MainView);
+  BookDetailsVPFactory := TBookDetailsVPFactory.Create;
+  LoginVPFactory := TLoginVPFactory.Create;
+  WriteReviewVPFactory := TWriteReviewVPFactory.Create;
+  BookServiceProxy := TBookServiceProxy.Create;
+  MainPresenter := TMainPresenter.Create(MainView, BookServiceProxy,
+    BookDetailsVPFactory);
+
+  Application.Run;
+end.

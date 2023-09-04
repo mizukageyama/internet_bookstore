@@ -1,0 +1,37 @@
+unit WriteReviewVPFactory;
+
+interface
+
+uses
+  WriteReviewVPFactoryIntf, WriteReviewFrmIntf, WriteReviewPresenterIntf, Book;
+
+type
+  TWriteReviewVPFactory = class(TInterfacedObject, IWriteReviewVPFactory)
+  public
+    function CreateWriteReviewView: IWriteReviewView;
+    function CreateWriteReviewPresenter(AWriteReviewView: IWriteReviewView;
+      ACustomerService: ICustomerService; ABook: TBook): IWriteReviewPresenter;
+  end;
+
+implementation
+
+uses
+  WriteReviewFrm, WriteReviewPresenter;
+
+{ TWriteReviewVPFactory }
+
+function TWriteReviewVPFactory.CreateWriteReviewPresenter(
+  AWriteReviewView: IWriteReviewView; ACustomerService: ICustomerService;
+  ABook: TBook): IWriteReviewPresenter;
+begin
+  var WriteReviewPresenter := TWriteReviewPresenter
+    .Create(AWriteReviewView, ACustomerService, ABook);
+  Result := WriteReviewPresenter;
+end;
+
+function TWriteReviewVPFactory.CreateWriteReviewView: IWriteReviewView;
+begin
+  Result := TWriteReviewView.Create(nil);
+end;
+
+end.

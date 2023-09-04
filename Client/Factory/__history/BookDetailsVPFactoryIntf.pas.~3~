@@ -1,0 +1,18 @@
+unit BookDetailsVPFactoryIntf;
+
+interface
+
+uses
+  BookDetailsFrmIntf, BookDetailsPresenterIntf, Book;
+
+type
+  IBookDetailsVPFactory = interface
+    ['{2889E033-B1E1-42A2-A367-02B99F0A9B8A}']
+    function CreateBookDetailsView: IBookDetailsView;
+    function CreateBookDetailsPresenter(BookDetailsView: IBookDetailsView;
+      Book: TBook): IBookDetailsPresenter;
+  end;
+
+implementation
+
+end.

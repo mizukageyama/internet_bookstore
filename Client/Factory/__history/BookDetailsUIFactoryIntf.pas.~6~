@@ -1,0 +1,16 @@
+unit BookDetailsUIFactoryIntf;
+
+interface
+
+uses
+  BookDetailsFrmIntf, BookDetailsPresenterIntf;
+
+type
+  IBookDetailsVPFactory = interface
+    function CreateBookDetailsView: IBookDetailsView;
+    function CreateBookDetailsPresenter: IBookDetailsPresenter;
+  end;
+
+implementation
+
+end.

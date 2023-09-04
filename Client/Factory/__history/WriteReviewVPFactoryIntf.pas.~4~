@@ -1,0 +1,17 @@
+unit WriteReviewVPFactoryIntf;
+
+interface
+
+uses
+  WriteReviewFrmIntf, WriteReviewViewIntf;
+
+type
+  IWriteReviewVPFactory = interface
+    function CreateWriteReviewView: IWriteReviewView;
+    function CreateriteReviewPresenter(ILoginViewView: IWriteReviewView):
+      ILoginPresenter;
+  end;
+
+implementation
+
+end.

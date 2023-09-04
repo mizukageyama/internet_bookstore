@@ -4,7 +4,7 @@ interface
 
 uses
   MainPresenterIntf, BookServiceIntf, MainFrmIntf, System.SysUtils,
-  Book, System.Generics.Collections, ViewFactoryIntf;
+  Book, System.Generics.Collections, ViewPresenterFactoryIntf;
 
 type
   TMainPresenter = class(TInterfacedObject, IMainPresenter)
@@ -12,8 +12,10 @@ type
     FMainView: IMainView;
     FBookServiceProxy: IBookService;
     FBookList: TList<TObject>;
+    FViewPresenterFactory: IViewPresenterFactory;
   public
-    constructor Create(AMainView: IMainView; AMainService: IBookService);
+    constructor Create(AMainView: IMainView; AMainService: IBookService;
+      AViewPresenterFactory: IViewPresenterFactory);
     procedure LoadBooks;
     procedure ShowBookDetails;
     function GetBookList: TList<TObject>;
@@ -23,18 +25,18 @@ type
 implementation
 
 uses
-  BookDetailsPresenterIntf, BookDetailsPresenter, SysConst, StatusCodeException,
-  CustomerReviewServiceIntf, CustomerReviewServiceProxy, ViewFactory,
-  BookDetailsFrmIntf;
+  BookDetailsPresenterIntf, SysConst, StatusCodeException,
+  CustomerReviewServiceIntf, BookDetailsFrmIntf;
 
 { TMainPresenter }
 
 constructor TMainPresenter.Create(AMainView: IMainView;
-  AMainService: IBookService);
+  AMainService: IBookService; AViewPresenterFactory: IViewPresenterFactory);
 begin
   FMainView := AMainView;
   FBookServiceProxy := AMainService;
   FMainView.SetPresenter(Self);
+  FViewPresenterFactory := AViewPresenterFactory;
   FBookList := TList<TObject>.Create;
 end;
 
@@ -68,9 +70,9 @@ var
   BookDetailsView: IBookDetailsView;
 begin
   SelectedBook := FMainView.GetSelectedBook as TBook;
-  BookDetailsView := TViewFactory.CreateBookDetailsView;
-  BookDetailsPresenter := TBookDetailsPresenter
-    .Create(BookDetailsView, SelectedBook);
+  BookDetailsView := FViewPresenterFactory.CreateBookDetailsView;
+  BookDetailsPresenter := FViewPresenterFactory.CreateBookDetailsPresenter(
+    BookDetailsView, SelectedBook, FViewPresenterFactory);
 
   BookDetailsView.Show;
 end;

@@ -1,0 +1,16 @@
+unit LoginVPFactoryIntf;
+
+interface
+
+uses
+  LoginFrmIntf, BookDetailsPresenterIntf, Book;
+
+type
+  ILoginVPFactory = interface
+    function CreateBookDetailsView: ILoginView;
+    function CreateBookDetailsPresenter(ILoginViewView: ILoginView): IBookDetailsPresenter;
+  end;
+
+implementation
+
+end.

@@ -1,0 +1,33 @@
+unit BookDetailsUIFactory;
+
+interface
+
+uses
+  BookDetailsUIFactoryIntf, BookDetailsFrmIntf, BookDetailsPresenterIntf;
+
+type
+  TBookDetailsUIFactory = class(TInterfacedObject, IBookDetailsVPFactory)
+  public
+    function CreateBookDetailsView: IBookDetailsView;
+    function CreateBookDetailsPresenter: IBookDetailsPresenter;
+  end;
+
+implementation
+
+uses
+  BookDetailsFrm;
+
+{ TBookDetailsUIFactory }
+
+function TBookDetailsUIFactory.CreateBookDetailsPresenter:
+  IBookDetailsPresenter;
+begin
+  Result := TBookDetailsPresenter.Crea;
+end;
+
+function TBookDetailsUIFactory.CreateBookDetailsView: IBookDetailsView;
+begin
+  Result := TBookDetailsView.Create(nil);
+end;
+
+end.

@@ -26,23 +26,25 @@ uses
   ResponseStatusMapper in 'Commons\ResponseStatusMapper.pas',
   StatusCodeException in 'Commons\StatusCodeException.pas',
   SysConst in 'Commons\SysConst.pas',
-  ViewFactory in 'FactoryMethod\ViewFactory.pas',
-  ViewFactoryIntf in 'FactoryMethod\ViewFactoryIntf.pas';
+  ViewPresenterFactoryIntf in 'Factory\ViewPresenterFactoryIntf.pas',
+  ViewPresenterFactory in 'Factory\ViewPresenterFactory.pas';
 
 {$R *.res}
 
 var
   BookServiceProxy: IBookService;
   MainPresenter: IMainPresenter;
+  ViewPresenterFactory: IViewPresenterFactory;
   MainView: TForm;
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
 
   Application.CreateForm(TMainView, MainView);
+  ViewPresenterFactory := TViewPresenterFactory.Create;
   BookServiceProxy := TBookServiceProxy.Create;
-  MainPresenter := TMainPresenter.Create(MainView as TMainView,
-    BookServiceProxy);
+  MainPresenter := TMainPresenter.Create(MainView as IMainView, BookServiceProxy,
+    ViewPresenterFactory);
 
   Application.Run;
 end.

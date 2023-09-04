@@ -1,0 +1,19 @@
+unit BookDetailsViewStub;
+
+interface
+
+uses
+  BookDetailsFrmIntf, BookDetailsPresenterIntf, Book;
+
+type
+  TBookDetailsViewStub = class(TInterfacedObject, IBookDetailsView)
+  private
+    FPresenter: IBookDetailsPresenter;
+  public
+    procedure SetPresenter(APresenter: IBookDetailsPresenter);
+    procedure SetBookDetails(const Book: TBook);
+    procedure Show;
+  end;
+implementation
+
+end.

@@ -1,0 +1,21 @@
+unit LoginViewStub;
+
+interface
+
+uses
+  LoginFrmIntf, LoginPresenterIntf;
+
+type
+  TLoginViewStub = class(TInterfacedObject, ILoginView)
+  public
+    function GetUsername: string;
+    function GetPassword: string;
+    procedure CloseForm;
+    procedure SetPresenter(APresenter: ILoginPresenter);
+    procedure ShowMessageDialog(const Msg: string);
+    procedure Show;
+  end;
+
+implementation
+
+end.

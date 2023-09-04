@@ -5,18 +5,21 @@ interface
 uses
   MainPresenterIntf, BookServiceIntf, MainFrmIntf, Book,
   CustomerReviewServiceIntf, BookDetailsFrmIntf, CustomerReview,
-  BookDetailsPresenterIntf;
+  BookDetailsPresenterIntf, LoginVPFactoryIntf, WriteReviewVPFactoryIntf,
+  ViewPresenterFactoryIntf;
 
 type
   TBookDetailsPresenter = class(TInterfacedObject, IBookDetailsPresenter)
   private
     FBookDetailsView: IBookDetailsView;
     FBook: TBook;
+    FViewPresenterFactory: IViewPresenterFactory;
 
     procedure ShowWriteReviewview;
     procedure ShowLoginView;
   public
-    constructor Create(ABookDetailsView: IBookDetailsView; ABook: TBook);
+    constructor Create(ABookDetailsView: IBookDetailsView;
+      ABook: TBook; AViewPresenterFactory: IViewPresenterFactory);
     procedure DisplayBookDetails;
     procedure WriteReview;
   end;
@@ -26,9 +29,7 @@ implementation
 { TBookDetailsPresenter }
 
 uses
-  CustomerReviewServiceProxy, WriteReviewPresenter, LoginPresenter,
-  CustomerSession, BookDetailsFrm, WriteReviewPresenterIntf,
-  ViewFactory;
+  CustomerReviewServiceProxy, CustomerSession, WriteReviewPresenterIntf;
 
 procedure TBookDetailsPresenter.DisplayBookDetails;
 begin
@@ -36,10 +37,11 @@ begin
 end;
 
 constructor TBookDetailsPresenter.Create(ABookDetailsView: IBookDetailsView;
-  ABook: TBook);
+  ABook: TBook; AViewPresenterFactory: IViewPresenterFactory);
 begin
   FBookDetailsView := ABookDetailsView;
   FBookDetailsView.SetPresenter(Self);
+  FViewPresenterFactory := AViewPresenterFactory;
   FBook := ABook;
 end;
 
@@ -56,19 +58,19 @@ end;
 
 procedure TBookDetailsPresenter.ShowWriteReviewView;
 begin
-  var WriteReviewView := TViewFactory.CreateWriteReviewView;
+  var WriteReviewView := FViewPresenterFactory.CreateWriteReviewView;
   var CustomerReviewServiceProxy := TCustomerReviewServiceProxy.Create;
   var WriteReviewPresenter: IWriteReviewPresenter;
-  WriteReviewPresenter := TWriteReviewPresenter
-    .Create(WriteReviewView, CustomerReviewServiceProxy, FBook);
+  WriteReviewPresenter := FViewPresenterFactory.CreateWriteReviewPresenter(
+    WriteReviewView, CustomerReviewServiceProxy, FBook);
 
   WriteReviewView.Show;
 end;
 
 procedure TBookDetailsPresenter.ShowLoginView;
 begin
-  var LoginView := TViewFactory.CreateLoginView;
-  var LoginPresenter := TLoginPresenter.Create(LoginView);
+  var LoginView := FViewPresenterFactory.CreateLoginView;
+  var LoginPresenter := FViewPresenterFactory.CreateLoginPresenter(LoginView);
 
   LoginPresenter.OnLoginSuccess := procedure
   begin

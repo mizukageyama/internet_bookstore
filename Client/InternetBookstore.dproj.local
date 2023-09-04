@@ -5,9 +5,35 @@
     <Transaction>2023/09/04 06:08:59.000.020,C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactoryMaker.pas=C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactory.pas</Transaction>
     <Transaction>2023/09/04 06:11:19.000.618,C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactoryMaker.pas=</Transaction>
     <Transaction>2023/09/04 06:11:33.000.735,=C:\Users\Emmy-chwaan\Desktop\internet_bookstore\Client\Commons\ViewFactory.pas</Transaction>
-    <Transaction>2023/09/04 10:17:09.543,C:\Users\User\Documents\GitHub\internet_bookstore\Client\FactoryMethod\ViewFactory.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Commons\ViewFactory.pas</Transaction>
-    <Transaction>2023/09/04 10:19:29.366,=C:\Users\User\Documents\GitHub\internet_bookstore\Client\FactoryMethod\ViewFactoryIntf.pas</Transaction>
-  </Transactions>  <ProjectSortOrder AutoSort="0" SortType="0">
+    <Transaction>2023/09/04 10:17:09.000.543,C:\Users\User\Documents\GitHub\internet_bookstore\Client\FactoryMethod\ViewFactory.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Commons\ViewFactory.pas</Transaction>
+    <Transaction>2023/09/04 10:19:29.000.366,=C:\Users\User\Documents\GitHub\internet_bookstore\Client\FactoryMethod\ViewFactoryIntf.pas</Transaction>
+    <Transaction>2023/09/04 13:21:51.000.248,=C:\Users\User\Documents\GitHub\internet_bookstore\Client\BookDetailsUIFactory.pas</Transaction>
+    <Transaction>2023/09/04 13:22:59.000.196,C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\BookDetailsUIFactory.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Client\BookDetailsUIFactory.pas</Transaction>
+    <Transaction>2023/09/04 13:23:24.000.832,=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Unit1.pas</Transaction>
+    <Transaction>2023/09/04 13:24:56.000.821,C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\BookDetailsUIFactory.pas=</Transaction>
+    <Transaction>2023/09/04 13:25:15.000.286,C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\BookDetailsUIFactory.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Unit1.pas</Transaction>
+    <Transaction>2023/09/04 13:25:46.000.331,=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\BookDetailsUIFactoryIntf.pas</Transaction>
+    <Transaction>2023/09/04 13:26:44.000.671,=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\ViewFactory.pas</Transaction>
+    <Transaction>2023/09/04 14:07:03.000.358,C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\BookDetailsUIFactoryIntf.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\BookDetailsVPFactoryIntf.pas</Transaction>
+    <Transaction>2023/09/04 14:07:10.000.435,C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\BookDetailsUIFactory.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\BookDetailsVPFactory.pas</Transaction>
+    <Transaction>2023/09/04 14:14:31.000.472,=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Unit1.pas</Transaction>
+    <Transaction>2023/09/04 14:14:46.000.341,C:\Users\User\Documents\GitHub\internet_bookstore\Client\Unit1.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Client\LoginVPFactoryIntf.pas</Transaction>
+    <Transaction>2023/09/04 14:14:59.000.834,C:\Users\User\Documents\GitHub\internet_bookstore\Client\LoginVPFactoryIntf.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\LoginVPFactoryIntf.pas</Transaction>
+    <Transaction>2023/09/04 14:16:34.000.506,=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Unit1.pas</Transaction>
+    <Transaction>2023/09/04 14:16:51.000.815,C:\Users\User\Documents\GitHub\internet_bookstore\Client\Unit1.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\WriteReviewVPFactoryIntf.pas</Transaction>
+    <Transaction>2023/09/04 14:21:26.000.247,=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Unit1.pas</Transaction>
+    <Transaction>2023/09/04 14:23:25.000.774,C:\Users\User\Documents\GitHub\internet_bookstore\Client\Unit1.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\WriteReviewVPFactory.pas</Transaction>
+    <Transaction>2023/09/04 14:50:20.000.141,C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\ViewFactory.pas=</Transaction>
+    <Transaction>2023/09/04 14:50:28.000.321,=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Unit1.pas</Transaction>
+    <Transaction>2023/09/04 14:50:42.000.008,C:\Users\User\Documents\GitHub\internet_bookstore\Client\Unit1.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\LoginVPFactory.pas</Transaction>
+    <Transaction>2023/09/04 15:32:17.000.851,C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\LoginVPFactoryIntf.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\ViewPresenterFactoryIntf.pas</Transaction>
+    <Transaction>2023/09/04 15:35:40.000.816,C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\LoginVPFactory.pas=C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\ViewPresenterFactory.pas</Transaction>
+    <Transaction>2023/09/04 15:43:06.000.363,C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\WriteReviewVPFactoryIntf.pas=</Transaction>
+    <Transaction>2023/09/04 15:43:13.000.847,C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\BookDetailsVPFactory.pas=</Transaction>
+    <Transaction>2023/09/04 15:43:16.000.774,C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\BookDetailsVPFactoryIntf.pas=</Transaction>
+    <Transaction>2023/09/04 15:43:22.000.801,C:\Users\User\Documents\GitHub\internet_bookstore\Client\Factory\WriteReviewVPFactory.pas=</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="BookDetails"/>
     <File Path="BookDetails\Presenter"/>
     <File Path="BookDetails\Presenter\BookDetailsPresenter.pas"/>
@@ -22,9 +48,9 @@
     <File Path="Commons\ResponseStatusMapper.pas"/>
     <File Path="Commons\StatusCodeException.pas"/>
     <File Path="Commons\SysConst.pas"/>
-    <File Path="FactoryMethod"/>
-    <File Path="FactoryMethod\ViewFactory.pas"/>
-    <File Path="FactoryMethod\ViewFactoryIntf.pas"/>
+    <File Path="Factory"/>
+    <File Path="Factory\ViewPresenterFactory.pas"/>
+    <File Path="Factory\ViewPresenterFactoryIntf.pas"/>
     <File Path="Login"/>
     <File Path="Login\Presenter"/>
     <File Path="Login\Presenter\LoginPresenter.pas"/>

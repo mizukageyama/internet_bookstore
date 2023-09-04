@@ -1,0 +1,18 @@
+unit WriteReviewVPFactoryIntf;
+
+interface
+
+uses
+  WriteReviewFrmIntf, WriteReviewPresenterIntf, Book;
+
+type
+  IWriteReviewVPFactory = interface
+    ['{DC551807-3F0B-408E-B139-AB90DD10286F}']
+    function CreateWriteReviewView: IWriteReviewView;
+    function CreateriteReviewPresenter(AWriteReviewView: IWriteReviewView;
+      ABook: TBook): IWriteReviewPresenter;
+  end;
+
+implementation
+
+end.

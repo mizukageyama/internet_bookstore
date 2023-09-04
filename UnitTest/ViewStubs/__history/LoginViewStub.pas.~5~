@@ -1,0 +1,32 @@
+unit LoginViewStub;
+
+interface
+
+uses
+  LoginFrmIntf, LoginPresenterIntf;
+
+type
+  TLoginViewStub = class(TInterfacedObject, ILoginView)
+  private
+    FUsernameInput: string;
+    FPasswordInput: string;
+    FIsFormClosed: Boolean;
+    FPresenter: ILoginPresenter;
+    FIsMessageDialogShown: Boolean;
+    FFormShown: Boolean;
+  public
+    procedure MockTypingInputInTextEditField(const Username, Password: string);
+    function GetUsername: string;
+    function GetPassword: string;
+    procedure CloseForm;
+    procedure SetPresenter(APresenter: ILoginPresenter);
+    procedure ShowMessageDialog(const Msg: string);
+    procedure Show;
+
+    property UsernameInput: string read FUsernameInput;
+    property PasswordInput: string read
+  end;
+
+implementation
+
+end.

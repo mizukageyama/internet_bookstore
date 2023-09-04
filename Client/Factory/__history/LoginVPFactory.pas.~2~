@@ -1,0 +1,14 @@
+unit LoginVPFactory;
+
+interface
+
+type
+  TLoginVPFactory = class(TInterfacedObject, ILoginVPFactory)
+  public
+    function CreateLoginView: ILoginView;
+    function CreateLoginPresenter(ILoginViewView: ILoginView): ILoginPresenter;
+  end;
+
+implementation
+
+end.

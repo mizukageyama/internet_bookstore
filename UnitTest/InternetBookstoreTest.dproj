@@ -95,10 +95,10 @@
         <DCCReference Include="MockCustomerReviewTableDatabase.pas"/>
         <DCCReference Include="CustomerReviewARDaoStub.pas"/>
         <DCCReference Include="BookDetailsPresenterTest.pas"/>
-        <DCCReference Include="MockBookDetailsPresenter.pas"/>
         <DCCReference Include="MainPresenterTest.pas"/>
-        <DCCReference Include="MockWriteReviewPresenter.pas"/>
-        <DCCReference Include="MockMainPresenter.pas"/>
+        <DCCReference Include="ViewStubs\BookDetailsViewStub.pas"/>
+        <DCCReference Include="ViewStubs\LoginViewStub.pas"/>
+        <DCCReference Include="ViewStubs\WriteReviewViewStub.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

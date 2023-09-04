@@ -25,7 +25,7 @@ type
 implementation
 
 uses
-  CustomerSession, BookDetailsFrmIntf, BookDetailsFrm, BookServiceProxy,
+  CustomerSession, BookDetailsFrmIntf, BookServiceProxy,
   StatusCodeException, SysConst;
 
 { TWriteReviewPresenter }

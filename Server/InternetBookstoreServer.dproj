@@ -96,7 +96,6 @@
         <DCCReference Include="JWTAuth\AuthCriteria.pas"/>
         <DCCReference Include="CustomerController.pas"/>
         <DCCReference Include="CustomerReviewController.pas"/>
-        <DCCReference Include="BaseController.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

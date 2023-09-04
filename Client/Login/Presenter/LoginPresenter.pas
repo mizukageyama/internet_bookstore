@@ -22,7 +22,9 @@ type
     procedure Login;
   public
     constructor Create(ALoginView: ILoginView);
-    property OnLoginSuccess: TProc read FOnLoginSuccess write FOnLoginSuccess;
+    procedure SetLoginSuccess(OnLoginSuccess: TProc);
+    function GetLoginSuccess: TProc;
+    property OnLoginSuccess: TProc read GetLoginSuccess write SetLoginSuccess;
   end;
 
 implementation
@@ -38,6 +40,11 @@ begin
   FLoginView := ALoginView;
   FLoginView.SetPresenter(Self);
   FRESTClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
+end;
+
+function TLoginPresenter.GetLoginSuccess: TProc;
+begin
+  Result := FOnLoginSuccess;
 end;
 
 procedure TLoginPresenter.Login;
@@ -74,6 +81,11 @@ begin
   end
   else
     FLoginView.ShowMessageDialog('Please enter email and password');
+end;
+
+procedure TLoginPresenter.SetLoginSuccess(OnLoginSuccess: TProc);
+begin
+  FOnLoginSuccess := OnLoginSuccess;
 end;
 
 procedure TLoginPresenter.UpdateCustomerSession(const ResponseContent: string);

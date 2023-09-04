@@ -3,7 +3,7 @@ unit AuthCriteria;
 interface
 
 uses
-  System.Generics.Collections, FireDAC.Comp.Client, MVCFramework.ActiveRecord,
+  System.Generics.Collections, MVCFramework.ActiveRecord,
   MVCFramework, System.StrUtils, System.SysUtils, MVCFramework.Commons;
 
 type
@@ -41,10 +41,6 @@ procedure TAuthCriteria.OnAuthentication(const AContext: TWebContext;
 begin
   inherited;
 
-  var LConn := TFDConnection.Create(nil);
-  LConn.ConnectionDefName := 'Internet_Bookstore_Connection';
-  ActiveRecordConnectionsRegistry.AddDefaultConnection(LConn, True);
-
   var CustomerAR := TCustomerActiveRecord.Create;
   var CustomerList := CustomerAR.Where(TCustomerActiveRecord,
     ' WHERE EMAIL = ?', [AUserName]);
@@ -75,7 +71,6 @@ begin
   finally
     CustomerAR.Free;
     CustomerList.Free;
-    LConn.Free;
   end;
 end;
 

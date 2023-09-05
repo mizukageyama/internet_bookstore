@@ -2,8 +2,8 @@ object MainView: TMainView
   Left = 0
   Top = 0
   Caption = 'Internet Bookstore'
-  ClientHeight = 409
-  ClientWidth = 609
+  ClientHeight = 400
+  ClientWidth = 603
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,7 +16,7 @@ object MainView: TMainView
   object TitleLabel: TLabel
     Left = 0
     Top = 0
-    Width = 609
+    Width = 603
     Height = 30
     Align = alTop
     Caption = 'ICONIX Internet Bookstore'
@@ -32,16 +32,15 @@ object MainView: TMainView
   object WelcomeTextPanel: TPanel
     Left = 0
     Top = 30
-    Width = 609
+    Width = 603
     Height = 59
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 603
     object lblWelcome: TLabel
       Left = 0
       Top = 0
-      Width = 609
+      Width = 603
       Height = 25
       Align = alTop
       Caption = 'Welcome to our streamlined Internet Bookstore.'
@@ -58,8 +57,8 @@ object MainView: TMainView
     Tag = 1
     Left = 0
     Top = 89
-    Width = 609
-    Height = 320
+    Width = 603
+    Height = 311
     Align = alClient
     ColCount = 1
     FixedCols = 0
@@ -67,8 +66,6 @@ object MainView: TMainView
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goFixedRowDefAlign]
     TabOrder = 1
     OnDblClick = BookListGridDblClick
-    ExplicitWidth = 603
-    ExplicitHeight = 311
     ColWidths = (
       600)
     ColAligments = (

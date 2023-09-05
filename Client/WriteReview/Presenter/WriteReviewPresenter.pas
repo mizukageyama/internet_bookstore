@@ -68,15 +68,15 @@ begin
     FWriteReviewView.ShowMessageDialog('Review is sent to admin for approval');
     FWriteReviewView.CloseForm;
   except
-    on E: EUnAuthorizedStatusCodeException do
+    on E: EHTTPUnAuthorizedException do
     begin
       CustomerSession.SetDefaultValue;
       FWriteReviewView.ShowMessageDialog('Session expired. Please login');
       FWriteReviewView.CloseForm;
     end;
-    on E: ENotFoundStatusCodeException do
+    on E: EHTTPNotFoundException do
       FWriteReviewView.ShowMessageDialog(E.ToString);
-    on E: ENotFoundStatusCodeException do
+    on E: EHTTPServerErrorException do
       FWriteReviewView.ShowMessageDialog(E.ToString);
   end;
 end;

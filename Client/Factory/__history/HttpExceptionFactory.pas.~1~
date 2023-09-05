@@ -1,0 +1,7 @@
+unit HttpExceptionFactory;
+
+interface
+
+implementation
+
+end.

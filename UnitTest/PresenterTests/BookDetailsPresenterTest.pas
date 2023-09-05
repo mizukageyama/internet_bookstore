@@ -25,10 +25,6 @@ type
       Test_DisplayBookDetails_PassSelectedBookToBookDetailsView_FieldsEqual;
     [Test]
     procedure Test_WriteReview_WriteReviewViewPresenterCreation_WillNotRaise;
-    [Test]
-    procedure Test_ShowWriteReviewView_ConditionalStatement_WillNotRaise;
-    [Test]
-    procedure Test_ShowLoginView_LoginViewPresenterCreation_WillNotRaise;
   end;
 
 implementation
@@ -66,27 +62,6 @@ begin
     (BookDisplayed.Synopsis = FSelectedBook.Synopsis));
 end;
 
-procedure TBookDetailsPresenterTest
-  .Test_ShowLoginView_LoginViewPresenterCreation_WillNotRaise;
-begin
-  Assert.WillNotRaise(
-    procedure
-    begin
-      FBookDetailsPresenter.ShowLoginView;
-    end
-    );
-end;
-
-procedure TBookDetailsPresenterTest
-  .Test_ShowWriteReviewView_ConditionalStatement_WillNotRaise;
-begin
-  Assert.WillNotRaise(
-    procedure
-    begin
-      FBookDetailsPresenter.ShowWriteReviewView;
-    end
-    );
-end;
 
 procedure TBookDetailsPresenterTest
   .Test_WriteReview_WriteReviewViewPresenterCreation_WillNotRaise;

@@ -1,0 +1,15 @@
+unit RemoteExceptionFactoryIntf;
+
+interface
+
+uses
+  System.SysUtils;
+
+type
+  IRemoteExceptionFactory = interface
+    function CreateException: Exception;
+  end;
+
+implementation
+
+end.

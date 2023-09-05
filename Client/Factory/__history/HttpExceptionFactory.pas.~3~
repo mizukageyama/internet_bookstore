@@ -1,0 +1,35 @@
+unit HttpExceptionFactory;
+
+interface
+
+uses
+  System.SysUtils, SysConst;
+
+type
+  THttpExceptionFactory = class
+  public
+    class function CreateHttpException(const StatusCode: TStatusCode):
+      Exception;
+  end;
+
+implementation
+
+uses
+  StatusCodeException;
+
+{ THttpExceptionFactory }
+
+class function THttpExceptionFactory.CreateHttpException(
+  const StatusCode: TStatusCode): Exception;
+begin
+  case StatusCode of
+    NotFound: Result := EHTTPNotFoundException.Create('Unable to create review');
+    UnAuthorized: Result := EHTTPUnauthorizedException.Create('Error Message');
+    BadRequest: Result := EHTTPBadRequestException.Create('Error Message');
+    Forbidden: Result := EHTTPForbiddenException.Create('Error Message');
+    ServerError: Result := EHTTPServerErrorException
+      .Create('Unable to create review');
+  end;
+end;
+
+end.

@@ -1,0 +1,47 @@
+unit HttpExceptionFactory;
+
+interface
+
+uses
+  System.SysUtils, SysConst, RemoteExceptionFactoryIntf;
+
+type
+  THttpExceptionFactory = class(TInterfacedObject, IRemoteExceptionFactory)
+  public
+    function CreateException(const ErrorCode: Integer): Exception;
+  end;
+
+implementation
+
+uses
+  StatusCodeException;
+
+{ THttpExceptionFactory }
+
+function THttpExceptionFactory.CreateException(
+  const ErrorCode: Integer): Exception;
+begin
+
+end;
+
+//---------------------------------------------
+//    class function CreateHttpException(const StatusCode: TStatusCode):
+//      Exception;
+{ THttpExceptionFactory }
+
+//class function THttpExceptionFactory.CreateHttpException(
+//  const StatusCode: TStatusCode): Exception;
+//begin
+//  case StatusCode of
+//    NotFound: Result := EHTTPNotFoundException.Create('Resource not found');
+//    UnAuthorized: Result := EHTTPUnauthorizedException
+//      .Create('Not authenticated');
+//    BadRequest: Result := EHTTPBadRequestException.Create('Invalid request');
+//    Forbidden: Result := EHTTPForbiddenException
+//      .Create('Not allowed to access this resource');
+//    ServerError: Result := EHTTPServerErrorException
+//      .Create('Internal server error');
+//  end;
+//end;
+
+end.

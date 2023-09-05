@@ -27,7 +27,9 @@ uses
   StatusCodeException in 'Commons\StatusCodeException.pas',
   SysConst in 'Commons\SysConst.pas',
   ViewPresenterFactoryIntf in 'Factory\ViewPresenterFactoryIntf.pas',
-  ViewPresenterFactory in 'Factory\ViewPresenterFactory.pas';
+  ViewPresenterFactory in 'Factory\ViewPresenterFactory.pas',
+  HttpExceptionFactory in 'Factory\HttpExceptionFactory.pas',
+  ServerExceptionFactoryIntf in 'Factory\ServerExceptionFactoryIntf.pas';
 
 {$R *.res}
 
@@ -42,9 +44,9 @@ begin
 
   Application.CreateForm(TMainView, MainView);
   ViewPresenterFactory := TViewPresenterFactory.Create;
-  BookServiceProxy := TBookServiceProxy.Create;
-  MainPresenter := TMainPresenter.Create(MainView as IMainView, BookServiceProxy,
-    ViewPresenterFactory);
+  BookServiceProxy := TBookServiceProxy.Create(THttpExceptionFactory.Create);
+  MainPresenter := TMainPresenter.Create(MainView as IMainView,
+    BookServiceProxy, ViewPresenterFactory);
 
   Application.Run;
 end.

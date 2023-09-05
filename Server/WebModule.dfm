@@ -7,8 +7,8 @@ object MyWebModule: TMyWebModule
   PixelsPerInch = 120
   object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink
     VendorLib = 
-      'C:\Users\User\Documents\GitHub\internet_bookstore\Server\Win32\D' +
-      'ebug\libmysql.dll'
+      'C:\Users\User\Documents\GitHub\internet_bookstore\Output\Lib\Win' +
+      '32\Debug\libmysql.dll'
     Left = 233
     Top = 96
   end

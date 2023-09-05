@@ -28,7 +28,8 @@ implementation
 { TBookDetailsPresenter }
 
 uses
-  CustomerReviewServiceProxy, CustomerSession, WriteReviewPresenterIntf;
+  CustomerReviewServiceProxy, CustomerSession, WriteReviewPresenterIntf,
+  HttpExceptionFactory;
 
 procedure TBookDetailsPresenter.DisplayBookDetails;
 begin
@@ -58,7 +59,8 @@ end;
 procedure TBookDetailsPresenter.ShowWriteReviewView;
 begin
   var WriteReviewView := FViewPresenterFactory.CreateWriteReviewView;
-  var CustomerReviewServiceProxy := TCustomerReviewServiceProxy.Create;
+  var CustomerReviewServiceProxy := TCustomerReviewServiceProxy.Create(
+    THttpExceptionFactory.Create);
   var WriteReviewPresenter: IWriteReviewPresenter;
   WriteReviewPresenter := FViewPresenterFactory.CreateWriteReviewPresenter(
     WriteReviewView, CustomerReviewServiceProxy, FBook);

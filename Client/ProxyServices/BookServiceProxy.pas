@@ -4,16 +4,18 @@ interface
 
 uses
   BookServiceIntf, Book, System.Generics.Collections, System.SysUtils,
-  MVCFramework.RESTClient.Intf, MVCFramework.RESTClient;
+  MVCFramework.RESTClient.Intf, MVCFramework.RESTClient,
+  ServerExceptionFactoryIntf;
 
 type
   TBookServiceProxy = class(TInterfacedObject, IBookService)
   private
     FRESTClient: IMVCRESTClient;
+    FServerExceptionFactory: IServerExceptionFactory;
     const
       ENDPOINT = '/api/books';
   public
-    constructor Create;
+    constructor Create(AServerExceptionFactory: IServerExceptionFactory);
     destructor Destroy; override;
 
     procedure CreateBook(const Book: TBook);
@@ -31,9 +33,11 @@ uses
 
 { TBookServiceProxy }
 
-constructor TBookServiceProxy.Create;
+constructor TBookServiceProxy.Create(
+  AServerExceptionFactory: IServerExceptionFactory);
 begin
-  inherited;
+  inherited Create;
+  FServerExceptionFactory := AServerExceptionFactory;
   FRESTClient := TMVCRESTClient.New.BaseURL('localhost', 8080);
 end;
 
@@ -55,7 +59,7 @@ begin
 
   var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
   if ResponseStatus <> OK then
-    raise EServerErrorStatusCodeException.Create('Unable to create book');
+    raise EHTTPServerErrorException.Create('Unable to create book');
 end;
 
 procedure TBookServiceProxy.DeleteBook(const BookId: Integer);
@@ -69,7 +73,7 @@ begin
 
   var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
   if ResponseStatus <> OK then
-    raise EServerErrorStatusCodeException.Create('Unable to delete book');
+    raise EHTTPServerErrorException.Create('Unable to delete book');
 end;
 
 function TBookServiceProxy.GetBookById(const BookId: Integer): TBook;
@@ -80,7 +84,7 @@ begin
 
   var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
   if ResponseStatus <> OK then
-    raise EServerErrorStatusCodeException.Create('Something went wrong');
+    raise EHTTPServerErrorException.Create('Something went wrong');
 
   var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
   var Data := JSONValue.GetValue<TJSONObject>('data');
@@ -99,17 +103,17 @@ begin
   FRESTClient.ClearQueryParams;
 
   var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
-  if ResponseStatus = OK then
-  begin
-    var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
-    var BookArray := JSONValue.GetValue<TJSONArray>('data');
+  if ResponseStatus <> OK then
+    raise FServerExceptionFactory.CreateException(ResponseStatus);
 
-    for var I := 0 to BookArray.Count - 1 do
-    begin
-      var BookJSON := BookArray.Items[I].ToString;
-      var Book := TJSON.JsonToObject<TBook>(BookJSON);
-      BookList.Add(Book);
-    end;
+  var JSONValue := TJSONObject.ParseJSONValue(Response.Content);
+  var BookArray := JSONValue.GetValue<TJSONArray>('data');
+
+  for var I := 0 to BookArray.Count - 1 do
+  begin
+    var BookJSON := BookArray.Items[I].ToString;
+    var Book := TJSON.JsonToObject<TBook>(BookJSON);
+    BookList.Add(Book);
   end;
 
   Result := BookList;
@@ -127,7 +131,7 @@ begin
 
   var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
   if ResponseStatus <> OK then
-    raise EServerErrorStatusCodeException.Create('Unable to update book');
+    raise EHTTPServerErrorException.Create('Unable to update book');
 end;
 
 end.

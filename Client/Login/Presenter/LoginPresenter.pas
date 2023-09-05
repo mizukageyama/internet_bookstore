@@ -64,7 +64,7 @@ begin
 
       var ResponseStatus := TResponseStatusMapper.Map(Response.StatusCode);
       if ResponseStatus <> OK then
-        raise EUnauthorizedStatusCodeException.Create(
+        raise EHTTPUnauthorizedException.Create(
           'Invalid password');
 
       UpdateCustomerSession(Response.Content);
@@ -73,7 +73,7 @@ begin
       if Assigned(FOnLoginSuccess) then
         FOnLoginSuccess;
     except
-      on E: EUnauthorizedStatusCodeException do
+      on E: EHTTPUnauthorizedException do
         FLoginView.ShowMessageDialog(E.ToString);
       else
         FLoginView.ShowMessageDialog('Something went wrong');

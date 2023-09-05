@@ -31,7 +31,7 @@ implementation
 uses
   ViewPresenterFactoryStub, MockCustomerReviewTableDatabase, System.DateUtils,
   CustomerReviewARDaoStub, CustomerReviewService, CustomerSession,
-  WriteReviewViewStub;
+  WriteReviewViewStub, System.SysUtils;
 
 procedure TWriteReviewPresenterTest.Setup;
 begin
@@ -79,7 +79,7 @@ procedure TWriteReviewPresenterTest
 begin
   (FWriteReviewViewStub as TWriteReviewViewStub)
     .MockUserInput('This is my sample review', '4');
-    var CustomerSession := TCustomerSession.Instance;
+  var CustomerSession := TCustomerSession.Instance;
   CustomerSession.SetLoggedIn(1, 'Jenny', 'sample_token', TDateTime.Now);
 
   var ListBeforeInsert := FReviewServiceProxy

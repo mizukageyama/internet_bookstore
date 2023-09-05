@@ -1,0 +1,12 @@
+unit RemoteExceptionFactoryIntf;
+
+interface
+
+type
+  IRemoteExceptionFactory = interface
+    function CreateServerException: Exception;
+  end;
+
+implementation
+
+end.
